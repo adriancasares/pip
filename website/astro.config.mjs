@@ -7,9 +7,14 @@ import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
+import vercel from "@astrojs/vercel/serverless";
+
+// https://astro.build/config
 export default defineConfig({
   integrations: [react(), tailwind()],
   server: {
     port: 1691
-  }
+  },
+  output: "server",
+  adapter: vercel()
 });
