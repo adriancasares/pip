@@ -19,6 +19,7 @@ services:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       APP_KEYS: ${APP_KEYS}
       NODE_ENV: ${NODE_ENV}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
     volumes:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
