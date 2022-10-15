@@ -1,5 +1,5 @@
 import React from "react";
-import { IoCall } from "react-icons/io5/index";
+import { IoChatbubble } from "react-icons/io5/index";
 
 export default function Button(props: {
   children: string;
@@ -8,7 +8,9 @@ export default function Button(props: {
 }) {
   return (
     <button className="bg-accent-a hover:bg-accent-b transition-colors text-accent-c w-fit py-3 px-6 rounded-md uppercase font-sans flex gap-4 items-center">
-      {props.icon === "phone" && <IoCall />}
+      <span className="opacity-50">
+        {props.icon === "message" && <IoChatbubble />}
+      </span>
       <span>{props.children}</span>
     </button>
   );
