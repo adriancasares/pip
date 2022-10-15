@@ -16,7 +16,7 @@ const { title, description, image, callToAction } = Astro.props;
             <h1 class="text-mono-a font-title font-extrabold text-4xl">{title}</h1>
             <p class="text-mono-b max-w-sm md:mx-auto">{description}</p>
             <div class="md:mx-auto">
-                { callToAction === "add phone number" && <Button>Add your Phone Number</Button> }
+                { callToAction === "add phone number" && <Button icon="phone">Get Involved</Button> }
             </div>
         </div>
     </div>

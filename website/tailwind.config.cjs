@@ -27,6 +27,7 @@ module.exports = {
           "text-dark": "#464646",
           border: "#201F1F",
         },
+        "section-bg-purple": "#181821",
         "header-image-overlay": "#3D2946",
         "gradient-purple": {
           from: "#889BFF",
