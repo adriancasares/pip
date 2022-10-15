@@ -72,7 +72,10 @@ export default function Paragraphs(props: { paragraphs: ParagraphData[] }) {
             )}
           </div>
         </div>
-        <div class="w-full h-20" ref={offScreen ? carouselRef : undefined}>
+        <div
+          class="w-full h-0 2xs:h-20"
+          ref={offScreen ? carouselRef : undefined}
+        >
           <div class="mx-auto w-fit">
             {offScreen && (
               <Carousel
