@@ -1,19 +1,24 @@
 ---
+import Header from '../components/sections/header/Header.astro';
+import Paragraphs from '../components/sections/paragraphs/Paragraphs.astro';
 import Layout from '../layouts/Layout.astro';
+const header = await fetch(`http://api.lasapip.com/api/header`).then(res => res.json()).then(data => data.data.attributes);
+const paragraphs = await fetch(`http://api.lasapip.com/api/paragraphs`).then(res => res.json()).then(data => data.data.map(item => item.attributes));
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Programming in Practice">
 	<main>
-		<h1 class="text-yellow-800 font-light text-4xl">Under Construction</h1>
+		<Header
+			title={header.title} 
+			description={header.description}
+			callToAction={header.buttonType}
+			image={header.image}
+		 />
+		 <Paragraphs paragraphs={paragraphs}/>
 	</main>
 </Layout>
 <style>
 	main {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
 		height: 100vh;
-		@apply bg-yellow-100
 	}
 </style>
