@@ -1,6 +1,7 @@
 import React from "react";
 
 import { ScrollFunction } from "./Paragraph";
+import { motion } from "framer-motion";
 export default function Carousel(props: {
   horizontal: boolean;
   count: number;
@@ -12,7 +13,8 @@ export default function Carousel(props: {
       className={`gap-10 flex ${props.horizontal ? "flex-row" : "flex-col"}`}
     >
       {Array.from({ length: props.count }, (_, i) => i).map((i) => (
-        <div
+        <motion.div
+          layoutId={`carousel-${i}`}
           key={i}
           onClick={() => {
             props.scrollTo(i);
@@ -25,7 +27,7 @@ export default function Carousel(props: {
           }`}
         >
           {i + 1}
-        </div>
+        </motion.div>
       ))}
     </div>
   );
