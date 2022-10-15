@@ -2,12 +2,15 @@ import React from "react";
 
 import { ScrollFunction } from "./Paragraph";
 export default function Carousel(props: {
+  horizontal: boolean;
   count: number;
   currentSection: number;
   scrollTo(idx: number): void;
 }) {
   return (
-    <div className="gap-10 flex flex-col">
+    <div
+      className={`gap-10 flex ${props.horizontal ? "flex-row" : "flex-col"}`}
+    >
       {Array.from({ length: props.count }, (_, i) => i).map((i) => (
         <div
           key={i}
