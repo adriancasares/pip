@@ -29,7 +29,7 @@ services:
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     ports:
-      - "1337:1337"
+      - "80:1337"
     networks:
       - strapi
     depends_on:
@@ -50,8 +50,8 @@ services:
     volumes:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
-    ports:
-      - "1338:3306"
+    # ports:
+      # - "1338:3306"
     expose:
       - "3306"
     networks:
