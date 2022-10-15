@@ -1,5 +1,5 @@
 #paragraphs .body > p {
-  @apply bg-clip-text from-gradient-purple-from to-gradient-purple-to via-gradient-purple-via bg-gradient-to-br text-mono-b;
+  @apply bg-clip-text from-gradient-text-from to-gradient-text-to via-gradient-text-via bg-gradient-to-br text-mono-b;
 }
 #paragraphs .body > p strong {
   @apply text-transparent font-bold tracking-tighter;

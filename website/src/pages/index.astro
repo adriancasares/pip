@@ -1,9 +1,12 @@
 ---
 import Header from '../components/sections/header/Header.astro';
 import Paragraphs from '../components/sections/paragraphs/Paragraphs';
+import Meetings from '../components/sections/meetings/Meetings.astro';
+
 import Layout from '../layouts/Layout.astro';
 const header = await fetch(`http://api.lasapip.com/api/header`).then(res => res.json()).then(data => data.data.attributes);
 const paragraphs = await fetch(`http://api.lasapip.com/api/paragraphs`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
+const meetings = await fetch(`http://api.lasapip.com/api/meetings`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
 ---
 
 <Layout title="Programming in Practice">
@@ -15,7 +18,8 @@ const paragraphs = await fetch(`http://api.lasapip.com/api/paragraphs`).then(res
 			image={header.image}
 		 />
 		 <Paragraphs paragraphs={paragraphs} client:load />
-		 <div class="w-full h-[1000px] bg-red-300" />
+
+		 <Meetings meetings={meetings} />
 	</main>
 </Layout>
 <style>

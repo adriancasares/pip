@@ -27,12 +27,21 @@ module.exports = {
           "text-dark": "#464646",
           border: "#201F1F",
         },
+        "section-bg-purple-lighter": "#22222C",
         "section-bg-purple": "#181821",
         "header-image-overlay": "#3D2946",
-        "gradient-purple": {
+        "gradient-text": {
           from: "#889BFF",
-          to: "#fa4520",
+          to: "#fa9006",
           via: "#CA55DD",
+        },
+        "gradient-purple": {
+          from: "#17365A",
+          to: "#482F5C",
+        },
+        "gradient-cyan": {
+          from: "#17365A",
+          to: "#2F5C44",
         },
       },
     },

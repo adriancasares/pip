@@ -59,9 +59,9 @@ export default function Paragraph(props: {
     >
       <div class="sticky top-20 h-fit" style={{ opacity }}>
         <div class="flex flex-col gap-4">
-          <h3 class="font-title text-lg">{header}</h3>
+          <h3 class="font-title text-lg select-text">{header}</h3>
           <div
-            class="font-sans body"
+            class="font-sans body select-text"
             dangerouslySetInnerHTML={{ __html: parsed }}
           />
         </div>

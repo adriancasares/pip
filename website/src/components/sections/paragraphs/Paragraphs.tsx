@@ -33,7 +33,7 @@ export default function Paragraphs(props: { paragraphs: ParagraphData[] }) {
   }, [offScreen]);
 
   return (
-    <section id="paragraphs" class="w-full bg-black relative pb-36">
+    <section id="paragraphs" class="w-full bg-black relative pb-36 select-none">
       <AnimateSharedLayout>
         <div class="px-10 mx-auto max-w-4xl flex justify-between">
           <div class="flex flex-col gap-36">
