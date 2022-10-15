@@ -29,7 +29,7 @@ export default function PreviousMeetings(props: {
             setShow(!show);
           }}
           animate={show ? "showing" : "hiding"}
-          className="bg-section-bg-purple-lighter text-mono-text py-4 px-8 rounded-full flex gap-2 items-center relative group"
+          className="my-10 bg-section-bg-purple-lighter text-mono-text py-4 px-8 rounded-full flex gap-2 items-center relative group"
           whileHover={{ paddingLeft: "32px", paddingRight: "60px" }}
           variants={{
             hiding: {},
