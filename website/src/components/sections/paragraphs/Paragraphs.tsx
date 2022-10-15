@@ -57,7 +57,7 @@ export default function Paragraphs(props: { paragraphs: ParagraphData[] }) {
             })}
           </div>
           <div
-            class="sticky top-20 h-fit"
+            class="sticky top-20 h-fit hidden 2xs:block"
             ref={!offScreen ? carouselRef : undefined}
           >
             {!offScreen && (

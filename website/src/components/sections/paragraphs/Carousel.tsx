@@ -19,7 +19,7 @@ export default function Carousel(props: {
           onClick={() => {
             props.scrollTo(i);
           }}
-          className={`transition-colors rounded-full w-20 h-20 flex justify-center items-center border-4 border-mono-border text-3xl font-number select-none
+          className={`transition-colors rounded-full w-16 h-16 xs:w-20 xs:h-20 flex justify-center items-center border-4 border-mono-border text-2xl smed:text-3xl font-number select-none
           ${
             i === props.currentSection
               ? "bg-mono-border text-mono-a"

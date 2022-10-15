@@ -53,7 +53,7 @@ export default function Paragraph(props: {
   }, []);
 
   return (
-    <div class="text-mono-a max-w-sm relative" ref={myRef}>
+    <div class="text-mono-a 2xs:max-w-[340px] xs:max-w-sm relative" ref={myRef}>
       <div class="sticky top-20 h-fit" style={{ opacity }}>
         <div class="flex flex-col gap-4">
           <h3 class="font-title text-lg">{header}</h3>

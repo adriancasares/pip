@@ -9,6 +9,11 @@ module.exports = {
       sans: ["Karla", "Inter", "sans-serif"],
     },
     extend: {
+      screens: {
+        "3xs": "435px",
+        "2xs": "535px",
+        xs: "600px",
+      },
       colors: {
         accent: {
           a: "#FFE175",
