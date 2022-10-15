@@ -1,5 +1,4 @@
 import React from "react";
-import { FiArrowUpRight } from "react-icons/fi";
 
 export interface MeetingData {
   description: string;

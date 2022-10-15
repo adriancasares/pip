@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Meeting, { MeetingData } from "./Meeting";
 import { motion } from "framer-motion";
-import { IoChevronDownOutline } from "react-icons/io5";
+import { IoChevronDownOutline } from "react-icons/io5/index";
 
 export default function PreviousMeetings(props: {
   meetings: MeetingData[];

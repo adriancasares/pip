@@ -1,5 +1,6 @@
 import React from "react";
-import { IoCall } from "react-icons/io5";
+import { IoCall } from "react-icons/io5/index";
+
 export default function Button(props: {
   children: string;
   onClick?: () => void;
