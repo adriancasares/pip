@@ -14,6 +14,8 @@ const meetings = Astro.props.meetings.sort((a, b) => {
 let lastMeeting = -1;
 
 meetings.forEach((meeting, index) => {
+	console.log("meeting: ", new Date(Date.parse(meeting.date.replaceAll("-", "/"))).getTime());
+	console.log("now: ", Date.now());
 	new Date(Date.parse(meeting.date.replaceAll("-", "/"))).getTime() < Date.now() && lastMeeting === -1 && (lastMeeting = index);
 });
 
