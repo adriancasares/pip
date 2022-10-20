@@ -16,6 +16,7 @@ const meetings = await fetch(`http://api.lasapip.com/api/meetings`).then(res => 
 			description={header.description}
 			callToAction={header.buttonType}
 			image={header.image}
+			discordLink={header.discord}
 		 />
 		 <Paragraphs paragraphs={paragraphs} client:load />
 

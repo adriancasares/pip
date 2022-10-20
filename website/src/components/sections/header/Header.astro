@@ -1,13 +1,15 @@
 ---
+import { FaDiscord } from "react-icons/fa/index.js";
 import Button from "../../Button";
 export interface Props {
 	title: string;
     description: string;
     image: string;
     callToAction: string;
+    discordLink: string;
 }
 
-const { title, description, image, callToAction } = Astro.props;
+const { title, description, image, callToAction, discordLink } = Astro.props;
 ---
 <section id="header" class="w-full">
     <div class="bg-header-image-overlay relative">
@@ -15,8 +17,14 @@ const { title, description, image, callToAction } = Astro.props;
         <div class="md:text-center flex flex-col gap-10 pt-20 pb-40 relative px-10">
             <h1 class="text-mono-a font-title font-extrabold text-4xl">{title}</h1>
             <p class="text-mono-b max-w-sm md:mx-auto">{description}</p>
-            <div class="md:mx-auto">
-                { callToAction === "add phone number" && <Button icon="message">Get Involved</Button> }
+            <div class="md:mx-auto flex flex-col gap-4 w-fit">
+
+                <div>
+                    { callToAction === "add phone number" && <Button icon="message">Get Involved</Button> }
+                </div>
+                <div class="flex items-ceter text-mono-c gap-2 items-center md:mx-auto w-fit">
+                    <a href={discordLink}>Join our Discord</a>
+                </div>
             </div>
         </div>
     </div>

@@ -23,6 +23,7 @@ module.exports = {
         mono: {
           a: "#FFFFFF",
           b: "#C3C3C3",
+          c: "#8d8d8d",
           text: "#C3C3C3",
           "text-dark": "#464646",
           border: "#201F1F",

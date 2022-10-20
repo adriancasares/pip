@@ -1,3 +1,4 @@
+import { useScroll, useTransform } from "framer-motion";
 import React from "react";
 import MeetingTag from "./MeetingTag";
 
@@ -20,7 +21,7 @@ export default function Meeting(props: {
   const localDate = new Date(Date.parse(date));
 
   return (
-    <div className="py-10 border-t-4 border-t-black/30 md:border-t-0 mx-auto max-w-4xl px-10 flex flex-col md:flex-row md:justify-between gap-4">
+    <div className="py-10 border-t-4 border-t-black/30 md:border-t-0 max-w-4xl px-10 flex flex-col md:flex-row md:justify-between gap-4">
       <div className="flex flex-col xs:flex-row gap-8">
         <div
           className={`select-none shrink-0 w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-2xl bg-gradient-to-tr ${
@@ -50,7 +51,7 @@ export default function Meeting(props: {
           </p>
         </div>
       </div>
-      <div className="flex xs:ml-28 md:ml-0 md:flex-col gap-4 items-end whitespace-nowrap flex-wrap">
+      <div className="flex xs:ml-28 md:ml-0 md:flex-col gap-4 items-end whitespace-nowrap flex-wrap w-40">
         <p className="font-sans text-mono-b bg-mono-border py-4 px-6 rounded-full md:bg-transparent md:py-0 md:px-0 md:rounded-none">
           {localDate.toLocaleDateString("en-US", {
             month: "long",
