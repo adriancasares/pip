@@ -1,33 +1,37 @@
 import React from "react";
+import MeetingTag from "./MeetingTag";
 
 export interface MeetingData {
+  title: string;
   description: string;
   date: string;
   slides?: string;
 }
 
 export default function Meeting(props: {
+  title: string;
   description: string;
   date: string;
   slides?: string;
-  status: "NEXT" | "LAST" | "PAST";
+  upcoming: boolean;
 }) {
-  const { description, date, slides, status } = props;
-  const localDate = new Date(Date.parse(date.replaceAll("-", "/")));
+  const { description, date, slides, upcoming } = props;
+
+  const localDate = new Date(Date.parse(date));
 
   return (
     <div className="py-10 border-t-4 border-t-black/30 md:border-t-0 mx-auto max-w-4xl px-10 flex flex-col md:flex-row md:justify-between gap-4">
       <div className="flex flex-col xs:flex-row gap-8">
         <div
           className={`select-none shrink-0 w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-2xl bg-gradient-to-tr ${
-            status === "NEXT"
+            upcoming
               ? "from-gradient-cyan-from to-gradient-cyan-to"
               : "from-gradient-purple-from/25 to-gradient-purple-to/25"
           }`}
         >
           <p
             className={`text-mono-a font-number text-4xl md:text-5xl ${
-              status === "NEXT" ? "" : "opacity-50"
+              upcoming ? "" : "opacity-50"
             }`}
           >
             {localDate.getDate()}
@@ -35,11 +39,12 @@ export default function Meeting(props: {
         </div>
 
         <div className="flex flex-col gap-2 md:max-w-sm">
-          <p className="font-title text-mono-a text-lg select-text">
-            {status === "NEXT" && "Next Meeting"}
-            {status === "LAST" && "Last Meeting"}
-            {status === "PAST" && "Previous Meeting"}
-          </p>
+          <div className="flex gap-2 items-center">
+            <p className="font-title text-mono-a text-lg select-text">
+              {props.title}
+            </p>
+            {upcoming && <MeetingTag>Upcoming</MeetingTag>}
+          </div>
           <p className="font-sans text-mono-b whitespace-normal">
             {props.description}
           </p>

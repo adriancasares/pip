@@ -10,14 +10,9 @@ const meetings = Astro.props.meetings.sort((a, b) => {
 	return Date.parse(b.date) - Date.parse(a.date);
 });
 
-
-let lastMeeting = -1;
-
-meetings.forEach((meeting, index) => {
-	console.log("meeting: ", new Date(Date.parse(meeting.date.replaceAll("-", "/"))).getTime());
-	console.log("now: ", Date.now());
-	new Date(Date.parse(meeting.date.replaceAll("-", "/"))).getTime() < Date.now() && lastMeeting === -1 && (lastMeeting = index);
-});
+const isUpcoming = (date: string) => {
+	return Date.parse(date) > Date.now();
+}
 
 ---
 <section id="header" class="w-full bg-section-bg-purple py-20`">
@@ -25,14 +20,10 @@ meetings.forEach((meeting, index) => {
 	<div class="flex flex-col py-10">
 
 		{ meetings.splice(0, 2).map((meeting, idx) => {
-			return <Meeting status={((() => {
-				if(idx < lastMeeting) return "NEXT";
-				if(idx > lastMeeting) return "PAST";
-				return "LAST";
-			})())} {...meeting} />
+			return <Meeting upcoming={isUpcoming(meeting.date)} {...meeting} />
 		})}
 
-		<PreviousMeetings meetings={meetings} lastMeeting={lastMeeting} client:visible />
+		<PreviousMeetings meetings={meetings} client:visible />
 	
 	</div>
 </section>

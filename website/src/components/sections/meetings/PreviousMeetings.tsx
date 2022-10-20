@@ -7,15 +7,19 @@ export default function PreviousMeetings(props: {
   meetings: MeetingData[];
   lastMeeting: number;
 }) {
-  const { meetings, lastMeeting } = props;
+  const isUpcoming = (date: string) => {
+    return Date.parse(date) > Date.now();
+  };
+
+  const { meetings } = props;
 
   const [show, setShow] = useState(false);
 
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (show) {
-      scrollRef.current.scrollIntoView();
+      scrollRef.current?.scrollIntoView();
     }
   }, [show]);
 
@@ -72,15 +76,7 @@ export default function PreviousMeetings(props: {
                   delay: 0.35,
                 }}
               >
-                <Meeting
-                  status={(() => {
-                    if (idx + 2 < lastMeeting) return "NEXT";
-                    if (idx + 2 > lastMeeting) return "PAST";
-                    return "LAST";
-                  })()}
-                  {...meeting}
-                />
-                ;
+                <Meeting upcoming={isUpcoming(meeting.date)} {...meeting} />;
               </motion.div>
             );
           })}
