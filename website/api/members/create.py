@@ -42,7 +42,7 @@ class handler(BaseHTTPRequestHandler):
     classYear = form.getvalue("classYear")
     preference = form.getvalue("preference")
 
-    doc_ref = db.collection('members').add({
+    time, doc_ref = db.collection(u'members').add({
         'firstName': firstName,
         'lastName': lastName,
         'phone': phone,
@@ -52,7 +52,7 @@ class handler(BaseHTTPRequestHandler):
         'timestamp': datetime.now()
     })
 
-    print(form)
+    print(time, doc_ref)
 
     self.send_response(200)
     self.send_header('Content-type', 'text/plain')
