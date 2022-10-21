@@ -6,7 +6,7 @@ import {
   IoMail,
   IoMailOutline,
   IoPeopleOutline,
-} from "react-icons/io5";
+} from "react-icons/io5/index.js";
 import Expandable from "./Expandable";
 import SocialIcon from "./SocialIcon";
 

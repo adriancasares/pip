@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { IoClose, IoCloseOutline } from "react-icons/io5";
+import { IoClose, IoCloseOutline } from "react-icons/io5/index.js";
 
 export default function Expandable(props: {
   selection: number;

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Meeting, { MeetingData } from "./Meeting";
 import { motion } from "framer-motion";
-import { IoChevronDownOutline } from "react-icons/io5/index";
+import { IoChevronDownOutline } from "react-icons/io5/index.js";
 
 export default function PreviousMeetings(props: { meetings: MeetingData[] }) {
   const isUpcoming = (date: string) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { IoChatbubble } from "react-icons/io5/index";
+import { IoChatbubble } from "react-icons/io5/index.js";
 
 export default function Button(props: {
   children: string;
