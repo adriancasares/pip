@@ -26,7 +26,7 @@ export default function Expandable(props: {
     <motion.div
       layout="position"
       layoutId={`expandable-${index}`}
-      className="p-4 bg-section-bg-purple max-w-4xl mx-auto rounded-2xl w-full"
+      className="p-4 bg-section-bg-purple max-w-4xl mx-auto rounded-2xl w-full overflow-hidden"
     >
       <div className="flex justify-between items-center">
         <motion.h2 className="text-mono-a text-xl font-title">

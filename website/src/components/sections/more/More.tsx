@@ -48,7 +48,7 @@ export default function More(props: { captains: Captain[] }) {
           >
             {props.captains.map((captain) => {
               return (
-                <div className="font-sans flex p-4 gap-8">
+                <div className="font-sans flex p-4 gap-8 overflow-hidden flex-col sm:flex-row">
                   {captain.image && (
                     <div className="w-48 h-60 rounded-lg overflow-hidden flex-none">
                       <img
@@ -66,7 +66,7 @@ export default function More(props: { captains: Captain[] }) {
                     {captain.bio && (
                       <p className="text-mono-b">{captain.bio}</p>
                     )}
-                    <div className="flex gap-4 items-center">
+                    <div className="flex gap-4 items-center flex-wrap-reverse">
                       {captain.github && (
                         <SocialIcon link={captain.github}>
                           <IoLogoGithub />
