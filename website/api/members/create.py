@@ -8,7 +8,7 @@ from firebase_admin import firestore_async
 
 class handler(BaseHTTPRequestHandler):
 
-  def do_POST(self):
+  async def do_POST(self):
     my_credentials = {
     "type": "service_account",
     "project_id": "lasapip",
@@ -42,7 +42,7 @@ class handler(BaseHTTPRequestHandler):
     classYear = form.getvalue("classYear")
     preference = form.getvalue("preference")
 
-    time, doc_ref = db.collection(u'members').add({
+    doc_ref = await db.collection(u'members').add({
         'firstName': firstName,
         'lastName': lastName,
         'phone': phone,
