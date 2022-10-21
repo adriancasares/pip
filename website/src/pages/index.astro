@@ -1,19 +1,35 @@
 ---
+import Header from '../components/sections/header/Header.astro';
+import Paragraphs from '../components/sections/paragraphs/Paragraphs';
+import Meetings from '../components/sections/meetings/Meetings.astro';
+
 import Layout from '../layouts/Layout.astro';
+import More from '../components/sections/more/More';
+import Button from '../components/Button';
+const header = await fetch(`http://api.lasapip.com/api/header`).then(res => res.json()).then(data => data.data.attributes);
+const paragraphs = await fetch(`http://api.lasapip.com/api/paragraphs`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
+const meetings = await fetch(`http://api.lasapip.com/api/meetings`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
+const captains = await fetch(`http://api.lasapip.com/api/captains`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Programming in Practice">
 	<main>
-		<h1 class="text-yellow-800 font-light text-4xl">Under Construction</h1>
+		<Header
+			title={header.title} 
+			description={header.description}
+			callToAction={header.buttonType}
+			image={header.image}
+			discordLink={header.discord}
+		 />
+		 <Paragraphs paragraphs={paragraphs} client:load />
+
+		 <Meetings meetings={meetings} />
+
+		 <More client:visible captains={captains} />
 	</main>
 </Layout>
 <style>
 	main {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
 		height: 100vh;
-		@apply bg-yellow-100
 	}
 </style>

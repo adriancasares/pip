@@ -1,4 +1,9 @@
 ---
+import "@fontsource/karla/400.css"
+import "@fontsource/karla/500.css"
+import "@fontsource/chivo/900.css"
+import "@fontsource/poppins/600.css"
+
 export interface Props {
 	title: string;
 }
@@ -22,6 +27,7 @@ const { title } = Astro.props;
 <style is:global>
 	html {
 		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
+		background-color: black;
+		scroll-behavior: smooth;
 	}
 </style>
