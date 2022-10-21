@@ -7,6 +7,8 @@ class handler(BaseHTTPRequestHandler):
     content_length = int(self.headers['Content-Length'])
     body = self.rfile.read(content_length)
 
+    print(body)
+    
     self.send_response(200)
     self.send_header('Content-type', 'text/plain')
     self.end_headers()
