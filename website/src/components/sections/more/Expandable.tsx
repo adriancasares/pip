@@ -8,9 +8,17 @@ export default function Expandable(props: {
   label: string;
   setComponent: (component: JSX.Element) => void;
   children: React.ReactNode;
+  icon: React.ReactNode;
 }) {
-  const { selection, setSelection, index, label, setComponent, children } =
-    props;
+  const {
+    selection,
+    setSelection,
+    index,
+    label,
+    setComponent,
+    children,
+    icon,
+  } = props;
 
   const selected = selection === index;
 
@@ -18,7 +26,7 @@ export default function Expandable(props: {
     <motion.div
       layout="position"
       layoutId={`expandable-${index}`}
-      className="p-4 bg-section-bg-purple max-w-3xl mx-auto rounded-2xl w-full"
+      className="p-4 bg-section-bg-purple max-w-4xl mx-auto rounded-2xl w-full"
     >
       <div className="flex justify-between items-center">
         <motion.h2 className="text-mono-a text-xl font-title">
@@ -59,8 +67,13 @@ export default function Expandable(props: {
           setSelection(index);
         }}
       >
-        <motion.span className={`${selected ? "hidden" : ""} w-fit`}>
-          {label}
+        <motion.span
+          className={`${
+            selected ? "hidden" : ""
+          } w-fit flex items-center gap-4`}
+        >
+          {icon && <span className="text-2xl">{icon}</span>}
+          <span>{label}</span>
         </motion.span>
       </motion.div>
     </motion.div>

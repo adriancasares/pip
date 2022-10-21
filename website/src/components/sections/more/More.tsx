@@ -5,6 +5,7 @@ import {
   IoLogoInstagram,
   IoMail,
   IoMailOutline,
+  IoPeopleOutline,
 } from "react-icons/io5";
 import Expandable from "./Expandable";
 import SocialIcon from "./SocialIcon";
@@ -28,6 +29,8 @@ export default function More(props: { captains: Captain[] }) {
       className="w-full from-gradient-more-section-from  to-gradient-more-section-to bg-gradient-to-br py-10 flex flex-col gap-10"
     >
       <div className="max-w-4xl w-full mx-auto px-10">
+        <h2 className="text-mono-a text-xl font-title py-4">More Stuff</h2>
+
         <AnimatePresence>{component}</AnimatePresence>
 
         <div
@@ -41,6 +44,7 @@ export default function More(props: { captains: Captain[] }) {
             setSelection={setSelected}
             setComponent={setComponent}
             index={0}
+            icon={<IoPeopleOutline />}
           >
             {props.captains.map((captain) => {
               return (
