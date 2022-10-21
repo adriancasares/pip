@@ -4,9 +4,12 @@ import Paragraphs from '../components/sections/paragraphs/Paragraphs';
 import Meetings from '../components/sections/meetings/Meetings.astro';
 
 import Layout from '../layouts/Layout.astro';
+import More from '../components/sections/more/More';
+import Button from '../components/Button';
 const header = await fetch(`http://api.lasapip.com/api/header`).then(res => res.json()).then(data => data.data.attributes);
 const paragraphs = await fetch(`http://api.lasapip.com/api/paragraphs`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
 const meetings = await fetch(`http://api.lasapip.com/api/meetings`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
+const captains = await fetch(`http://api.lasapip.com/api/captains`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
 ---
 
 <Layout title="Programming in Practice">
@@ -21,6 +24,8 @@ const meetings = await fetch(`http://api.lasapip.com/api/meetings`).then(res => 
 		 <Paragraphs paragraphs={paragraphs} client:load />
 
 		 <Meetings meetings={meetings} />
+
+		 <More client:visible captains={captains} />
 	</main>
 </Layout>
 <style>

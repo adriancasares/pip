@@ -36,6 +36,10 @@ module.exports = {
           to: "#fa9006",
           via: "#CA55DD",
         },
+        "gradient-more-section": {
+          from: "#341234",
+          to: "#123244",
+        },
         "gradient-purple": {
           from: "#17365A",
           to: "#482F5C",
