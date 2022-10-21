@@ -3,7 +3,6 @@ from datetime import datetime
 import cgi
 import os
 import firebase_admin
-from firebase_admin import credentials
 from firebase_admin import firestore_async
 
 class handler(BaseHTTPRequestHandler):
@@ -22,9 +21,9 @@ class handler(BaseHTTPRequestHandler):
     "client_x509_cert_url": os.environ.get("AUTH_PROVIDER_X509_CERT_URL")
     }
 
-    cred = credentials.ApplicationDefault()
+    # cred = credentials.ApplicationDefault()
 
-    firebase_admin.initialize_app(cred)
+    firebase_admin.initialize_app(my_credentials)
     db = firestore_async.client()
 
     content_length = int(self.headers['Content-Length'])
