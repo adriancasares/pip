@@ -42,9 +42,7 @@ class handler(BaseHTTPRequestHandler):
     classYear = form.getvalue("classYear")
     preference = form.getvalue("preference")
 
-    doc_ref = db.collection('members').document()
-
-    doc_ref.set({
+    doc_ref = db.collection('members').add({
         'firstName': firstName,
         'lastName': lastName,
         'phone': phone,
