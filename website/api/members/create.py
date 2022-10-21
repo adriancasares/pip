@@ -24,7 +24,7 @@ class handler(BaseHTTPRequestHandler):
 
     cred = credentials.Certificate(my_credentials)
 
-    firebase_admin.initialize_app(my_credentials)
+    firebase_admin.initialize_app(cred)
     db = firestore_async.client()
 
     content_length = int(self.headers['Content-Length'])
