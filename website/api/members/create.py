@@ -8,54 +8,64 @@ from firebase_admin import firestore_async
 
 class handler(BaseHTTPRequestHandler):
 
-  async def do_POST(self):
-    my_credentials = {
-    "type": "service_account",
-    "project_id": "lasapip",
-    "private_key_id": os.environ.get("PRIVATE_KEY_ID"),
-    "private_key": os.environ.get("PRIVATE_KEY").replace(r'\n', '\n'),  # CHANGE HERE
-    "client_email": os.environ.get("CLIENT_EMAIL"),
-    "client_id": os.environ.get("CLIENT_ID"),
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": os.environ.get("AUTH_PROVIDER_X509_CERT_URL"),
-    "client_x509_cert_url": os.environ.get("AUTH_PROVIDER_X509_CERT_URL")
-    }
+    def do_POST(self):
 
-    cred = credentials.Certificate(my_credentials)
+        my_credentials = {
+        "type": "service_account",
+        "project_id": "lasapip",
+        "private_key_id": os.environ.get("PRIVATE_KEY_ID"),
+        "private_key": os.environ.get("PRIVATE_KEY").replace(r'\n', '\n'),  # CHANGE HERE
+        "client_email": os.environ.get("CLIENT_EMAIL"),
+        "client_id": os.environ.get("CLIENT_ID"),
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": os.environ.get("AUTH_PROVIDER_X509_CERT_URL"),
+        "client_x509_cert_url": os.environ.get("AUTH_PROVIDER_X509_CERT_URL")
+        }
 
-    firebase_admin.initialize_app(cred)
-    db = firestore_async.client()
+        cred = credentials.Certificate(my_credentials)
 
-    content_length = int(self.headers['Content-Length'])
+        firebase_admin.initialize_app(cred)
+        db = firestore_async.client()
 
-    form = cgi.FieldStorage(
-            fp=self.rfile,
-            headers=self.headers,
-            environ={'REQUEST_METHOD': 'POST'}
-    )
+        content_length = int(self.headers['Content-Length'])
 
-    firstName = form.getvalue("firstName")
-    lastName = form.getvalue("lastName")
-    phone = form.getvalue("phone")
-    email = form.getvalue("email")
-    classYear = form.getvalue("classYear")
-    preference = form.getvalue("preference")
+        form = cgi.FieldStorage(
+                fp=self.rfile,
+                headers=self.headers,
+                environ={'REQUEST_METHOD': 'POST'}
+        )
 
-    doc_ref = await db.collection(u'members').add({
-        'firstName': firstName,
-        'lastName': lastName,
-        'phone': phone,
-        'email': email,
-        'classYear': classYear,
-        'preference': preference,
-        'timestamp': datetime.now()
-    })
+        firstName = form.getvalue("firstName")
+        lastName = form.getvalue("lastName")
+        phone = form.getvalue("phone")
+        email = form.getvalue("email")
+        classYear = form.getvalue("classYear")
+        preference = form.getvalue("preference")
 
-    print(time, doc_ref)
+        db.collection(u'members').add({
+            u'firstName': firstName,
+            u'lastName': lastName,
+            u'phone': phone,
+            u'email': email,
+            u'classYear': classYear,
+            u'preference': preference,
+            u'createdAt': datetime.now()
+        }).then(lambda doc_ref: print(u'Document added with ID: {}'.format(doc_ref.id)))
+        # doc_ref = await db.collection(u'members').add({
+        #     'firstName': firstName,
+        #     'lastName': lastName,
+        #     'phone': phone,
+        #     'email': email,
+        #     'classYear': classYear,
+        #     'preference': preference,
+        #     'timestamp': datetime.now()
+        # })
 
-    self.send_response(200)
-    self.send_header('Content-type', 'text/plain')
-    self.end_headers()
-    self.wfile.write(str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')).encode())
-    return
+        # print(time, doc_ref)
+
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')).encode())
+        return
