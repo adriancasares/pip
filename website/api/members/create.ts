@@ -80,7 +80,7 @@ export default async function handler(
     to: phone,
   });
 
-  axios.post(
+  const contact = await axios.post(
     `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
     {
       Body: `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
@@ -98,6 +98,8 @@ export default async function handler(
       },
     }
   );
+
+  console.log(contact.data);
 
   response.status(200).send("success");
 }
