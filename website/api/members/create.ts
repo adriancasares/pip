@@ -1,25 +1,31 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import multiparty from "multiparty";
-import { initializeApp } from "firebase/app";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import admin from "firebase-admin";
+import { getFirestore, CollectionReference } from "firebase-admin/firestore";
 
 export default async function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    // databaseURL: process.env.FIREBASE_DATABASE_URL,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID,
-  };
+  const app = admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY,
 
-  console.log(firebaseConfig);
+      // type: "service_account",
+      // project_id: "lasapip",
+      // private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+      // private_key: process.env.FIREBASE_PRIVATE_KEY,
+      // client_email: process.env.FIREBASE_CLIENT_EMAIL,
+      // client_id: process.env.FIREBASE_CLIENT_ID,
+      // auth_uri: "https://accounts.google.com/o/oauth2/auth",
+      // token_uri: "https://oauth2.googleapis.com/token",
+      // auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+      // client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
+    }),
+  });
 
-  const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
   const form = new multiparty.Form();
@@ -40,7 +46,7 @@ export default async function handler(
 
   console.log(firstName, lastName, email, phone, classYear, preference);
 
-  const docRef = await addDoc(collection(db, "members"), {
+  db.collection("members").add({
     firstName,
     lastName,
     email,
