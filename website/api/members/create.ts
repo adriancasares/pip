@@ -71,7 +71,7 @@ export default async function handler(
   const client = twilio(accountSid, authToken);
 
   const message = await client.messages.create({
-    body: `Welcome to Programming Practice, ${firstName}! We'll text you about new meetings and events. Reply STOP to unsubscribe, and talk to us if you have any questions.`,
+    body: `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
     from: process.env.TWILIO_PHONE_NUMBER,
     to: phone,
   });
