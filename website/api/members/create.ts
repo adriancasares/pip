@@ -80,26 +80,30 @@ export default async function handler(
     to: phone,
   });
 
-  const contact = await axios.post(
-    `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-    {
-      Body: `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
-      From: process.env.TWILIO_PHONE_NUMBER,
-      To: phone,
-      MediaUrl: process.env.VCARD_URL,
-      Headers: {
-        "Content-Type": "text/vcard",
+  try {
+    const contact = await axios.post(
+      `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+      {
+        Body: `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
+        From: process.env.TWILIO_PHONE_NUMBER,
+        To: phone,
+        MediaUrl: process.env.VCARD_URL,
+        Headers: {
+          "Content-Type": "text/vcard",
+        },
       },
-    },
-    {
-      auth: {
-        username: accountSid,
-        password: authToken,
-      },
-    }
-  );
+      {
+        auth: {
+          username: accountSid,
+          password: authToken,
+        },
+      }
+    );
 
-  console.log(contact.data);
+    console.log(contact);
+  } catch (error) {
+    console.log(error);
+  }
 
   response.status(200).send("success");
 }
