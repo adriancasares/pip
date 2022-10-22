@@ -10,5 +10,10 @@ export default async function handler(
   console.log(cardFile);
 
   // send text/vcard
-  response.status(200).setHeader("Content-Type", "text/vcard").send(cardFile);
+  response
+    .status(200)
+    .setHeader("Content-Type", "text/vcard")
+    .setHeader("Content-Disposition", "attachment; filename=Contact.vcf")
+    .send(cardFile);
+  // set file name to Contact.vcf;
 }

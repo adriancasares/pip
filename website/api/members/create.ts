@@ -80,25 +80,17 @@ export default async function handler(
     to: phone,
   });
 
-  try {
-    const contact = await axios.post(
-      `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-      `Body=Here's our contact&To=${phone}&From=${process.env.TWILIO_PHONE_NUMBER}&MediaUrl=https://www.lasapip.com/api/misc/contact`,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        auth: {
-          username: accountSid,
-          password: authToken,
-        },
-      }
-    );
+  const contactMessage = await client.messages.create({
+    from: process.env.TWILIO_PHONE_NUMBER,
+    to: phone,
+    body: "Save our contact:",
+  });
 
-    console.log(contact);
-  } catch (error) {
-    console.log(error);
-  }
+  const contactFile = await client.messages.create({
+    from: process.env.TWILIO_PHONE_NUMBER,
+    to: phone,
+    mediaUrl: "https://lasapip.vercel.app/api/misc/contact",
+  });
 
   response.status(200).send("success");
 }
