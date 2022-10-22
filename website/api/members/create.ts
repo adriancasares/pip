@@ -81,13 +81,9 @@ export default async function handler(
   });
 
   try {
-    console.log(
-      `Body=Here's our contact&${phone}&From=${process.env.TWILIO_PHONE_NUMBER}&MediaUrl=https://lasapip.com/Contact.vcf`
-    );
-
     const contact = await axios.post(
       `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-      `Body=Here's our contact&To=${phone}&From=${process.env.TWILIO_PHONE_NUMBER}&MediaUrl=https://lasapip.com/Contact.vcf`,
+      `Body=Here's our contact&To=${phone}&From=${process.env.TWILIO_PHONE_NUMBER}&MediaUrl=https://lasapip.com/api/misc/contact`,
       {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
