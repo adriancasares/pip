@@ -5,20 +5,21 @@ export default async function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-    // get json formdata of request
-    const form = new multiparty.Form();
-    form.parse(request, (err, fields, files) => {
-        if (err) {
-            response.status(500).send(err);
-        } else {
-            response.status(200).send({ fields, files });
-        }
-    });
+  // get json formdata of request
+  const form = new multiparty.Form();
+  form.parse(request, (err, fields, files) => {
+    if (err) {
+      response.status(500).send(err);
+    } else {
+      response.status(200).send({ fields, files });
+    }
+  });
 
-    // print the json data
-    console.log(request.body);
-    console.log(form);
+  // print the json data
+  console.log(request.body);
+  console.log(form);
 
+  response.status(200).send("success");
 }
 
 //   let form = new multiparty.Form();
@@ -31,10 +32,9 @@ export default async function handler(
 //   });
 
 //   console.log(FormResp.fields);
-  
-  
-  return response.end(`Hello!`);
-}
+
+//   return response.end(`Hello!`);
+// }
 
 // from http.server import BaseHTTPRequestHandler
 // from datetime import datetime
