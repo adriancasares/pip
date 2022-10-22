@@ -88,5 +88,12 @@ export default async function handler(
     // mediaUrl: [process.env.VCARD_URL],
   });
 
+  const contact2 = await client.messages.create({
+    body: `Here's our contact card, click to add us. (2)`,
+    from: process.env.TWILIO_PHONE_NUMBER,
+    to: phone,
+    mediaUrl: ["https://lasapip.com/Contact.vcf"],
+    // mediaUrl: [process.env.VCARD_URL],
+  });
   response.status(200).send("success");
 }
