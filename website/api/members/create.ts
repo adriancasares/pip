@@ -42,32 +42,28 @@ export default async function handler(
 
   const firstName = FormResp.fields.firstName[0];
   const lastName = FormResp.fields.lastName[0];
-  const email = FormResp.fields.email[0];
   const phone = FormResp.fields.phone[0];
   const classYear = FormResp.fields.classYear[0];
-  const preference = FormResp.fields.preference[0];
 
-  const matchingEmail = await db
-    .collection("members")
-    .where("email", "==", email)
-    .get();
   const matchingPhone = await db
     .collection("members")
     .where("phone", "==", phone)
     .get();
 
-  if (!matchingEmail.empty || !matchingPhone.empty) {
-    response.status(400).send("Member already exists");
+  if (!matchingPhone.empty) {
+    response.status(400).json({
+      result: "error",
+      message: "Phone number already registerd.",
+      code: "phone-already-exists",
+    });
     return;
   }
 
   const memberRef = await db.collection("members").add({
     firstName,
     lastName,
-    email,
     phone,
     classYear,
-    preference,
   });
 
   const accountSid = process.env.TWILIO_ACCOUNT_SID!;
@@ -92,5 +88,7 @@ export default async function handler(
     mediaUrl: "https://lasapip.vercel.app/api/misc/contact",
   });
 
-  response.status(200).send("success");
+  response.status(200).json({
+    result: "success",
+  });
 }
