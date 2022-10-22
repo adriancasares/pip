@@ -82,7 +82,10 @@ export default async function handler(
     body: `Here's our contact card, click to add us.`,
     from: process.env.TWILIO_PHONE_NUMBER,
     to: phone,
-    // mediaUrl: process.env.VCARD_URL,
+    mediaUrl: [
+      "https://raw.githubusercontent.com/dianephan/flask_upload_photos/main/UPLOADS/DRAW_THE_OWL_MEME.png",
+    ],
+    // mediaUrl: [process.env.VCARD_URL],
   });
 
   response.status(200).send("success");
