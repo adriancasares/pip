@@ -45,7 +45,9 @@ export default async function handler(
 
   console.log(firstName, lastName, email, phone, classYear, preference);
 
-  db.collection("members").add({
+  console.log("adding member...");
+
+  await db.collection("members").add({
     firstName,
     lastName,
     email,
@@ -53,6 +55,7 @@ export default async function handler(
     classYear,
     preference,
   });
+  console.log("done!");
 
   response.status(200).send("success");
 }
