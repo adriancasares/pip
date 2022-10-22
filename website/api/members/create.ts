@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import multiparty from "multiparty";
 import admin from "firebase-admin";
 import { getFirestore, CollectionReference } from "firebase-admin/firestore";
-
+import twilio from "twilio";
 export default async function handler(
   request: VercelRequest,
   response: VercelResponse
@@ -43,10 +43,6 @@ export default async function handler(
   const classYear = FormResp.fields.classYear[0];
   const preference = FormResp.fields.preference[0];
 
-  console.log(firstName, lastName, email, phone, classYear, preference);
-
-  console.log("adding member...");
-
   const matchingEmail = await db
     .collection("members")
     .where("email", "==", email)
@@ -58,6 +54,7 @@ export default async function handler(
 
   if (!matchingEmail.empty || !matchingPhone.empty) {
     response.status(400).send("Member already exists");
+    return;
   }
 
   await db.collection("members").add({
@@ -68,7 +65,16 @@ export default async function handler(
     classYear,
     preference,
   });
-  console.log("done!");
+
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const client = twilio(accountSid, authToken);
+
+  const message = await client.messages.create({
+    body: `Welcome to Programming Practice, ${firstName}! We'll text you about new meetings and events. Reply STOP to unsubscribe, and talk to us if you have any questions.`,
+    from: process.env.TWILIO_PHONE_NUMBER,
+    to: phone,
+  });
 
   response.status(200).send("success");
 }
