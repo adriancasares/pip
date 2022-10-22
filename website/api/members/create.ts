@@ -3,6 +3,8 @@ import multiparty from "multiparty";
 import admin from "firebase-admin";
 import { getFirestore, CollectionReference } from "firebase-admin/firestore";
 import twilio from "twilio";
+import axios from "axios";
+
 export default async function handler(
   request: VercelRequest,
   response: VercelResponse
@@ -68,8 +70,8 @@ export default async function handler(
     preference,
   });
 
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const accountSid = process.env.TWILIO_ACCOUNT_SID!;
+  const authToken = process.env.TWILIO_AUTH_TOKEN!;
   const client = twilio(accountSid, authToken);
 
   const message = await client.messages.create({
@@ -78,24 +80,24 @@ export default async function handler(
     to: phone,
   });
 
-  const contact = await client.messages.create({
-    body: `Here's our contact card, click to add us.`,
-    from: process.env.TWILIO_PHONE_NUMBER,
-    to: phone,
-    mediaUrl: [
-      "https://raw.githubusercontent.com/dianephan/flask_upload_photos/main/UPLOADS/DRAW_THE_OWL_MEME.png",
-    ],
-    // mediaUrl: [process.env.VCARD_URL],
-  });
+  axios.post(
+    `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+    {
+      Body: `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
+      From: process.env.TWILIO_PHONE_NUMBER,
+      To: phone,
+      MediaUrl: process.env.VCARD_URL,
+      Headers: {
+        "Content-Type": "text/vcard",
+      },
+    },
+    {
+      auth: {
+        username: accountSid,
+        password: authToken,
+      },
+    }
+  );
 
-  const contact2 = await client.messages.create({
-    body: `Here's our contact card, click to add us. (2)`,
-    from: process.env.TWILIO_PHONE_NUMBER,
-    to: phone,
-    mediaUrl: [
-      "https://raw.githubusercontent.com/adriancasares/pip/main/website/public/Contact.vcf",
-    ],
-    // mediaUrl: [process.env.VCARD_URL],
-  });
   response.status(200).send("success");
 }
