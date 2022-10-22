@@ -83,13 +83,17 @@ export default async function handler(
   try {
     const contact = await axios.post(
       `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-      "To=" +
-        phone +
-        "&From=" +
-        process.env.TWILIO_PHONE_NUMBER +
-        "&Body=" +
-        `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
+      `To=${phone}&From=${process.env.TWILIO_PHONE_NUMBER}&Body=Here's our contact card:&MediaUrl=https://lasapip.com/Contact.vcf`,
+      //   "To=" +
+      //     phone +
+      //     "&From=" +
+      //     process.env.TWILIO_PHONE_NUMBER +
+      //     "&Body=" +
+      //     `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
       {
+        headers: {
+          "Content-Type": "text-vcard",
+        },
         auth: {
           username: accountSid,
           password: authToken,
