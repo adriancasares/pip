@@ -14,7 +14,7 @@ export default async function handler(
     .setHeader("Content-Type", "text/vcard")
     .setHeader(
       "Content-Disposition",
-      "attachment; filename=Click to Add Contact.vcf"
+      'attachment; filename="Click to Add Contact.vcf"'
     )
     .send(cardFile);
 }
