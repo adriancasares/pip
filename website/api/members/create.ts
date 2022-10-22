@@ -61,14 +61,14 @@ export default async function handler(
     return;
   }
 
-  await db.collection("members").add({
-    firstName,
-    lastName,
-    email,
-    phone,
-    classYear,
-    preference,
-  });
+  //   await db.collection("members").add({
+  //     firstName,
+  //     lastName,
+  //     email,
+  //     phone,
+  //     classYear,
+  //     preference,
+  //   });
 
   const accountSid = process.env.TWILIO_ACCOUNT_SID!;
   const authToken = process.env.TWILIO_AUTH_TOKEN!;
@@ -83,15 +83,12 @@ export default async function handler(
   try {
     const contact = await axios.post(
       `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-      {
-        Body: `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
-        From: process.env.TWILIO_PHONE_NUMBER,
-        To: phone,
-        MediaUrl: process.env.VCARD_URL,
-        Headers: {
-          "Content-Type": "text/vcard",
-        },
-      },
+      "To=" +
+        phone +
+        "&From=" +
+        process.env.TWILIO_PHONE_NUMBER +
+        "&Body=" +
+        `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
       {
         auth: {
           username: accountSid,
