@@ -14,7 +14,12 @@ export default async function handler(
     });
   });
 
+  // get firstName fielf from form
+  const firstName = FormResp.fields.firstName[0];
+
   // print the json data
+  console.log(firstName);
+
   console.log(request.body);
   console.log(form);
 
