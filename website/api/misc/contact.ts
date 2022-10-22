@@ -5,8 +5,11 @@ export default async function handler(
   response: VercelResponse
 ) {
   // send text/vcard
-  response.status(200).json({
-    body: `BEGIN:VCARD
+  response
+    .status(200)
+    .setHeader("Content-Type", "text/vcard")
+    .send(
+      `BEGIN:VCARD
         VERSION:3.0
         PRODID:-//Apple Inc.//macOS 12.1//EN
         N:;;;;
@@ -18,9 +21,6 @@ export default async function handler(
         item1.X-ABLabel:_$!<HomePage>!$_
         X-ABShowAs:COMPANY
         END:VCARD
-        `,
-    headers: {
-      "Content-Type": "text/vcard",
-    },
-  });
+        `
+    );
 }
