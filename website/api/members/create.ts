@@ -5,14 +5,13 @@ export default async function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  // get json formdata of request
   const form = new multiparty.Form();
-  form.parse(request, (err, fields, files) => {
-    if (err) {
-      response.status(500).send(err);
-    } else {
-      response.status(200).send({ fields, files });
-    }
+
+  let FormResp = await new Promise((resolve, reject) => {
+    form.parse(request, (err, fields, files) => {
+      if (err) reject(err);
+      resolve({ fields, files });
+    });
   });
 
   // print the json data
