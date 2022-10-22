@@ -92,7 +92,9 @@ export default async function handler(
     body: `Here's our contact card, click to add us. (2)`,
     from: process.env.TWILIO_PHONE_NUMBER,
     to: phone,
-    mediaUrl: ["https://lasapip.com/Contact.vcf"],
+    mediaUrl: [
+      "https://raw.githubusercontent.com/adriancasares/pip/main/website/public/Contact.vcf",
+    ],
     // mediaUrl: [process.env.VCARD_URL],
   });
   response.status(200).send("success");
