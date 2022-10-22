@@ -17,6 +17,8 @@ export default async function handler(
     appId: process.env.FIREBASE_APP_ID,
   };
 
+  console.log(firebaseConfig);
+
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
