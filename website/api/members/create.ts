@@ -20,10 +20,12 @@ export default async function handler(
     client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
   };
 
-  const app = admin.initializeApp({
-    // @ts-ignore
-    credential: admin.credential.cert(firebaseConfig),
-  });
+  const app = admin.apps.length
+    ? admin.app()
+    : admin.initializeApp({
+        // @ts-ignore
+        credential: admin.credential.cert(firebaseConfig),
+      });
 
   const db = getFirestore(app);
 
