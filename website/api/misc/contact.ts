@@ -7,8 +7,6 @@ export default async function handler(
   const cardFile = (await axios.get("https://lasapip.vercel.app/Contact.vcf"))
     .data;
 
-  console.log(cardFile);
-
   response
     .status(200)
     .setHeader("Content-Type", "text/vcard")

@@ -7,6 +7,7 @@ module.exports = {
       number: ["Chivo", "monospace"],
       title: ["Poppins", "Inter", "sans-serif"],
       sans: ["Karla", "Inter", "sans-serif"],
+      os: ["system-ui", "Inter", "sans-serif"],
     },
     extend: {
       animation: {

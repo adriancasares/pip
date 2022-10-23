@@ -56,8 +56,8 @@ export default async function handler(
   if (!matchingPhone.empty) {
     response.status(400).json({
       result: "error",
+      error: "phone-already-exists",
       message: "Phone number already registerd.",
-      code: "phone-already-exists",
     });
     return;
   }
