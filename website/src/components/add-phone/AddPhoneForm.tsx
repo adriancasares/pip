@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Button from "../Button";
 import PhoneInput from "./PhoneInput";
 import SelectInput from "./SelectInput";
@@ -7,6 +7,7 @@ import axios from "axios";
 import DoneAlert from "./DoneAlert";
 import Alert from "./Alert";
 import ErrorAlert from "./ErrorAlert";
+import phoneValidation from "phone";
 
 export default function AddPhoneForm() {
   const [firstName, setFirstName] = useState("");
@@ -20,8 +21,20 @@ export default function AddPhoneForm() {
     "SUCCESS" | "PHONE_EXISTS" | "UNKNOWN" | undefined
   >(undefined);
 
+  const phoneNumberValid = useMemo(
+    () => phone.length > 0 && phoneValidation(phone).isValid,
+    [phone]
+  );
+
+  const disabled =
+    firstName === "" ||
+    lastName === "" ||
+    !phoneNumberValid ||
+    classYear === "";
+
   const onSubmit = async (e: any) => {
     e.preventDefault();
+    if (disabled) return;
 
     setLoading(true);
 
@@ -130,12 +143,7 @@ export default function AddPhoneForm() {
                 loading={loading}
                 type={"submit"}
                 tabIndex={5}
-                disabled={
-                  firstName === "" ||
-                  lastName === "" ||
-                  phone === "" ||
-                  classYear === ""
-                }
+                disabled={disabled}
               >
                 Sign Up
               </Button>

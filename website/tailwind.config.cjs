@@ -10,7 +10,23 @@ module.exports = {
       os: ["system-ui", "Inter", "sans-serif"],
     },
     extend: {
+      keyframes: {
+        "fade-in-down": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(-10px)",
+            // perspective: "1000px",
+            // transform: "rotateX(90deg) translateZ(50px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+            // perspective: "1000px",
+          },
+        },
+      },
       animation: {
+        "fade-in-down": "fade-in-down 0.7s ease-out",
         "loading-dot-1": "pulse 0.75s linear infinite 0s",
         "loading-dot-2": "pulse 0.75s linear infinite 0.25s",
         "loading-dot-3": "pulse 0.75s linear infinite 0.5s",
