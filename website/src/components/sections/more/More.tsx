@@ -53,7 +53,7 @@ export default function More(props: { captains: Captain[] }) {
                     <div className="w-48 h-60 rounded-lg overflow-hidden flex-none">
                       <img
                         className="w-48 h-60 object-cover"
-                        src={`http://api.lasapip.com${captain.image}`}
+                        src={`/image/${captain.image}`}
                         width={100}
                         height={100}
                       />
