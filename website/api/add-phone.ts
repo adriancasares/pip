@@ -80,7 +80,7 @@ export default async function handler(
 
   const matchingPhone = await db
     .collection("members")
-    .where("phone", "==", phoneNumber)
+    .where("phoneNumber", "==", phoneNumber)
     .get();
 
   if (!matchingPhone.empty) {
@@ -95,7 +95,7 @@ export default async function handler(
   const memberRef = await db.collection("members").add({
     firstName,
     lastName,
-    phone: phoneNumber,
+    phoneNumber,
     classYear,
   });
 
