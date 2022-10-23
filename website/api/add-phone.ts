@@ -5,6 +5,7 @@ import { getFirestore, CollectionReference } from "firebase-admin/firestore";
 import twilio from "twilio";
 import axios from "axios";
 import dotenv from "dotenv";
+import phoneChecker from "phone";
 
 export default async function handler(
   request: VercelRequest,
@@ -47,10 +48,39 @@ export default async function handler(
   const lastName = FormResp.fields.lastName[0];
   const phone = FormResp.fields.phone[0];
   const classYear = FormResp.fields.classYear[0];
+  const captchaKey = FormResp.fields.captchaKey[0];
+  // verify captchaKey with hcaptcha
+  const captchaResponse = await axios.post(
+    "https://hcaptcha.com/siteverify",
+    "secret=" + process.env.HCAPTCHA_SECRET + "&response=" + captchaKey,
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+
+  if (!captchaResponse.data.success) {
+    response.status(400).json({
+      result: "error",
+      error: "invalid-captcha",
+    });
+    return;
+  }
+
+  const { isValid, phoneNumber } = phoneChecker(phone);
+
+  if (!isValid) {
+    response.status(400).json({
+      result: "error",
+      error: "invalid-phone-number",
+    });
+    return;
+  }
 
   const matchingPhone = await db
     .collection("members")
-    .where("phone", "==", phone)
+    .where("phone", "==", phoneNumber)
     .get();
 
   if (!matchingPhone.empty) {
@@ -65,7 +95,7 @@ export default async function handler(
   const memberRef = await db.collection("members").add({
     firstName,
     lastName,
-    phone,
+    phoneNumber,
     classYear,
   });
 
@@ -76,18 +106,18 @@ export default async function handler(
   const message = await client.messages.create({
     body: `🤖 Programming in Practice:\nWelcome, ${firstName}. We'll text you about new meetings and events. Reply STOP to unsubscribe, and send a message if you have any questions.`,
     from: process.env.TWILIO_PHONE_NUMBER,
-    to: phone,
+    to: phoneNumber,
   });
 
   const contactMessage = await client.messages.create({
     from: process.env.TWILIO_PHONE_NUMBER,
-    to: phone,
+    to: phoneNumber,
     body: "Save our contact:",
   });
 
   const contactFile = await client.messages.create({
     from: process.env.TWILIO_PHONE_NUMBER,
-    to: phone,
+    to: phoneNumber,
     mediaUrl: "https://lasapip.vercel.app/api/misc/contact",
   });
 

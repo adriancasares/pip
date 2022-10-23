@@ -8,6 +8,7 @@ import DoneAlert from "./DoneAlert";
 import Alert from "./Alert";
 import ErrorAlert from "./ErrorAlert";
 import phoneValidation from "phone";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 export default function AddPhoneForm() {
   const [firstName, setFirstName] = useState("");
@@ -18,8 +19,15 @@ export default function AddPhoneForm() {
   const [loading, setLoading] = useState(false);
 
   const [response, setResponse] = useState<
-    "SUCCESS" | "PHONE_EXISTS" | "UNKNOWN" | undefined
+    | "SUCCESS"
+    | "PHONE_EXISTS"
+    | "INVALID_PHONE"
+    | "INVALID_CAPTCHA"
+    | "UNKNOWN"
+    | undefined
   >(undefined);
+
+  const [captcha, setCaptcha] = useState("");
 
   const phoneNumberValid = useMemo(
     () => phone.length > 0 && phoneValidation(phone).isValid,
@@ -30,7 +38,8 @@ export default function AddPhoneForm() {
     firstName === "" ||
     lastName === "" ||
     !phoneNumberValid ||
-    classYear === "";
+    classYear === "" ||
+    captcha == "";
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -43,6 +52,7 @@ export default function AddPhoneForm() {
     bodyFormData.append("lastName", lastName);
     bodyFormData.append("phone", phone);
     bodyFormData.append("classYear", classYear);
+    bodyFormData.append("captchaKey", captcha);
 
     await axios({
       method: "post",
@@ -58,6 +68,10 @@ export default function AddPhoneForm() {
       .catch((err) => {
         if (err.response.data.error === "phone-already-exists") {
           setResponse("PHONE_EXISTS");
+        } else if (err.response.data.error === "invalid-phone-number") {
+          setResponse("INVALID_PHONE");
+        } else if (err.response.data.error === "invalid-captcha") {
+          setResponse("INVALID_CAPTCHA");
         } else {
           setResponse("UNKNOWN");
         }
@@ -76,6 +90,16 @@ export default function AddPhoneForm() {
             <ErrorAlert>
               Your phone number is already on our list. If you haven't been
               getting texts, let us know.
+            </ErrorAlert>
+          )}
+          {response === "INVALID_PHONE" && (
+            <ErrorAlert>
+              The phone number you entered is invalid. Please try again.
+            </ErrorAlert>
+          )}
+          {response === "INVALID_CAPTCHA" && (
+            <ErrorAlert>
+              The captcha you submitted is invalid. Please try again.
             </ErrorAlert>
           )}
           {response === "UNKNOWN" && (
@@ -138,7 +162,12 @@ export default function AddPhoneForm() {
                 </div>
               </div>
             </div>
-            <div className="mx-auto">
+            <div className="mx-auto flex flex-col items-center gap-2">
+              <HCaptcha
+                sitekey="994171e5-ba9e-465c-9825-441ad34a3537"
+                theme="dark"
+                onVerify={(token) => setCaptcha(token)}
+              />
               <Button
                 loading={loading}
                 type={"submit"}

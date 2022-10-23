@@ -17,6 +17,7 @@
     "@fontsource/chivo": "^4.5.9",
     "@fontsource/karla": "^4.5.10",
     "@fontsource/poppins": "^4.5.10",
+    "@hcaptcha/react-hcaptcha": "^1.4.4",
     "@types/marked": "^4.0.7",
     "@vercel/node": "^2.5.26",
     "astro": "^1.4.7",
