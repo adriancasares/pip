@@ -4,11 +4,14 @@ import admin from "firebase-admin";
 import { getFirestore, CollectionReference } from "firebase-admin/firestore";
 import twilio from "twilio";
 import axios from "axios";
+import dotenv from "dotenv";
 
 export default async function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
+  dotenv.config();
+
   const firebaseConfig = {
     type: "service_account",
     project_id: "lasapip",

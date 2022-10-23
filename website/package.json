@@ -20,6 +20,7 @@
     "@types/marked": "^4.0.7",
     "@vercel/node": "^2.5.26",
     "astro": "^1.4.7",
+    "dotenv": "^16.0.3",
     "firebase-admin": "^11.2.0",
     "framer-motion": "^7.5.3",
     "marked": "^4.1.1",

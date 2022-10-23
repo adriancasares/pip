@@ -9,6 +9,11 @@ module.exports = {
       sans: ["Karla", "Inter", "sans-serif"],
     },
     extend: {
+      animation: {
+        "loading-dot-1": "pulse 0.75s linear infinite 0s",
+        "loading-dot-2": "pulse 0.75s linear infinite 0.25s",
+        "loading-dot-3": "pulse 0.75s linear infinite 0.5s",
+      },
       screens: {
         "3xs": "435px",
         "2xs": "535px",
@@ -26,6 +31,7 @@ module.exports = {
           c: "#8d8d8d",
           text: "#C3C3C3",
           "text-dark": "#464646",
+          "border-lighter": "#282727",
           border: "#201F1F",
         },
         "section-bg-purple-lighter": "#22222C",
