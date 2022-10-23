@@ -95,7 +95,7 @@ export default async function handler(
   const memberRef = await db.collection("members").add({
     firstName,
     lastName,
-    phoneNumber,
+    phone: phoneNumber,
     classYear,
   });
 
