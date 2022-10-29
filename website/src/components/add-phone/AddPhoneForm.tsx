@@ -56,7 +56,7 @@ export default function AddPhoneForm() {
 
     await axios({
       method: "post",
-      url: "/api/add-phone",
+      url: "/api/messaging/add-phone",
       data: bodyFormData,
       headers: { "Content-Type": "multipart/form-data" },
     })
