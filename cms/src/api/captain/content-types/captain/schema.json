@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "captains",
+  "info": {
+    "singularName": "captain",
+    "pluralName": "captains",
+    "displayName": "Captain"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "text"
+    },
+    "github": {
+      "type": "string"
+    },
+    "instagram": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    }
+  }
+}
