@@ -6,15 +6,11 @@ import Meetings from '../components/sections/meetings/Meetings.astro';
 import Layout from '../layouts/Layout.astro';
 import More from '../components/sections/more/More';
 import Button from '../components/Button';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-const header = await fetch(`${process.env.API_HOST}/api/content/header`).then(res => res.json());
-const paragraphs = await fetch(`${process.env.API_HOST}/api/content/body`).then(res => res.json());
-const meetings = await fetch(`${process.env.API_HOST}/api/content/meetings`).then(res => res.json());
-const captains = await fetch(`${process.env.API_HOST}/api/content/captains`).then(res => res.json());
-
+const header = await fetch(`http://lasapip.herokuapp.com/api/header`).then(res => res.json()).then(data => data.data.attributes);
+const paragraphs = await fetch(`http://lasapip.herokuapp.com/api/paragraphs`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
+const meetings = await fetch(`http://lasapip.herokuapp.com/api/meetings`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
+const captains = await fetch(`http://lasapip.herokuapp.com/api/captains`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
 ---
 
 <Layout title="Programming in Practice">
