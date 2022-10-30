@@ -67,6 +67,8 @@ export default async function handler(
 
     response.status(200).send(twiml.toString());
   } else if (message.toLowerCase() === "stop") {
+    console.log("user unsubscribed");
+
     const twiml = new twilio.twiml.MessagingResponse();
 
     twiml.message(
@@ -75,7 +77,7 @@ export default async function handler(
 
     response.status(200).send(twiml.toString());
   } else {
-    console.log(memberStatus.docs[0]);
+    console.log(memberStatus.docs[0].get("conversationId"));
 
     response.status(200).send("OK");
   }
