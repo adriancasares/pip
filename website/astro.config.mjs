@@ -13,8 +13,7 @@ import vercel from "@astrojs/vercel/serverless";
 export default defineConfig({
   integrations: [react(), tailwind()],
   server: {
-    port: 1691
+    port: 1691,
   },
-  output: "server",
-  adapter: vercel()
+  output: "static",
 });
