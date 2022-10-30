@@ -45,7 +45,7 @@ export default async function handler(
   const validation = twilio.validateRequest(
     process.env.TWILIO_AUTH_TOKEN || "",
     // @ts-ignore
-    request.headers["X-Twilio-Signature"],
+    request.headers["x-twilio-signature"],
     "https://www.lasapip.com/api/messaging/webhook/onRecieve",
     request.body
   );
