@@ -49,11 +49,13 @@ export default async function handler(
 
   const from = phoneChecker(request.body.From).phoneNumber;
 
+  console.log("Got Message From: ", from);
+
   const message = request.body.Body;
 
   const memberStatus = await db
     .collection("member")
-    .where("phone", "==", from)
+    .where("phoneNumber", "==", from)
     .get();
 
   if (memberStatus.empty) {
