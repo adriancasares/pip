@@ -54,7 +54,7 @@ export default async function handler(
   const message = request.body.Body;
 
   const memberStatus = await db
-    .collection("member")
+    .collection("members")
     .where("phoneNumber", "==", from)
     .get();
 
@@ -75,6 +75,8 @@ export default async function handler(
 
     response.status(200).send(twiml.toString());
   } else {
+    console.log(memberStatus.docs[0]);
+
     response.status(200).send("OK");
   }
 
