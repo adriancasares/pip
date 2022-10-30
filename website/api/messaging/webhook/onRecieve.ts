@@ -40,6 +40,7 @@ export default async function handler(
 
   console.log(request);
   console.log(request.body);
+  console.log(request.body["From"], request.body["Body"]);
 
   response.status(200).send("OK");
 }
