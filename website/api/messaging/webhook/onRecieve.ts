@@ -70,9 +70,12 @@ export default async function handler(
     twiml.message(
       "🤖 Programming in Practice:\nYou've been unsubscribed from messages. Want to subscribe again? Text us anything."
     );
+
+    response.status(200).send(twiml.toString());
+  } else {
+    response.status(200).send("OK");
   }
 
   //   if(message.toLowerCase() === "stop"){
   //     response.status(200).send("You have been unsubscribed from all messages. If you would like to subscribe again, please text 'subscribe'.");
-  response.status(200).send("OK");
 }
