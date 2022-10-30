@@ -39,6 +39,7 @@ export default async function handler(
   //   console.log(params);
 
   console.log(request);
+  console.log(request.body);
 
   response.status(200).send("OK");
 }
