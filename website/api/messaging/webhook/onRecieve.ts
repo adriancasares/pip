@@ -39,8 +39,18 @@ export default async function handler(
   //   console.log(params);
 
   console.log(request);
+
   console.log(request.body);
-  console.log(request.body["From"], request.body["Body"]);
+
+  const validation = twilio.validateRequest(
+    process.env.TWILIO_AUTH_TOKEN || "",
+    // @ts-ignore
+    request.headers["X-Twilio-Signature"],
+    "https://www.lasapip.com/api/messaging/webhook/onRecieve",
+    request.body
+  );
+
+  console.log(validation);
 
   response.status(200).send("OK");
 }
