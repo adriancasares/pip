@@ -3,7 +3,7 @@ import PreviousMeetings from "./PreviousMeetings";
 import MeetingHeader from "./MeetingHeader";
 
 export default function Meetings(props: { meetings: MeetingData[] }) {
-	const meetings = Astro.props.meetings.sort((a, b) => {
+	const meetings = props.meetings.sort((a, b) => {
 		return Date.parse(b.date) - Date.parse(a.date);
 	});
 	
