@@ -23,7 +23,7 @@ const isUpcoming = (date: string) => {
 		<div class="flex flex-col w-fit mx-auto">
 				
 				{ meetings.splice(0, 2).map((meeting, idx) => {
-					return <Meeting upcoming={isUpcoming(meeting.date)} {...meeting} />
+					return <Meeting client:load upcoming={isUpcoming(meeting.date)} {...meeting} />
 				})}
 
 			<PreviousMeetings meetings={meetings} client:visible />
