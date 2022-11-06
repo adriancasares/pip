@@ -1,7 +1,7 @@
 ---
 import Header from '../components/sections/header/Header.astro';
 import Paragraphs from '../components/sections/paragraphs/Paragraphs';
-import Meetings from '../components/sections/meetings/Meetings.astro';
+import Meetings from '../components/sections/meetings/Meetings';
 
 import Layout from '../layouts/Layout.astro';
 import More from '../components/sections/more/More';
@@ -24,7 +24,7 @@ const captains = await fetch(`http://lasapip.herokuapp.com/api/captains`).then(r
 		 />
 		 <Paragraphs paragraphs={paragraphs} client:load />
 
-		 <Meetings meetings={meetings} />
+		 <Meetings meetings={meetings} client:load />
 
 		 <More client:visible captains={captains} />
 	</main>
