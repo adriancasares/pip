@@ -4,7 +4,8 @@
   "info": {
     "singularName": "captain",
     "pluralName": "captains",
-    "displayName": "Captain"
+    "displayName": "Captain",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -27,6 +28,12 @@
       "type": "string"
     },
     "image": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "role": {
       "type": "string"
     }
   }
