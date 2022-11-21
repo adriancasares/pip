@@ -10,7 +10,7 @@ import Button from '../components/Button';
 const header = await fetch(`http://lasapip.herokuapp.com/api/header`).then(res => res.json()).then(data => data.data.attributes);
 const paragraphs = await fetch(`http://lasapip.herokuapp.com/api/paragraphs`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
 const meetings = await fetch(`http://lasapip.herokuapp.com/api/meetings`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
-const captains = await fetch(`http://lasapip.herokuapp.com/api/captains`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes));
+const captains = await fetch(`http://lasapip.herokuapp.com/api/captains`).then(res => res.json()).then(data => data.data.map((item: { attributes: any; }) => item.attributes).sort((i1: any, i2: any) => (i1.order > i2.order ? 1 : -1)));
 ---
 
 <Layout title="Programming in Practice">
