@@ -4,7 +4,8 @@
   "info": {
     "singularName": "outreach-header",
     "pluralName": "outreach-headers",
-    "displayName": "Outreach Header"
+    "displayName": "Outreach Header",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -16,6 +17,9 @@
     },
     "description": {
       "type": "richtext"
+    },
+    "order": {
+      "type": "integer"
     }
   }
 }
