@@ -3,7 +3,7 @@ export interface Props {
   title: string;
   links: {
     link: string;
-    team: number;
+    title: string;
     header: number;
   }[];
   description: string;
@@ -11,10 +11,14 @@ export interface Props {
 
 const { title, links, description } = Astro.props;
 ---
-<div>
-    <h3 class="text-mono-a text-xl font-title">{title}</h3>
-    <p class="text-mono-a text-sm font-body">{description}</p>  
+<div class="max-w-3xl mx-auto p-10 bg-mono-border rounded-xl flex flex-col gap-4">
+    <h3 class="text-xl text-mono-a font-semibold font-title">{title}</h3>
+    <p class="text-mono-b text-base font-body leading-loose">{description}</p>  
+    <div class="flex gap-4">
     { links.map((link) => (
-        <a href={link.link} class="text-mono-a text-sm font-body">{link.team}</a>
+        <a href={link.link} class="bg-offaccent-d py-2 px-4 rounded-lg border border-offaccent-c text-offaccent-a"
+            referrerpolicy="no-referrer" target="_blank" rel="noopener noreferrer"
+        >{link.title}</a>
     ))}
+    </div>
 </div>

@@ -41,6 +41,13 @@ module.exports = {
           a: "#FFE175",
           b: "#FBBF24",
           c: "#755910",
+          d: "#4e3c0e",
+        },
+        offaccent: {
+          a: "#ed75ff",
+          b: "#c924fb",
+          c: "#6b1075",
+          d: "#450e4e",
         },
         mono: {
           a: "#FFFFFF",

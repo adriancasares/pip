@@ -1,6 +1,8 @@
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import {
+  IoEarth,
+  IoGlobe,
   IoLogoGithub,
   IoLogoInstagram,
   IoMail,
@@ -93,6 +95,18 @@ export default function More(props: { captains: Captain[] }) {
                 </div>
               );
             })}
+          </Expandable>
+          <Expandable
+            label="Outreach Portal"
+            selection={selected}
+            setSelection={() => {}}
+            setComponent={() => {
+              location.href = "/outreach";
+            }}
+            index={1}
+            icon={<IoEarth />}
+          >
+            <></>
           </Expandable>
         </div>
       </div>

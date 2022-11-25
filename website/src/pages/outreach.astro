@@ -17,7 +17,7 @@ const outreachLinks = await fetch("http://lasapip.herokuapp.com/api/outreach-lin
           ...o,
           links: outreachLinks.filter((l: any) => l.header === o.id)
         })).map((o: any) => {
-          <OutreachSection {...o} />
+          return <OutreachSection {...o} />
         })
       }
     </div>
