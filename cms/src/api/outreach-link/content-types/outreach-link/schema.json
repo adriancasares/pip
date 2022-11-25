@@ -4,7 +4,8 @@
   "info": {
     "singularName": "outreach-link",
     "pluralName": "outreach-links",
-    "displayName": "Outreach Link"
+    "displayName": "Outreach Link",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,11 +15,11 @@
     "link": {
       "type": "string"
     },
-    "team": {
-      "type": "integer"
-    },
     "header": {
       "type": "integer"
+    },
+    "title": {
+      "type": "string"
     }
   }
 }
