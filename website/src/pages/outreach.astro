@@ -4,7 +4,7 @@ import Header from "../components/outreach/Header.astro";
 import OutreachSection from "../components/outreach/OutreachSection.astro";
 import Layout from "../layouts/Layout.astro";
 
-const outreachHeaders = await fetch("http://lasapip.herokuapp.com/api/outreach-headers").then((res) => res.json()).then(data => data.data.map((item: { id: number, attributes: any; }) => ({ id: item.id, ...item.attributes }).sort((i1: any, i2: any) => (i1.order > i2.order ? 1 : -1))));
+const outreachHeaders = await fetch("http://lasapip.herokuapp.com/api/outreach-headers").then((res) => res.json()).then(data => data.data.map((item: { id: number, attributes: any; }) => ({ id: item.id, ...item.attributes })).sort((i1: any, i2: any) => (i1.order > i2.order ? 1 : -1)));
 const outreachLinks = await fetch("http://lasapip.herokuapp.com/api/outreach-links").then((res) => res.json()).then(data => data.data.map((item: { id: number, attributes: any; }) => item.attributes));
 ---
 <Layout title="Outreach Portal - Programming in Practice">
