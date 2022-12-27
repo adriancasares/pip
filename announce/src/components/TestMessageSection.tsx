@@ -26,7 +26,7 @@ export default function TestMessageSection(props: { message: string }) {
     setState("LOADING");
 
     axios
-      .post("/api/send-test-message", {
+      .post("/api/send-message", {
         message: message,
         phoneNumber: phoneNumber,
       })

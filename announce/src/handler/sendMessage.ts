@@ -5,7 +5,7 @@ import { Email, EmailRecipient } from "../lib/Email";
 import { createEmail } from "./createEmail.js";
 import twilio from "twilio";
 
-export default function sendTestMessage(message: string, phoneNumber: string) {
+export default function sendMessage(message: string, phoneNumber: string) {
   return new Promise(async (resolve, reject) => {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;

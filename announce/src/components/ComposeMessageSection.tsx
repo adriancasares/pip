@@ -4,7 +4,7 @@ import DatePicker from "./DatePicker";
 import Input from "./Input";
 import Section from "./Section";
 
-export default function SendMessageSection(props: {
+export default function ComposeMessageSection(props: {
   setMessage: (message: string) => void;
 }) {
   const [message, setMessage] = useState("");
@@ -14,7 +14,7 @@ export default function SendMessageSection(props: {
   }, [message]);
 
   return (
-    <Section label="Send Message" index={3}>
+    <Section label="Compose Message" index={3}>
       <p>Enter a message to send via SMS.</p>
 
       <Input

@@ -4,7 +4,7 @@ import sgmail, { MailDataRequired } from "@sendgrid/mail";
 import { Email, EmailRecipient } from "../lib/Email";
 import { createEmail } from "./createEmail.js";
 
-export default function sendTestEmail(email: Email, recipient: EmailRecipient) {
+export default function sendEmail(email: Email, recipient: EmailRecipient) {
   return new Promise((resolve, reject) => {
     sgmail.setApiKey(process.env.SENDGRID_API_KEY!);
 

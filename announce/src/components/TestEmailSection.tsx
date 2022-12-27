@@ -29,7 +29,7 @@ export default function TestEmailSection(props: { email: Email }) {
     setState("LOADING");
 
     axios
-      .post("/api/send-test-email", {
+      .post("/api/send-email", {
         email: email,
         recipient: {
           name: testEmailRecipientName,

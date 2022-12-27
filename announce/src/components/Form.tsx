@@ -3,10 +3,12 @@ import { useState } from "react";
 import CreateMeetingSection from "./CreateMeetingSection";
 import ComposeEmailSection from "./ComposeEmailSection";
 import Section from "./Section";
-import SendMessageSection from "./SendMessageSection";
+import SendMessageSection from "./ComposeMessageSection";
 import AddToWebsiteSection from "./AddToWebsiteSection";
 import TestEmailSection from "./TestEmailSection";
 import TestMessageSection from "./TestMessageSection";
+import SendSection from "./SendSection";
+import StopServerSection from "./StopServerSection";
 
 export default function Form() {
   const [meeting, setMeeting] = useState(undefined);
@@ -21,6 +23,8 @@ export default function Form() {
         <AddToWebsiteSection meeting={meeting} />
         <TestEmailSection email={email} />
         <TestMessageSection message={textMessage} />
+        <SendSection email={email} textMessage={textMessage} />
+        <StopServerSection />
       </div>
     </MantineProvider>
   );
