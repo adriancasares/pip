@@ -6,7 +6,11 @@ import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import Placeholder from "@tiptap/extension-placeholder";
 
-export default function Editor(props: { setBody: (body: string) => void }) {
+export default function Editor(props: {
+  setBody: (body: string) => void;
+  label: string;
+  preset: string;
+}) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -25,6 +29,7 @@ export default function Editor(props: { setBody: (body: string) => void }) {
 
   return (
     <div>
+      <p className="text-base text-slate-600 font-medium">{props.label}</p>
       <RichTextEditor editor={editor}>
         <RichTextEditor.Toolbar>
           <RichTextEditor.ControlsGroup>
@@ -37,6 +42,7 @@ export default function Editor(props: { setBody: (body: string) => void }) {
             <RichTextEditor.Unlink />
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Color color="" />
             <RichTextEditor.Color color="#F03E3E" />
             <RichTextEditor.Color color="#7048E8" />
             <RichTextEditor.Color color="#1098AD" />
@@ -49,7 +55,8 @@ export default function Editor(props: { setBody: (body: string) => void }) {
               className="border-none rounded-lg overflow-hidden"
               aria-label="Load Preset"
               onClick={() => {
-                editor.commands.setContent("<p>Hello world!</p>");
+                editor.commands.setContent(props.preset);
+                props.setBody(editor.getHTML());
               }}
             >
               <p className="px-2 bg-blue-500 text-white">Load Preset</p>

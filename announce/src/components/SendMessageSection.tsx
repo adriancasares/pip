@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import DatePicker from "./DatePicker";
 import Input from "./Input";
 import Section from "./Section";
 
-export default function SendMessageSection() {
+export default function SendMessageSection(props: {
+  setMessage: (message: string) => void;
+}) {
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    props.setMessage(message);
+  }, [message]);
 
   return (
     <Section label="Send Message" index={3}>

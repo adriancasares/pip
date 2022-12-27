@@ -15,8 +15,6 @@ export default function Input(props: {
           className="p-2 border border-gray-300 rounded-md"
           value={props.value}
           onChange={(e) => {
-            console.log("Input value: " + e.target.value);
-
             props.onChange(e.target.value);
           }}
         />

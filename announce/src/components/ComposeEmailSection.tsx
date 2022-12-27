@@ -15,15 +15,26 @@ export default function ComposeEmailSection(props: {
   const [title, setTitle] = useState("Tomorrow at PIP: ");
   const [text, setText] = useState("We'll be covering...");
 
+  const [senderName, setSenderName] = useState("");
+  const [senderAddress, setSenderAddress] = useState("");
   const [body, setBody] = useState("");
+  const [footer, setFooter] = useState("");
+
+  const BODY_PRESET =
+    "<p>Hi {NAME}, this is a reminder about the PIP meeting tomorrow:</p><p>We'll be <strong>(Sentence)</strong> in Room 505 tomorrow at lunch. <strong>(Additional Sentence)</strong>.</p><p><strong>(Closing)</strong>,</p><p><strong>(Your Name)</strong></p>";
+  const FOOTER_PRESET =
+    "<p>We send announcements about upcoming meetings so you're in the know. If you're not a part of PIP anymore, just reply to this email and we'll update our list.</p>";
 
   useEffect(() => {
     props.setEmail({
+      from: senderAddress,
+      sender: senderName,
       title: title,
       body: body,
       text: text,
+      footer: footer,
     });
-  }, [title, body]);
+  }, [title, body, footer]);
 
   return (
     <Section label="Compose Email" index={2}>
@@ -31,7 +42,14 @@ export default function ComposeEmailSection(props: {
 
       <Input label="Subject" value={title} onChange={setTitle} />
       <Input label="Text" value={text} onChange={setText} />
-      <Editor setBody={setBody} />
+      <Input label="Sender Name" value={senderName} onChange={setSenderName} />
+      <Input
+        label="Sender Address"
+        value={senderAddress}
+        onChange={setSenderAddress}
+      />
+      <Editor setBody={setBody} label="Body" preset={BODY_PRESET} />
+      <Editor setBody={setFooter} label="Footer" preset={FOOTER_PRESET} />
     </Section>
   );
 }

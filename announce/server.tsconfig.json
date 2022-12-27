@@ -27,7 +27,7 @@
     "composite": true,
     "skipLibCheck": true,
     "noEmitHelpers": false,
-    "lib": ["ES2015", "DOM"],
+    "lib": ["ES2021", "ES2015", "DOM"],
 
     "outDir": "dist",
     "rootDir": "src",

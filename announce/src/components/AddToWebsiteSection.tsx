@@ -8,6 +8,7 @@ import axios from "redaxios";
 import { IoAlertCircleOutline, IoCloseCircle } from "react-icons/io5/index.js";
 import ReactLoading from "react-loading";
 import addToStrapi from "../handler/strapi";
+import StatusLine from "./StatusLine";
 
 function Step(props: {
   label: string;
@@ -16,18 +17,16 @@ function Step(props: {
   current: number;
 }) {
   return (
-    <div className="flex gap-2 bg-slate-200 p-2 rounded-md items-center">
-      <p>{props.label}</p>
-      {props.index === props.current && (
-        <div>
-          {props.error ? (
-            <IoCloseCircle className="text-lg text-red-500" />
-          ) : (
-            <ReactLoading type="spin" color="#000" height={15} width={15} />
-          )}
-        </div>
-      )}
-    </div>
+    <StatusLine
+      label={props.label}
+      status={
+        props.current !== props.index
+          ? "IDLE"
+          : props.error
+          ? "ERROR"
+          : "LOADING"
+      }
+    />
   );
 }
 export default function AddToWebsiteSection(props: { meeting: Meeting }) {
@@ -37,6 +36,11 @@ export default function AddToWebsiteSection(props: { meeting: Meeting }) {
 
   const [status, setStatus] = useState(0);
   const [error, setError] = useState(false);
+
+  function reset() {
+    setStatus(0);
+    setError(false);
+  }
 
   function handleAddToStrapi() {
     setStatus(1);
@@ -68,7 +72,7 @@ export default function AddToWebsiteSection(props: { meeting: Meeting }) {
   }
 
   return (
-    <Section index={4} label="Add to Website">
+    <Section index={4} label="Add to Website" reset={reset}>
       <p className="text-slate-600 text-base">
         Add the meeting to the website calendar.
       </p>

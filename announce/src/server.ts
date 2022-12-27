@@ -10,6 +10,7 @@ import addToStrapi from "./handler/strapi.js";
 import * as dotenv from "dotenv";
 import deployToVercel from "./handler/vercel.js";
 import sendTestEmail from "./handler/testEmail.js";
+import sendTestMessage from "./handler/testMessage.js";
 
 dotenv.config();
 
@@ -51,7 +52,21 @@ import("../dist/server/entry.mjs").then((module: any) => {
     [bodyParser.json(), bodyParser.urlencoded({ extended: true })],
 
     (req: any, res: any, next: any) => {
-      sendTestEmail(req.body)
+      sendTestEmail(req.body.email, req.body.recipient)
+        .then(() => {
+          res.send("OK");
+        })
+        .catch(next);
+    }
+  );
+
+  app.post(
+    "/api/send-test-message",
+
+    [bodyParser.json(), bodyParser.urlencoded({ extended: true })],
+
+    (req: any, res: any, next: any) => {
+      sendTestMessage(req.body.message, req.body.phoneNumber)
         .then(() => {
           res.send("OK");
         })
