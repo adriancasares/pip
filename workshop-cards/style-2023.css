@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=DM+Mono&display=swap");
+
+body {
+  font-family: "Nunito", sans-serif;
+  margin: 0;
+}
+
+:root {
+  --card-width: 528px;
+  --card-height: 408px;
+}
+.theme-green {
+  --background: #f0ffee;
+  --accent: #0dc26b;
+  --accent-dark: #0dab72;
+  --code-background: #fff;
+  --header-image: url("assets/theme-green/rabbit.png");
+  --footer-image: url("assets/theme-green/rabbit-grass.png");
+}
+
+card-group-front,
+card-group-back {
+  display: flex;
+  width: calc(var(--card-width) * 2);
+  height: calc(var(--card-height) * 2);
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+card-group-back {
+  flex-direction: row-reverse;
+}
+challenge-card,
+hint-card {
+  position: relative;
+  display: block;
+  background: var(--background);
+  width: var(--card-width);
+  height: var(--card-height);
+}
+
+card-header {
+  display: flex;
+  align-items: center;
+  background: var(--accent-dark);
+  color: white;
+  padding-left: 16px;
+  font-weight: 700;
+  position: relative;
+}
+
+card-header::before {
+  content: "";
+  background: var(--header-image);
+  background-size: cover;
+  width: 36px;
+  height: 36px;
+  display: block;
+  position: relative;
+  align-self: flex-end;
+}
+
+card-header p {
+  margin: 0;
+  padding: 12px;
+}
+
+card-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--accent);
+  color: white;
+  padding: 12px;
+  font-weight: 700;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+card-footer::before {
+  content: "";
+  background: var(--footer-image);
+  background-size: cover;
+  width: 96px;
+  height: 96px;
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+  bottom: 100%;
+}
+
+card-footer > label {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 24px;
+  border-radius: 12px;
+  color: white;
+}
+
+card-footer > p {
+  margin: 0 8px;
+}
+
+card-body {
+  padding: 4px 20px;
+  display: block;
+}
+
+code {
+  background: var(--code-background);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: block;
+  line-height: 2;
+  font-family: "DM Mono", monospace;
+}
+
+* {
+  font-size: 14px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+ul > li {
+  list-style-type: none;
+  font-size: 16px;
+  margin: 24px 0;
+}
+
+ul > li::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  display: inline-block;
+  margin-right: 16px;
+  border-radius: 4px;
+  position: relative;
+  top: 0px;
+}
