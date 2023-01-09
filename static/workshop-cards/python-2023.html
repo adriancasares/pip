@@ -17,18 +17,17 @@
     <card-group-front class="theme-green">
       <challenge-card>
         <card-body>
-          <p>
-            <b>Code Sample</b>
-          </p>
+          <p><b>Code Sample</b></p>
           <code>
-            day = “Friday”
+            day = "Friday"
             <br />
-            print(“Today is ” + day + “!”)
+            print("Today is " + day + "!")
           </code>
           <ul>
             <li>What do you think this will show on the screen?</li>
-            <li>Write code to say “My name is ...” on the screen.</li>
+            <li>Write code to say “My name is …” on the screen.</li>
             <li>Congrats! You just wrote some code.</li>
+            <li>In python, the text data in quotes is called a string.</li>
           </ul>
         </card-body>
         <card-footer>
@@ -36,20 +35,30 @@
           <label>Part 1</label>
         </card-footer>
       </challenge-card>
+
       <challenge-card>
         <card-body>
-          <p>
-            <b>Code Sample</b>
-          </p>
+          <p><b>Code Sample</b></p>
           <code>
-            day = “Friday”
+            print(10 + 20)
             <br />
-            print(“Today is ” + day + “!”)
+            print("10" + "20")
           </code>
           <ul>
-            <li>What do you think this will show on the screen?</li>
-            <li>Write code to say “My name is ...” on the screen.</li>
-            <li>Congrats! You just wrote some code.</li>
+            <li>What do you think this will show on the screen.</li>
+          </ul>
+          <code>
+            print("10" + 20)
+            <br />
+            print("10" + str(20))
+          </code>
+          <ul class="cutoff-right">
+            <li>
+              The first line causes an error, because you can't combine a string
+              and a number. What do you think the
+              <b>second line</b>
+              will do?
+            </li>
           </ul>
         </card-body>
         <card-footer>
@@ -57,20 +66,21 @@
           <label>Part 2</label>
         </card-footer>
       </challenge-card>
+
       <challenge-card>
         <card-body>
-          <p>
-            <b>Code Sample</b>
-          </p>
-          <code>
-            day = “Friday”
-            <br />
-            print(“Today is ” + day + “!”)
-          </code>
+          <p><b>Code Sample</b></p>
+          <code> response = input("Cats or dogs? ") print(response) </code>
           <ul>
-            <li>What do you think this will show on the screen?</li>
-            <li>Write code to say “My name is ...” on the screen.</li>
-            <li>Congrats! You just wrote some code.</li>
+            <li>What do you think this code will do?</li>
+            <li>
+              Write code that says "Hello [your name]." using the input
+              function.
+            </li>
+            <li>
+              This is where it gets interesting! Using the input function, the
+              same code can have a different output every time.
+            </li>
           </ul>
         </card-body>
         <card-footer>
@@ -78,25 +88,240 @@
           <label>Part 3</label>
         </card-footer>
       </challenge-card>
+
       <challenge-card>
         <card-body>
+          <p><b>Code Sample</b></p>
+          <code> mystery = int("5") + 2 print(mystery) </code>
           <p>
-            <b>Code Sample</b>
+            An Integer (int) is a type of number. What do you think this will
+            show on the screen?
           </p>
-          <code>
-            day = “Friday”
-            <br />
-            print(“Today is ” + day + “!”)
-          </code>
-          <ul>
-            <li>What do you think this will show on the screen?</li>
-            <li>Write code to say “My name is ...” on the screen.</li>
-            <li>Congrats! You just wrote some code.</li>
-          </ul>
+          <p>
+            Your final challenge is to make a calculator app. Ask the user for
+            two numbers, and output the sum of those numbers.
+          </p>
         </card-body>
         <card-footer>
           <p>Get a hint on the other side or ask for help.</p>
           <label>Part 4</label>
+        </card-footer>
+      </challenge-card>
+    </card-group-front>
+
+    <card-group-back class="theme-green">
+      <hint-card>
+        <card-header>
+          <p>
+            This is the hint for Part 1. If you're stuck, just ask for help.
+          </p>
+        </card-header>
+        <card-body>
+          <p>
+            The print function will show everything inside the parenthesis on
+            the screen. You can use quotes to write text inside your code.
+          </p>
+          <code>print(“hello world”)</code>
+          <p>
+            You can also print variables. Think of a variable as a box that
+            stores data. You can change what's in the box and the computer will
+            print that data accordingly.
+          </p>
+          <code>
+            state = “Texas”
+            <br />
+            print(“I live in ” + state)
+            <br />
+            state = “Florida”
+            <br />
+            print(“I just moved to “ + state)
+          </code>
+        </card-body>
+      </hint-card>
+      <hint-card>
+        <card-header>
+          <p>
+            This is the hint for Part 2. If you're stuck, just ask for help.
+          </p>
+        </card-header>
+        <card-body>
+          <p>
+            The print function will show everything inside the parenthesis on
+            the screen. You can use quotes to write text inside your code.
+          </p>
+          <code>print(“hello world”)</code>
+          <p>
+            You can also print variables. Think of a variable as a box that
+            stores data. You can change what's in the box and the computer will
+            print that data accordingly.
+          </p>
+          <code>
+            state = “Texas”
+            <br />
+            print(“I live in ” + state)
+            <br />
+            state = “Florida”
+            <br />
+            print(“I just moved to “ + state)
+          </code>
+        </card-body>
+      </hint-card>
+      <hint-card>
+        <card-header>
+          <p>
+            This is the hint for Part 3. If you're stuck, just ask for help.
+          </p>
+        </card-header>
+        <card-body>
+          <p>
+            The print function will show everything inside the parenthesis on
+            the screen. You can use quotes to write text inside your code.
+          </p>
+          <code>print(“hello world”)</code>
+          <p>
+            You can also print variables. Think of a variable as a box that
+            stores data. You can change what's in the box and the computer will
+            print that data accordingly.
+          </p>
+          <code>
+            state = “Texas”
+            <br />
+            print(“I live in ” + state)
+            <br />
+            state = “Florida”
+            <br />
+            print(“I just moved to “ + state)
+          </code>
+        </card-body>
+      </hint-card>
+      <hint-card>
+        <card-header>
+          <p>
+            This is the hint for Part 4. If you're stuck, just ask for help.
+          </p>
+        </card-header>
+        <card-body>
+          <p>
+            The print function will show everything inside the parenthesis on
+            the screen. You can use quotes to write text inside your code.
+          </p>
+          <code>print(“hello world”)</code>
+          <p>
+            You can also print variables. Think of a variable as a box that
+            stores data. You can change what's in the box and the computer will
+            print that data accordingly.
+          </p>
+          <code>
+            state = “Texas”
+            <br />
+            print(“I live in ” + state)
+            <br />
+            state = “Florida”
+            <br />
+            print(“I just moved to “ + state)
+          </code>
+        </card-body>
+      </hint-card>
+    </card-group-back>
+
+    <card-group-front class="theme-blue">
+      <challenge-card>
+        <card-body>
+          <p><b>Code Sample</b></p>
+          <code>
+            a = 6 / 2
+            <br />
+            b = a - 4
+            <br />
+            print(b * 1)
+          </code>
+          <ul>
+            <li>What do you think will be shown on the screen?</li>
+          </ul>
+          <code>print("5" * 3) <br />print(5 * 3)</code>
+          <ul class="cutoff-right">
+            <li>
+              These two lines will show something different, but neither will
+              cause an error. Knowing this, what do you think will be shown on
+              the screen?
+            </li>
+          </ul>
+        </card-body>
+        <card-footer>
+          <p>Get a hint on the other side or ask for help.</p>
+          <label>Part 5</label>
+        </card-footer>
+      </challenge-card>
+
+      <challenge-card>
+        <card-body>
+          <p><b>Code Sample</b></p>
+          <code>
+            if(True and False):
+            <br />
+            &nbsp;&nbsp;print("dog")
+            <br />
+            elif(not True):
+            <br />
+            &nbsp;&nbsp;print("cat")
+            <br />
+            else:
+            <br />
+            &nbsp;&nbsp;print("duck")
+          </code>
+          <ul>
+            <li>What do you think will show on the screen?</li>
+            <li>What is the difference between if and elif?</li>
+          </ul>
+        </card-body>
+        <card-footer>
+          <p>Get a hint on the other side or ask for help.</p>
+          <label>Part 6</label>
+        </card-footer>
+      </challenge-card>
+
+      <challenge-card>
+        <card-body>
+          <p><b>Code Sample</b></p>
+          <code
+            >if(5 >= 5):
+            <br />
+            &nbsp;&nbsp;print("foo")
+          </code>
+          <ul>
+            <li>What do you think will be shown on the screen?</li>
+          </ul>
+          <code> if("cat" == "dog"):<br />&nbsp;&nbsp;print("bar") </code>
+          <ul class="cutoff-right">
+            <li>What do you think will be shown on the screen?</li>
+            <li>
+              Write a program that asks for a password and says "Access Granted"
+              if it's the correct password of your choosing.
+            </li>
+          </ul>
+        </card-body>
+        <card-footer>
+          <p>Get a hint on the other side or ask for help.</p>
+          <label>Part 7</label>
+        </card-footer>
+      </challenge-card>
+
+      <challenge-card>
+        <card-body>
+          <p><b>Final Challenge</b></p>
+          <p>
+            Ask for two numbers as input and print the difference between those
+            numbers. If the numbers are equal, say "These are equal!"
+          </p>
+          <p>Example:</p>
+
+          <code> Number 1: 5 <br />Number 2: 9 <br />Difference: 4 </code>
+          <br />
+          <code> Number 1: 9 <br />Number 2: 9 <br />These are equal! </code>
+        </card-body>
+        <card-footer>
+          <p>Get a hint on the other side or ask for help.</p>
+          <label>Part 8</label>
         </card-footer>
       </challenge-card>
     </card-group-front>

@@ -17,7 +17,14 @@ body {
   --header-image: url("assets/theme-green/rabbit.png");
   --footer-image: url("assets/theme-green/rabbit-grass.png");
 }
-
+.theme-blue {
+  --background: #eef9ff;
+  --accent: #0d81c2;
+  --accent-dark: #003a7d;
+  --code-background: #fff;
+  --header-image: url("assets/theme-blue/whale-full.png");
+  --footer-image: url("assets/theme-blue/whale-top.png");
+}
 card-group-front,
 card-group-back {
   display: flex;
@@ -52,6 +59,7 @@ card-header {
 card-header::before {
   content: "";
   background: var(--header-image);
+  object-fit: contain;
   background-size: cover;
   width: 36px;
   height: 36px;
@@ -115,6 +123,7 @@ code {
   display: block;
   line-height: 2;
   font-family: "DM Mono", monospace;
+  font-size: 12px;
 }
 
 * {
@@ -129,7 +138,7 @@ ul {
 ul > li {
   list-style-type: none;
   font-size: 16px;
-  margin: 24px 0;
+  margin: 12px 0;
 }
 
 ul > li::before {
@@ -142,4 +151,8 @@ ul > li::before {
   border-radius: 4px;
   position: relative;
   top: 0px;
+}
+
+.cutoff-right {
+  margin-right: 96px;
 }
