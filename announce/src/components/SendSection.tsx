@@ -22,33 +22,8 @@ export default function SendSection(props: {
       .then((res) => res.json())
       .then((res) => {
         setFetchRecipientsStatus("DONE");
-        setTextRecipients([
-          {
-            firstName: "John",
-            lastName: "Doe",
-            phoneNumber: "+15126290469",
-          },
-          {
-            firstName: "Jane",
-            lastName: "Doe",
-            phoneNumber: "+15126290469",
-          },
-        ]);
-        setEmailRecipients([
-          {
-            firstName: "John",
-            lastName: "Doe",
-            email: "adrianfcasares@gmail.com",
-          },
-          {
-            firstName: "Jane",
-            lastName: "Doe",
-            email: "adrianfcasares@gmail.com",
-          },
-        ]);
-
-        // setTextRecipients(res.textRecipients);
-        // setEmailRecipients(res.emailRecipients);
+        setTextRecipients(res.textRecipients);
+        setEmailRecipients(res.emailRecipients);
       })
       .catch((e) => {
         setFetchRecipientsStatus("ERROR");

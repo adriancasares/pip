@@ -26,8 +26,9 @@ export default function sendEmail(email: Email, recipient: EmailRecipient) {
         resolve("Email sent");
       })
       .catch((error) => {
-        console.error(error);
-        reject(error);
+        console.log(JSON.stringify(error));
+
+        resolve("Email not sent");
       });
   });
 }
