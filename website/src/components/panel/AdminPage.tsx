@@ -1,8 +1,7 @@
 import React from "react";
 import { initializeApp } from "firebase/app";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth/dist/auth/index.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { MantineProvider } from "@mantine/core";
 import Login from "./Login";
 
 export default function AdminPage() {
