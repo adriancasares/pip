@@ -57,6 +57,7 @@ module.exports = {
           "text-dark": "#464646",
           "border-lighter": "#282727",
           border: "#201F1F",
+          "container-light": "#F8F8F8",
         },
         "section-bg-purple-lighter": "#22222C",
         "section-bg-purple": "#181821",

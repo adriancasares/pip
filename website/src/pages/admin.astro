@@ -1,0 +1,19 @@
+---
+import Header from "../components/sections/header/Header.astro";
+import Layout from "../layouts/Layout.astro";
+import AdminPage from "../components/panel/AdminPage";
+---
+
+<Layout title="Programming in Practice">
+  <main>
+    <AdminPage client:load />
+  </main>
+</Layout>
+<style>
+  main {
+    height: 100vh;
+  }
+  html {
+    background-color: white;
+  }
+</style>
