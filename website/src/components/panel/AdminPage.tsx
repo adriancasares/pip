@@ -1,6 +1,7 @@
 import React from "react";
 import { initializeApp } from "firebase/app";
-import { useAuthState } from "react-firebase-hooks/auth/dist/auth/index";
+// @ts-ignore
+import { useAuthState } from "react-firebase-hooks/auth/dist/index.cjs.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Login from "./Login";
 
