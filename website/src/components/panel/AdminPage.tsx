@@ -1,6 +1,6 @@
 import React from "react";
 import { initializeApp } from "firebase/app";
-import { useAuthState } from "react-firebase-hooks/auth/dist/auth/index.js";
+import { useAuthState } from "react-firebase-hooks/auth/dist/auth/index";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Login from "./Login";
 
