@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type NewsletterSection from "../../../types/NewsletterSection";
 import { motion } from "framer-motion";
 import TextInput from "../TextInput";
@@ -15,8 +15,16 @@ export default function NewsletterSectionEditor(props: {
   section: NewsletterSection;
   onChange: (section: NewsletterSection) => void;
 }) {
-  const [name, setName] = useState("");
-  const [className, setClassName] = useState("");
+  const [name, setName] = useState(props.section.name);
+  const [className, setClassName] = useState(props.section.className);
+
+  useEffect(() => {
+    props.onChange({
+      ...props.section,
+      name: name,
+      className: className,
+    });
+  }, [name, className]);
 
   const presets: NewsletterSection[] = [
     {
@@ -90,10 +98,42 @@ export default function NewsletterSectionEditor(props: {
             if (block.type === "TEXT") {
               return (
                 <NewsletterTextBlockEditor
+                  isFirst={index === 0}
+                  isLast={index === props.section.blocks.length - 1}
+                  onMoveUp={() => {
+                    const newBlocks = props.section.blocks;
+                    const temp = newBlocks[index];
+                    newBlocks[index] = newBlocks[index - 1];
+                    newBlocks[index - 1] = temp;
+                    props.onChange({
+                      ...props.section,
+                      blocks: newBlocks,
+                    });
+                  }}
+                  onMoveDown={() => {
+                    const newBlocks = props.section.blocks;
+                    const temp = newBlocks[index];
+                    newBlocks[index] = newBlocks[index + 1];
+                    newBlocks[index + 1] = temp;
+                    props.onChange({
+                      ...props.section,
+                      blocks: newBlocks,
+                    });
+                  }}
                   block={block as NewsletterTextBlock}
                   onChange={(newBlock) => {
+                    if (newBlock == null) {
+                      const newBlocks = props.section.blocks;
+                      newBlocks.splice(index, 1);
+                      props.onChange({
+                        ...props.section,
+                        blocks: newBlocks,
+                      });
+                      return;
+                    }
                     const newBlocks = props.section.blocks;
                     newBlocks[index] = newBlock;
+
                     props.onChange({
                       ...props.section,
                       blocks: newBlocks,
@@ -108,6 +148,36 @@ export default function NewsletterSectionEditor(props: {
                   onChange={(newBlock) => {
                     const newBlocks = props.section.blocks;
                     newBlocks[index] = newBlock;
+                    props.onChange({
+                      ...props.section,
+                      blocks: newBlocks,
+                    });
+                  }}
+                  onRemove={() => {
+                    const newBlocks = props.section.blocks;
+                    newBlocks.splice(index, 1);
+                    props.onChange({
+                      ...props.section,
+                      blocks: newBlocks,
+                    });
+                  }}
+                  isFirst={index === 0}
+                  isLast={index === props.section.blocks.length - 1}
+                  onMoveUp={() => {
+                    const newBlocks = props.section.blocks;
+                    const temp = newBlocks[index];
+                    newBlocks[index] = newBlocks[index - 1];
+                    newBlocks[index - 1] = temp;
+                    props.onChange({
+                      ...props.section,
+                      blocks: newBlocks,
+                    });
+                  }}
+                  onMoveDown={() => {
+                    const newBlocks = props.section.blocks;
+                    const temp = newBlocks[index];
+                    newBlocks[index] = newBlocks[index + 1];
+                    newBlocks[index + 1] = temp;
                     props.onChange({
                       ...props.section,
                       blocks: newBlocks,
@@ -166,7 +236,7 @@ export default function NewsletterSectionEditor(props: {
 
                   props.onChange({
                     ...props.section,
-                    blocks: [...props.section.blocks, b],
+                    blocks: [...(props.section.blocks ?? []), b],
                   });
                 }}
               >
@@ -182,7 +252,7 @@ export default function NewsletterSectionEditor(props: {
 
                   props.onChange({
                     ...props.section,
-                    blocks: [...props.section.blocks, b],
+                    blocks: [...(props.section.blocks ?? []), b],
                   });
                 }}
               >

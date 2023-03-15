@@ -9,9 +9,9 @@ export interface NewsletterTextBlock extends NewsletterContentBlock {
 
 export interface NewsletterImageBlock extends NewsletterContentBlock {
   type: "IMAGE";
-  src: string;
-  alt: string;
-  caption: string;
+  src?: string;
+  alt?: string;
+  caption?: string;
 }
 
 export interface NewsletterDividerBlock extends NewsletterContentBlock {

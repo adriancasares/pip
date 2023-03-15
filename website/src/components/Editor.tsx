@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { RichTextEditor, Link } from "@mantine/tiptap";
-import { useEditor } from "@tiptap/react";
+import { BubbleMenu, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import Placeholder from "@tiptap/extension-placeholder";
-
-export default function Editor(props: { setBody: (body: string) => void }) {
+import { motion } from "framer-motion";
+export default function Editor(props: {
+  initialBody: string;
+  setBody: (body: string) => void;
+}) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -17,6 +20,7 @@ export default function Editor(props: { setBody: (body: string) => void }) {
         placeholder: "Write stuff here.",
       }),
     ],
+    content: props.initialBody,
   });
 
   useEffect(() => {
@@ -25,41 +29,40 @@ export default function Editor(props: { setBody: (body: string) => void }) {
     });
   }, [editor]);
 
+  const [focused, setFocused] = useState(false);
   return (
     <div>
-      <RichTextEditor editor={editor}>
-        <RichTextEditor.Toolbar>
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Bold />
-            <RichTextEditor.Italic />
-            <RichTextEditor.Underline />
-          </RichTextEditor.ControlsGroup>
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Link />
-            <RichTextEditor.Unlink />
-          </RichTextEditor.ControlsGroup>
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Color color="" />
-            <RichTextEditor.Color color="#F03E3E" />
-            <RichTextEditor.Color color="#7048E8" />
-            <RichTextEditor.Color color="#1098AD" />
-            <RichTextEditor.Color color="#37B24D" />
-            <RichTextEditor.Color color="#F59F00" />
-          </RichTextEditor.ControlsGroup>
-          {/* <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Control
-              title="Load Preset"
-              className="border-none rounded-lg overflow-hidden"
-              aria-label="Load Preset"
-              onClick={() => {
-                editor?.commands.setContent(props.preset);
-                props.setBody(editor?.getHTML() ?? "");
-              }}
-            >
-              <p className="px-2 bg-blue-500 text-white">Load Preset</p>
-            </RichTextEditor.Control>
-          </RichTextEditor.ControlsGroup> */}
-        </RichTextEditor.Toolbar>
+      <RichTextEditor
+        editor={editor}
+        className="border-0 p-0"
+        onFocus={() => {
+          setFocused(true);
+        }}
+        onBlur={() => {
+          setFocused(false);
+        }}
+        styles={{
+          content: {
+            backgroundColor: focused ? "#F8F8F8" : "transparent",
+          },
+        }}
+      >
+        {editor && (
+          <BubbleMenu editor={editor}>
+            <RichTextEditor.ControlsGroup className="bg-white">
+              <RichTextEditor.Bold />
+              <RichTextEditor.Italic />
+              <RichTextEditor.Underline />
+              <RichTextEditor.Link />
+              <RichTextEditor.Unlink />
+              <RichTextEditor.ColorPicker
+                colors={["#F03E3E", "#7048E8", "#1098AD", "#37B24D", "#F59F00"]}
+              />
+              <RichTextEditor.UnsetColor />
+              <RichTextEditor.ClearFormatting />
+            </RichTextEditor.ControlsGroup>
+          </BubbleMenu>
+        )}
 
         <RichTextEditor.Content
           className="font-sans"

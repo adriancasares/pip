@@ -8,12 +8,15 @@ export default function TextInput(props: {
   tabIndex?: number;
   disabled?: boolean;
   password?: boolean;
+  smallLabel?: boolean;
 }) {
   const { label, value, onChange, placeholder } = props;
 
   return (
     <div className="flex flex-col gap-2 font-os">
-      {label && <p className="">{label}</p>}
+      {label && (
+        <p className={props.smallLabel ? "text-sm" : "text-base"}>{label}</p>
+      )}
       <input
         disabled={props.disabled}
         tabIndex={props.tabIndex}

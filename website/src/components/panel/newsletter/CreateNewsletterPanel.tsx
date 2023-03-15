@@ -65,6 +65,7 @@ export default function CreateNewsletterPanel(props: {
   const [slug, setSlug] = useState(props.newsletter.slug);
   const [date, setDate] = useState(props.newsletter.date);
   const [author, setAuthor] = useState(props.newsletter.author);
+
   const [sections, setSections] = useState<NewsletterSection[]>(
     props.newsletter.sections
   );
@@ -120,7 +121,7 @@ export default function CreateNewsletterPanel(props: {
     return () => {
       setProgressSaved("WAITING_TO_SAVE");
     };
-  }, [sections, date, author, slug, name]);
+  }, [date, author, slug, name]);
 
   useEffect(() => {
     const intervalCallback = () => {
@@ -196,7 +197,13 @@ export default function CreateNewsletterPanel(props: {
               onChange={(section) => {
                 const newSections = [...sections];
                 newSections[i] = section;
+
+                if (JSON.stringify(newSections) !== JSON.stringify(sections)) {
+                  setProgressSaved("WAITING_TO_SAVE");
+                }
+
                 setSections(newSections);
+                setProgressSaved("WAITING_TO_SAVE");
               }}
             />
           );
@@ -214,6 +221,8 @@ export default function CreateNewsletterPanel(props: {
                 blocks: [],
               },
             ]);
+
+            setProgressSaved("WAITING_TO_SAVE");
           }}
         >
           Add Section
