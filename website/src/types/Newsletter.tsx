@@ -1,7 +1,10 @@
 import type { NewsletterContentBlock } from "./NewsletterContentBlock";
+import type NewsletterSection from "./NewsletterSection";
 
-export default interface NewsletterSection {
+export default interface Newsletter {
   name: string;
-  className: string;
-  blocks: NewsletterContentBlock[];
+  slug: string;
+  date: Date;
+  author: string;
+  sections: NewsletterSection[];
 }
