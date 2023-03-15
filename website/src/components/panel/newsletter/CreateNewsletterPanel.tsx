@@ -138,7 +138,7 @@ export default function CreateNewsletterPanel(props: {
         });
       }
     };
-    const interval = setInterval(intervalCallback, 20000);
+    const interval = setInterval(intervalCallback, 2000);
 
     return () => {
       clearInterval(interval);
