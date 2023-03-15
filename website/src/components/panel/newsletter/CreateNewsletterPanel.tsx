@@ -119,7 +119,6 @@ export default function CreateNewsletterPanel(props: {
   useEffect(() => {
     return () => {
       setProgressSaved("WAITING_TO_SAVE");
-      console.log("setting to waiting to save");
     };
   }, [sections, date, author, slug, name]);
 
@@ -127,7 +126,6 @@ export default function CreateNewsletterPanel(props: {
     const intervalCallback = () => {
       if (progressSaved === "WAITING_TO_SAVE") {
         setProgressSaved("WAITING_TO_RECIEVE");
-        console.log("setting to waiting to recieve");
 
         set(ref(database, "drafts/" + props.id), {
           name,
@@ -193,6 +191,7 @@ export default function CreateNewsletterPanel(props: {
         {sections.map((section, i) => {
           return (
             <NewsletterSectionEditor
+              key={i}
               section={section}
               onChange={(section) => {
                 const newSections = [...sections];

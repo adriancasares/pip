@@ -86,7 +86,7 @@ export default function NewsletterSectionEditor(props: {
         </div>
 
         <div className="p-4 flex flex-col gap-4">
-          {props.section.blocks.map((block, index) => {
+          {(props.section.blocks ?? []).map((block, index) => {
             if (block.type === "TEXT") {
               return (
                 <NewsletterTextBlockEditor
