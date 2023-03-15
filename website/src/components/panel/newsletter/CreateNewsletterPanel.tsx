@@ -8,8 +8,7 @@ import { motion } from "framer-motion";
 import { IoEnterOutline } from "react-icons/io5/index.js";
 import { getDatabase, ref, set, onValue, off, get } from "firebase/database";
 import type Newsletter from "../../../types/Newsletter";
-
-import { RotatingLines } from "react-loader-spinner";
+import LoadingSpinner from "../../LoadingSpinner";
 
 function NewsletterPanelLoader(props: { id: string }) {
   const [newsletter, setNewsletter] = useState<Newsletter | undefined>(
@@ -139,7 +138,7 @@ export default function CreateNewsletterPanel(props: {
         });
       }
     };
-    const interval = setInterval(intervalCallback, 2000);
+    const interval = setInterval(intervalCallback, 20000);
 
     return () => {
       clearInterval(interval);
@@ -161,13 +160,7 @@ export default function CreateNewsletterPanel(props: {
           />
         </div>
         {progressSaved !== "NO_CHANGES" ? (
-          <RotatingLines
-            strokeColor="grey"
-            strokeWidth="5"
-            animationDuration="0.75"
-            width="20"
-            visible={true}
-          />
+          <LoadingSpinner />
         ) : (
           <p>All changes saved</p>
         )}
