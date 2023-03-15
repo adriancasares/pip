@@ -4,6 +4,8 @@ import { initializeApp } from "firebase/app";
 import { useAuthState } from "react-firebase-hooks/auth/dist/index.cjs.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Login from "./Login";
+import CreateNewsletterPanel from "./newsletter/CreateNewsletterPanel";
+import { MantineProvider } from "@mantine/core";
 
 export default function AdminPage() {
   const firebaseConfig = {
@@ -21,9 +23,11 @@ export default function AdminPage() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <div>
-      {/* either show a login page or the panel */}
-      {user ? <div>Panel</div> : <Login auth={auth} />}
-    </div>
+    <MantineProvider>
+      <div>
+        {/* either show a login page or the panel */}
+        {user ? <CreateNewsletterPanel id="new" /> : <Login auth={auth} />}
+      </div>
+    </MantineProvider>
   );
 }

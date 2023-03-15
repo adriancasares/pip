@@ -1,5 +1,5 @@
 import React from "react";
-import { IoChatbubble } from "react-icons/io5/index.js";
+import { IoAddCircle, IoChatbubble } from "react-icons/io5/index.js";
 import LoadingDots from "./LoadingDots";
 import { motion } from "framer-motion";
 
@@ -9,6 +9,7 @@ function ButtonInner(props: { icon?: string; children: string }) {
       {props.icon && (
         <span className="opacity-50">
           {props.icon === "message" && <IoChatbubble />}
+          {props.icon === "plus" && <IoAddCircle />}
         </span>
       )}
       <span>{props.children}</span>
