@@ -9,8 +9,7 @@ import { IoEnterOutline } from "react-icons/io5/index.js";
 import { getDatabase, ref, set, onValue, off, get } from "firebase/database";
 import type Newsletter from "../../../types/Newsletter";
 
-import ReactSpinner from "react-loader-spinner";
-const { RotatingLines } = ReactSpinner;
+import { RotatingLines } from "react-loader-spinner";
 
 function NewsletterPanelLoader(props: { id: string }) {
   const [newsletter, setNewsletter] = useState<Newsletter | undefined>(
