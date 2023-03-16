@@ -3,6 +3,7 @@ import type { NewsletterImageBlock } from "../../../types/NewsletterContentBlock
 import NewsletterChangeOrderBar from "./NewsletterChangeOrderBar";
 import { motion } from "framer-motion";
 import TextInput from "../TextInput";
+import ImageEditor from "./ImageEditor";
 
 export default function NewsletterImageBlockEditor(props: {
   block: NewsletterImageBlock;
@@ -14,9 +15,10 @@ export default function NewsletterImageBlockEditor(props: {
   onRemove: () => void;
 }) {
   const [src, setSrc] = useState<string | undefined>(props.block.src);
+
   const widget = useMemo(() => {
     // @ts-ignore
-    return window["cloudinary"].createUploadWidget(
+    const w = window["cloudinary"].createUploadWidget(
       {
         cloudName: "dlkexpc87",
         uploadPreset: "newsletter",
@@ -28,6 +30,7 @@ export default function NewsletterImageBlockEditor(props: {
         }
       }
     );
+    return w;
   }, []);
 
   const [hover, setHover] = useState(false);
@@ -55,7 +58,18 @@ export default function NewsletterImageBlockEditor(props: {
             setHover(false);
           }}
         >
-          <div className="absolute top-4 left-4 z-20">
+          <ImageEditor
+            src={src}
+            caption={caption}
+            alt={alt}
+            width={width}
+            isFirst={props.isFirst}
+            isLast={props.isLast}
+            onMoveUp={props.onMoveUp}
+            onMoveDown={props.onMoveDown}
+            onRemove={props.onRemove}
+          />
+          {/* <div className="absolute top-4 left-4 z-20">
             <div className="flex flex-col gap-4">
               <NewsletterChangeOrderBar
                 show={hover}
@@ -114,7 +128,7 @@ export default function NewsletterImageBlockEditor(props: {
             </div>
           </div>
           <div className="absolute top-0 left-0 w-full h-full bg-sky-500 opacity-0 group-hover:opacity-50 cursor-pointer"></div>
-          <img src={src} width={displayWidth} />
+          <img src={src} width={displayWidth} /> */}
         </div>
       ) : (
         <div className="ml-4">
