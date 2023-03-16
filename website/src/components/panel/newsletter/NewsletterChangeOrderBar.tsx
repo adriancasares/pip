@@ -4,7 +4,7 @@ import {
   IoCaretDownOutline,
   IoCaretUpOutline,
   IoRemoveCircle,
-} from "react-icons/io5";
+} from "react-icons/io5/index.js";
 export default function NewsletterChangeOrderBar(props: {
   show: boolean;
   isFirst: boolean;
