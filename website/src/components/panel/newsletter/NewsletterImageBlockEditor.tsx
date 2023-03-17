@@ -92,66 +92,6 @@ export default function NewsletterImageBlockEditor(props: {
             setCrop={setCrop}
             setPublicId={setPublicId}
           />
-          {/* <div className="absolute top-4 left-4 z-20">
-            <div className="flex flex-col gap-4">
-              <NewsletterChangeOrderBar
-                show={hover}
-                isFirst={props.isFirst}
-                isLast={props.isLast}
-                onMoveUp={props.onMoveUp}
-                onMoveDown={props.onMoveDown}
-                remove={props.onRemove}
-              />
-              <motion.div
-                className="p-2 flex flex-col bg-white rounded-xl shadow-sm border border-mono-border-light overflow-hidden w-fit z-20 child:cursor-pointer"
-                style={{}}
-                animate={{
-                  opacity: hover ? 1 : 0,
-                  scale: hover ? 1 : 0.9,
-                }}
-                transition={{
-                  duration: hover ? 0.3 : 0,
-                }}
-              >
-                <input
-                  type="range"
-                  min="0"
-                  max="500"
-                  value={width}
-                  onChange={(e) => {
-                    setWidth(parseInt(e.target.value));
-                  }}
-                />
-              </motion.div>
-              <motion.div
-                className="child:p-2 flex flex-col bg-white rounded-xl shadow-sm border border-mono-border-light overflow-hidden w-fit z-20 child:cursor-pointer"
-                style={{}}
-                animate={{
-                  opacity: hover ? 1 : 0,
-                  scale: hover ? 1 : 0.9,
-                }}
-                transition={{
-                  duration: hover ? 0.3 : 0,
-                }}
-              >
-                <TextInput
-                  label="Alternative Text"
-                  value={alt}
-                  onChange={setAlt}
-                  smallLabel
-                />
-
-                <TextInput
-                  label="Caption"
-                  value={caption}
-                  onChange={setCaption}
-                  smallLabel
-                />
-              </motion.div>
-            </div>
-          </div>
-          <div className="absolute top-0 left-0 w-full h-full bg-sky-500 opacity-0 group-hover:opacity-50 cursor-pointer"></div>
-          <img src={src} width={displayWidth} /> */}
         </div>
       ) : (
         <div className="ml-4">
