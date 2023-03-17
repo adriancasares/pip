@@ -4,6 +4,7 @@ import NewsletterChangeOrderBar from "./NewsletterChangeOrderBar";
 import { motion } from "framer-motion";
 import TextInput from "../TextInput";
 import ImageEditor from "./ImageEditor";
+import type { Crop } from "react-image-crop";
 
 export default function NewsletterImageBlockEditor(props: {
   block: NewsletterImageBlock;
@@ -14,7 +15,9 @@ export default function NewsletterImageBlockEditor(props: {
   onMoveDown: () => void;
   onRemove: () => void;
 }) {
-  const [src, setSrc] = useState<string | undefined>(props.block.src);
+  const [publicId, setPublicId] = useState<string | undefined>(
+    props.block.publicId
+  );
 
   const widget = useMemo(() => {
     // @ts-ignore
@@ -25,8 +28,10 @@ export default function NewsletterImageBlockEditor(props: {
       },
       (error: any, result: any) => {
         if (result.event === "success") {
-          setSrc(result.info.secure_url);
-          props.onChange({ ...props.block, src: result.info.secure_url });
+          console.log(result);
+
+          setPublicId(result.info.public_id);
+          props.onChange({ ...props.block, publicId });
         }
       }
     );
@@ -35,20 +40,33 @@ export default function NewsletterImageBlockEditor(props: {
 
   const [hover, setHover] = useState(false);
 
-  const [caption, setCaption] = useState("");
-  const [alt, setAlt] = useState("");
-  const [width, setWidth] = useState(250);
-  const [displayWidth, setDisplayWidth] = useState(250);
+  const [caption, setCaption] = useState<string>(props.block.caption ?? "");
+  const [alt, setAlt] = useState<string>(props.block.alt ?? "");
+  const [width, setWidth] = useState<number>(props.block.width ?? 250);
+
+  const [crop, setCrop] = useState<Crop | undefined>(
+    props.block.crop
+      ? {
+          x: props.block.crop.x,
+          y: props.block.crop.y,
+          width: props.block.crop.width,
+          height: props.block.crop.height,
+          unit: "px",
+        }
+      : undefined
+  );
 
   useEffect(() => {
-    if (!hover) {
-      setDisplayWidth(width);
+    if (crop) {
+      props.onChange({ type: "IMAGE", caption, alt, width, publicId, crop });
+    } else {
+      props.onChange({ type: "IMAGE", caption, alt, width, publicId });
     }
-  }, [hover, width]);
+  }, [caption, alt, width, publicId, crop]);
 
   return (
     <div className="mx-auto">
-      {src ? (
+      {publicId ? (
         <div
           className="relative group"
           onMouseOver={() => {
@@ -59,7 +77,7 @@ export default function NewsletterImageBlockEditor(props: {
           }}
         >
           <ImageEditor
-            src={src}
+            publicId={publicId}
             caption={caption}
             alt={alt}
             width={width}
@@ -68,6 +86,11 @@ export default function NewsletterImageBlockEditor(props: {
             onMoveUp={props.onMoveUp}
             onMoveDown={props.onMoveDown}
             onRemove={props.onRemove}
+            setWidth={setWidth}
+            setCaption={setCaption}
+            setAlt={setAlt}
+            setCrop={setCrop}
+            setPublicId={setPublicId}
           />
           {/* <div className="absolute top-4 left-4 z-20">
             <div className="flex flex-col gap-4">

@@ -9,7 +9,14 @@ export interface NewsletterTextBlock extends NewsletterContentBlock {
 
 export interface NewsletterImageBlock extends NewsletterContentBlock {
   type: "IMAGE";
-  src?: string;
+  crop?: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  width: number;
+  publicId?: string;
   alt?: string;
   caption?: string;
 }
