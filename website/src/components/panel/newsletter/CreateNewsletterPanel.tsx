@@ -24,6 +24,8 @@ import LoadingSpinner from "../../LoadingSpinner";
 import type { NewsletterTextBlock } from "../../../types/NewsletterContentBlock";
 import { TbPlus } from "react-icons/tb";
 import NewsletterEditorChip from "./NewsletterEditorChip";
+import MetadataTextInput from "./MetadataTextInput";
+import MetadataDateInput from "./MetadataDateInput";
 
 function NewsletterPanelLoader(props: { id: string }) {
   const [newsletter, setNewsletter] = useState<Newsletter | undefined>(
@@ -200,17 +202,17 @@ export default function CreateNewsletterPanel(props: {
         <div className="flex gap-4">
           <NewsletterEditorChip
             label="Preview"
-            onClick={() => {}}
+            // onClick={() => {}}
             icon={<IoEyeOutline />}
           />
           <NewsletterEditorChip
             label="Publish"
-            onClick={() => {}}
+            // onClick={() => {}}
             icon={<IoCloudUploadOutline />}
           />
           <NewsletterEditorChip
             label="Send"
-            onClick={() => {}}
+            // onClick={() => {}}
             icon={<IoPaperPlaneOutline />}
           />
         </div>
@@ -245,7 +247,15 @@ export default function CreateNewsletterPanel(props: {
         </div>
       </div> */}
       <div className="p-8 flex flex-col gap-8">
-        <div></div>
+        <div className="flex flex-col w-96">
+          <MetadataTextInput label={"Slug"} value={slug} setValue={setSlug} />
+          <MetadataTextInput
+            label={"Author"}
+            value={author}
+            setValue={setAuthor}
+          />
+          <MetadataDateInput label={"Date"} value={date} setValue={setDate} />
+        </div>
         {sections.map((section, i) => {
           return (
             <NewsletterSectionEditor
