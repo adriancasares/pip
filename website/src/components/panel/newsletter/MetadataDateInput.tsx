@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 
 export default function MetadataDateInput(props: {
   label: string;
-  value: Date;
+  value: number;
   placeholder?: string;
-  setValue: (value: Date) => void;
+  setValue: (value: number) => void;
 }) {
   const [show, setShow] = useState(false);
 
@@ -29,22 +29,21 @@ export default function MetadataDateInput(props: {
   }, [show]);
 
   return (
-    <div
-      className="flex items-center relative"
-      onClick={() => {
-        setShow(!show);
-      }}
-      ref={inputRef}
-    >
+    <div className="flex items-center relative" ref={inputRef}>
       <p className="text-xs text-mono-text font-os w-24">{props.label}</p>
       <p
-        className="font-os text-sm py-1 w-full whitespace-normal overflow-hidden resize-none outline-none focus:bg-mono-container-light transition-colors rounded-md px-2"
+        onClick={() => {
+          setShow(!show);
+        }}
+        className="font-os text-sm py-1 w-full whitespace-normal overflow-hidden resize-none outline-none hover:bg-mono-container-light transition-colors rounded-md px-2 cursor-pointer"
         placeholder={props.placeholder}
         style={{
           height: "28px",
         }}
       >
-        {props.value.toDateString()}
+        {props.value
+          ? new Date(props.value).toDateString()
+          : "No date selected"}
       </p>
       <motion.div
         className="origin-top absolute bg-white top-full left-0 z-20 shadow-sm border border-mono-border-light rounded-md overflow-hidden p-1"
@@ -62,7 +61,13 @@ export default function MetadataDateInput(props: {
           scale: 0,
         }}
       >
-        <DatePicker value={props.value} onChange={props.setValue} />
+        <DatePicker
+          value={new Date(props.value)}
+          onChange={(v) => {
+            props.setValue(v?.getTime() || 0);
+          }}
+          weekendDays={[1, 2, 5, 6]}
+        />
       </motion.div>
     </div>
   );

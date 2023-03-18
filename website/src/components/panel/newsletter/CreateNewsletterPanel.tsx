@@ -35,7 +35,7 @@ function NewsletterPanelLoader(props: { id: string }) {
   const database = getDatabase();
 
   useEffect(() => {
-    const draft = ref(database, "drafts/" + props.id);
+    const draft = ref(database, "newsletterDrafts/" + props.id);
 
     get(draft).then((snapshot) => {
       if (snapshot.exists()) {
@@ -49,7 +49,7 @@ function NewsletterPanelLoader(props: { id: string }) {
         setNewsletter({
           name: val.name || "",
           slug: val.slug || "",
-          date: val.date || new Date(),
+          date: val.date || Date.now(),
           author: val.author || "",
           sections: val.sections || [],
         });
@@ -99,7 +99,7 @@ export default function CreateNewsletterPanel(props: {
   }, [name]);
 
   useEffect(() => {
-    const draft = ref(database, "drafts/" + props.id);
+    const draft = ref(database, "newsletterDrafts/" + props.id);
 
     onValue(draft, (snapshot) => {
       if (progressSaved === "WAITING_TO_RECIEVE") {
@@ -145,10 +145,10 @@ export default function CreateNewsletterPanel(props: {
       if (progressSaved === "WAITING_TO_SAVE") {
         setProgressSaved("WAITING_TO_RECIEVE");
 
-        set(ref(database, "drafts/" + props.id), {
+        set(ref(database, "newsletterDrafts/" + props.id), {
           name,
           slug,
-          date,
+          date: date.valueOf(),
           author,
           sections,
         });
@@ -163,10 +163,10 @@ export default function CreateNewsletterPanel(props: {
 
   useEffect(() => {
     if (progressSaved !== "NO_CHANGES") {
-      set(ref(database, "drafts/" + props.id), {
+      set(ref(database, "newsletterDrafts/" + props.id), {
         name,
         slug,
-        date,
+        date: date.valueOf(),
         author,
         sections,
       });
@@ -187,10 +187,10 @@ export default function CreateNewsletterPanel(props: {
 
   return (
     <div className="pt-20">
-      <div className="fixed top-0 w-full flex items-center justify-between py-4 px-8 border-b border-b-mono-b/50 bg-white z-10">
+      <div className="fixed top-0 w-full flex items-center justify-between py-4 px-8 bg-white z-10">
         <div>
           <input
-            className="outline-none border border-mono-border-light py-2 px-4 rounded-md text-xl font-semibold w-96"
+            className="outline-none border border-mono-border-light py-2 px-4 rounded-xl text-xl font-semibold w-96"
             type={"text"}
             placeholder={"Newsletter Name"}
             value={name}
@@ -246,7 +246,7 @@ export default function CreateNewsletterPanel(props: {
           </div>
         </div>
       </div> */}
-      <div className="p-8 flex flex-col gap-8">
+      <div className="px-8 flex flex-col gap-8">
         <div className="flex flex-col w-96">
           <MetadataTextInput label={"Slug"} value={slug} setValue={setSlug} />
           <MetadataTextInput
