@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import { crop } from "@cloudinary/url-gen/actions/resize";
 import { Cloudinary } from "@cloudinary/url-gen";
 import imageSize from "image-size";
+import MetadataTextInput from "./MetadataTextInput";
 
 export default function ImageEditor(props: {
   publicId: string;
@@ -137,8 +138,8 @@ export default function ImageEditor(props: {
   const altTextRef = useRef<HTMLSpanElement>(null);
 
   return (
-    <div>
-      <div className="relative">
+    <div className="">
+      <div className="relative mx-auto" style={{ width }}>
         <ReactCrop
           disabled={trueCrop != null}
           crop={workingCrop}
@@ -238,46 +239,18 @@ export default function ImageEditor(props: {
           </motion.div>
         ) : null}
       </div>
-
-      <div className="flex items-center">
-        <p className="text-xs text-mono-text font-os w-24">Alt Text</p>
-        <textarea
-          className="font-os text-sm py-1 w-full whitespace-normal overflow-hidden resize-none outline-none focus:bg-mono-container-light transition-colors rounded-md px-2"
-          placeholder="Enter an alt text for this image."
-          suppressContentEditableWarning
-          style={{
-            height: "28px",
-          }}
-          onChange={(e) => {
-            e.currentTarget.style.height = "0px";
-            e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
-
-            setAlt(e.currentTarget.value);
-          }}
+      <div style={{ width }} className="mx-auto">
+        <MetadataTextInput
+          label="Alt Text"
           value={alt}
-        />
-      </div>
-      <div
-        className="flex items-center"
-        style={{
-          width: width,
-        }}
-      >
-        <p className="text-xs text-mono-text font-os w-24">Caption</p>
-        <textarea
-          className="font-os text-sm py-1 w-full whitespace-normal overflow-hidden resize-none outline-none focus:bg-mono-container-light transition-colors rounded-md px-2"
+          setValue={setAlt}
           placeholder="Enter a caption for this image."
-          suppressContentEditableWarning
-          style={{
-            height: "28px",
-          }}
-          onChange={(e) => {
-            e.currentTarget.style.height = "0px";
-            e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
-
-            setCaption(e.currentTarget.value);
-          }}
+        />
+        <MetadataTextInput
+          label="Caption"
           value={caption}
+          setValue={setCaption}
+          placeholder="Enter a caption for this image."
         />
       </div>
     </div>

@@ -80,7 +80,7 @@ export default function NewsletterImageBlockEditor(props: {
   }, [caption, alt, width, publicId, crop]);
 
   return (
-    <div className="mx-auto relative">
+    <div className="mx-auto relative my-4">
       {publicId ? (
         <div
           className="relative group"

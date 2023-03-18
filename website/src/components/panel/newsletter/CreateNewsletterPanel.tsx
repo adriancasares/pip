@@ -7,11 +7,23 @@ import NewsletterSectionEditor, {
 } from "./NewsletterSectionEditor";
 import Button from "../../Button";
 import { motion } from "framer-motion";
-import { IoEnterOutline } from "react-icons/io5/index.js";
+import {
+  IoAddCircle,
+  IoAddSharp,
+  IoAirplaneOutline,
+  IoCloudUploadOutline,
+  IoEnterOutline,
+  IoEyeOutline,
+  IoPaperPlane,
+  IoPaperPlaneOutline,
+  IoPaperPlaneSharp,
+} from "react-icons/io5/index.js";
 import { getDatabase, ref, set, onValue, off, get } from "firebase/database";
 import type Newsletter from "../../../types/Newsletter";
 import LoadingSpinner from "../../LoadingSpinner";
 import type { NewsletterTextBlock } from "../../../types/NewsletterContentBlock";
+import { TbPlus } from "react-icons/tb";
+import NewsletterEditorChip from "./NewsletterEditorChip";
 
 function NewsletterPanelLoader(props: { id: string }) {
   const [newsletter, setNewsletter] = useState<Newsletter | undefined>(
@@ -185,6 +197,23 @@ export default function CreateNewsletterPanel(props: {
             }}
           />
         </div>
+        <div className="flex gap-4">
+          <NewsletterEditorChip
+            label="Preview"
+            onClick={() => {}}
+            icon={<IoEyeOutline />}
+          />
+          <NewsletterEditorChip
+            label="Publish"
+            onClick={() => {}}
+            icon={<IoCloudUploadOutline />}
+          />
+          <NewsletterEditorChip
+            label="Send"
+            onClick={() => {}}
+            icon={<IoPaperPlaneOutline />}
+          />
+        </div>
         {progressSaved !== "NO_CHANGES" ? (
           <LoadingSpinner />
         ) : (
@@ -216,6 +245,7 @@ export default function CreateNewsletterPanel(props: {
         </div>
       </div> */}
       <div className="p-8 flex flex-col gap-8">
+        <div></div>
         {sections.map((section, i) => {
           return (
             <NewsletterSectionEditor
@@ -263,9 +293,9 @@ export default function CreateNewsletterPanel(props: {
           );
         })}
       </div>
-      <motion.div>
-        <Button
-          icon="plus"
+      <div className="w-full">
+        <button
+          className="bg-accent-a p-2 rounded-full text-accent-c w-fit mx-auto block"
           onClick={() => {
             const textBlock: NewsletterTextBlock = {
               type: "TEXT",
@@ -284,9 +314,9 @@ export default function CreateNewsletterPanel(props: {
             setProgressSaved("WAITING_TO_SAVE");
           }}
         >
-          Add Section
-        </Button>
-      </motion.div>
+          <TbPlus />
+        </button>
+      </div>
     </div>
   );
 }
