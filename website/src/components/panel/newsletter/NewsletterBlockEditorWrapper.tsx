@@ -1,7 +1,13 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import { FiPlus } from "react-icons/fi/index.js";
-import { IoAdd, IoText } from "react-icons/io5/index.js";
+import { FiDivide, FiPlus } from "react-icons/fi/index.js";
+import {
+  IoAdd,
+  IoGitCommit,
+  IoImage,
+  IoText,
+  IoTextSharp,
+} from "react-icons/io5/index.js";
 import { motion } from "framer-motion";
 import type { NewsletterContentBlock } from "../../../types/NewsletterContentBlock";
 export default function NewsletterBlockEditorWrapper(props: {
@@ -52,6 +58,10 @@ export default function NewsletterBlockEditorWrapper(props: {
 
           <motion.div
             className="select-none top-0 left-6 z-10 absolute bg-white child:flex child:p-2 child:pr-4 child:gap-2 whitespace-nowrap p-2 text-mono-c font-os text-sm rounded-md shadow-sm border border-mono-border-light hover:child:bg-accent-c/10 child:rounded-md child:cursor-pointer child:items-center origin-top-left"
+            initial={{
+              opacity: 0,
+              scale: 0,
+            }}
             animate={{
               opacity: showAddDialogue ? 1 : 0,
               scale: showAddDialogue ? 1 : 0,
@@ -67,17 +77,17 @@ export default function NewsletterBlockEditorWrapper(props: {
                 addBlock("TEXT");
               }}
             >
-              <IoText />
+              <IoTextSharp />
               <p>Add Text</p>
             </div>
 
             <div>
-              <IoText />
+              <IoImage />
               <p>Add Image</p>
             </div>
 
             <div>
-              <IoText />
+              <IoGitCommit />
               <p>Add Divider</p>
             </div>
           </motion.div>

@@ -13,9 +13,20 @@ import NewsletterTextBlockEditor from "./NewsletterTextBlockEditor";
 import NewsletterImageBlockEditor from "./NewsletterImageBlockEditor";
 import NewsletterDividerBlockEditor from "./NewsletterDividerBlockEditor";
 import NewsletterBlockEditorWrapper from "./NewsletterBlockEditorWrapper";
+import {
+  IoCaretDown,
+  IoCaretUp,
+  IoEllipsisVertical,
+} from "react-icons/io5/index.js";
+import NewsletterChangeOrderBar from "./NewsletterChangeOrderBar";
 export default function NewsletterSectionEditor(props: {
   section: NewsletterSection;
   onChange: (section: NewsletterSection) => void;
+  remove: () => void;
+  moveUp: () => void;
+  moveDown: () => void;
+  isFirst: boolean;
+  isLast: boolean;
 }) {
   const [name, setName] = useState(props.section.name);
   const [className, setClassName] = useState(props.section.className);
@@ -64,10 +75,6 @@ export default function NewsletterSectionEditor(props: {
     // }px`;
   };
 
-  const generateBlockId = () => {
-    return Math.random().toString(36).substring(2, 9);
-  };
-
   const addBlock = (
     blockType: NewsletterContentBlock["type"],
     index: number
@@ -102,6 +109,28 @@ export default function NewsletterSectionEditor(props: {
     });
   };
 
+  const [showDialogue, setShowDialogue] = useState(false);
+  const dialogueRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (showDialogue) {
+      const listener = (e: MouseEvent) => {
+        if (
+          dialogueRef.current &&
+          !dialogueRef.current.contains(e.target as any)
+        ) {
+          setShowDialogue(false);
+        }
+      };
+
+      document.addEventListener("click", listener);
+
+      return () => {
+        document.removeEventListener("click", listener);
+      };
+    }
+  }, [showDialogue]);
+
   return (
     <motion.div
       initial={{ scale: 0.8 }}
@@ -111,34 +140,77 @@ export default function NewsletterSectionEditor(props: {
         duration: 0.8,
       }}
     >
-      <div className="border-2 border-accent-c/50 border-dashed">
-        <div className="bg-accent-c/10 py-4 px-8 flex flex-col gap-4">
-          <p className="font-os text-mono-c text-sm">Section</p>
-          <div className="grid grid-cols-2 gap-4">
-            <TextInput label={"Name"} value={name} onChange={setName} />
-            <TextInput
-              label={"Style Classes"}
-              value={className}
-              onChange={setClassName}
-            />
-          </div>
-          <div className="flex font-os text-sm items-center gap-4">
-            <p className="text-mono-c">Presets</p>
-            <div className="flex flex-row gap-2">
-              {presets.map((preset, key) => {
-                return (
-                  <div
-                    key={key}
-                    className="flex flex-col gap-2 bg-accent-a py-1 px-4 rounded-md hover:bg-accent-b cursor-pointer"
-                    onClick={(e) => {
-                      setName(preset.name);
-                      setClassName(preset.className);
-                    }}
-                  >
-                    <p>{preset.name}</p>
+      <div className="">
+        <div className="flex items-center">
+          <div className="rounded-xl bg-accent-c/5 py-4 px-8 flex w-full justify-between">
+            <h3 className="text-lg font-sans font-semibold">{name}</h3>
+            <div className="relative" ref={dialogueRef}>
+              <div
+                className="w-8 h-8 justify-center items-center flex hover:bg-accent-b/30 rounded-lg cursor-pointer text-accent-c"
+                onClick={() => {
+                  setShowDialogue(!showDialogue);
+                }}
+              >
+                <IoEllipsisVertical />
+              </div>
+              <motion.div
+                className="select-none top-full right-full z-10 absolute bg-white whitespace-nowrap p-2 text-mono-c font-os text-sm rounded-md shadow-sm border border-mono-border-light flex origin-top-right"
+                initial={{
+                  opacity: 0,
+                  scale: 0,
+                }}
+                animate={{
+                  opacity: showDialogue ? 1 : 0,
+                  scale: showDialogue ? 1 : 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  type: "spring",
+                  bounce: 0.25,
+                }}
+              >
+                <div className="absolute -right-4 -bottom-4">
+                  <NewsletterChangeOrderBar
+                    isFirst={props.isFirst}
+                    isLast={props.isLast}
+                    onMoveUp={props.moveUp}
+                    onMoveDown={props.moveDown}
+                    remove={props.remove}
+                    show={showDialogue}
+                  />{" "}
+                </div>
+
+                <div className="w-60 flex flex-col gap-5 p-2">
+                  <TextInput
+                    label={"Name"}
+                    value={name}
+                    onChange={setName}
+                    smallLabel
+                  />
+                  <TextInput
+                    label={"Style Classes"}
+                    value={className}
+                    onChange={setClassName}
+                    smallLabel
+                  />
+                  <div className="flex gap-1 flex-wrap">
+                    {presets.map((preset, key) => {
+                      return (
+                        <div
+                          key={key}
+                          className="text-xs flex flex-col gap-2 bg-accent-a/30  py-0.5 px-1.5 rounded-md hover:bg-accent-b/30 cursor-pointer text-accent-c"
+                          onClick={(e) => {
+                            setName(preset.name);
+                            setClassName(preset.className);
+                          }}
+                        >
+                          <p>{preset.name}</p>
+                        </div>
+                      );
+                    })}
                   </div>
-                );
-              })}
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -319,69 +391,12 @@ export default function NewsletterSectionEditor(props: {
               ))}
             </div>
           </AnimateSharedLayout>
-          <div className="flex flex-col gap-2 items-center font-os text-sm">
-            <p className="text-mono-c">Add a Block</p>
-            <div className="flex gap-2">
-              <div
-                className="flex flex-col items-center w-20 h-20 border border-mono-border-light justify-center gap-2 rounded-xl hover:bg-accent-b/20 cursor-pointer"
-                onClick={() => {
-                  const b: NewsletterTextBlock = {
-                    type: "TEXT",
-                    content: "",
-                    id: generateBlockId(),
-                  };
-
-                  props.onChange({
-                    ...props.section,
-                    blocks: [...(props.section.blocks ?? []), b],
-                  });
-                }}
-              >
-                <FiType className="" />
-                <p>Text</p>
-              </div>
-              <div
-                className="flex flex-col items-center w-20 h-20 border border-mono-border-light justify-center gap-2 rounded-xl hover:bg-accent-b/20 cursor-pointer"
-                onClick={() => {
-                  const b: NewsletterImageBlock = {
-                    type: "IMAGE",
-                    publicId: "",
-                    alt: "",
-                    caption: "",
-                    width: 0,
-                    id: generateBlockId(),
-                  };
-
-                  props.onChange({
-                    ...props.section,
-                    blocks: [...(props.section.blocks ?? []), b],
-                  });
-                }}
-              >
-                <FiImage className="" />
-                <p>Image</p>
-              </div>
-              <div
-                className="flex flex-col items-center w-20 h-20 border border-mono-border-light justify-center gap-2 rounded-xl hover:bg-accent-b/20 cursor-pointer"
-                onClick={() => {
-                  const b: NewsletterDividerBlock = {
-                    type: "DIVIDER",
-                    id: generateBlockId(),
-                  };
-
-                  props.onChange({
-                    ...props.section,
-                    blocks: [...(props.section.blocks ?? []), b],
-                  });
-                }}
-              >
-                <FiGitCommit className="" />
-                <p>Divider</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </motion.div>
   );
 }
+
+export const generateBlockId = () => {
+  return Math.random().toString(36).substring(2, 9);
+};

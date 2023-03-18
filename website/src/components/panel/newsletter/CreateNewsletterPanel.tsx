@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import TextInput from "../TextInput";
 import sluggify from "slug";
 import type NewsletterSection from "../../../types/NewsletterSection";
-import NewsletterSectionEditor from "./NewsletterSectionEditor";
+import NewsletterSectionEditor, {
+  generateBlockId,
+} from "./NewsletterSectionEditor";
 import Button from "../../Button";
 import { motion } from "framer-motion";
 import { IoEnterOutline } from "react-icons/io5/index.js";
 import { getDatabase, ref, set, onValue, off, get } from "firebase/database";
 import type Newsletter from "../../../types/Newsletter";
 import LoadingSpinner from "../../LoadingSpinner";
+import type { NewsletterTextBlock } from "../../../types/NewsletterContentBlock";
 
 function NewsletterPanelLoader(props: { id: string }) {
   const [newsletter, setNewsletter] = useState<Newsletter | undefined>(
@@ -229,6 +232,33 @@ export default function CreateNewsletterPanel(props: {
                 setSections(newSections);
                 setProgressSaved("WAITING_TO_SAVE");
               }}
+              isFirst={i === 0}
+              isLast={i === sections.length - 1}
+              moveUp={() => {
+                const newSections = [...sections];
+                const temp = newSections[i];
+                newSections[i] = newSections[i - 1];
+                newSections[i - 1] = temp;
+
+                setSections(newSections);
+                setProgressSaved("WAITING_TO_SAVE");
+              }}
+              moveDown={() => {
+                const newSections = [...sections];
+                const temp = newSections[i];
+                newSections[i] = newSections[i + 1];
+                newSections[i + 1] = temp;
+
+                setSections(newSections);
+                setProgressSaved("WAITING_TO_SAVE");
+              }}
+              remove={() => {
+                const newSections = [...sections];
+                newSections.splice(i, 1);
+
+                setSections(newSections);
+                setProgressSaved("WAITING_TO_SAVE");
+              }}
             />
           );
         })}
@@ -237,12 +267,17 @@ export default function CreateNewsletterPanel(props: {
         <Button
           icon="plus"
           onClick={() => {
+            const textBlock: NewsletterTextBlock = {
+              type: "TEXT",
+              content: "",
+              id: generateBlockId(),
+            };
             setSections([
               ...sections,
               {
                 name: "Untitled Section",
                 className: "",
-                blocks: [],
+                blocks: [textBlock],
               },
             ]);
 

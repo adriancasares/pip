@@ -41,7 +41,7 @@ export default function NewsletterChangeOrderBar(props: {
         <div
           onClick={() => {
             alerts.addAlert({
-              name: "Are you sure you want to remove this alert?",
+              name: "Are you sure you want to remove this?",
               callback: (confirm: boolean) => {
                 if (confirm) {
                   props.remove();
