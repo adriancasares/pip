@@ -191,7 +191,7 @@ export default function CreateNewsletterPanel(props: {
           <p>All changes saved</p>
         )}
       </div>
-      <div className="w-full mx-auto flex flex-col gap-2">
+      {/* <div className="w-full mx-auto flex flex-col gap-2">
         <div className="grid grid-cols-2 gap-4 px-8 py-4 bg-mono-container-light">
           <TextInput label={"Slug"} value={slug} onChange={setSlug} />
           <TextInput label={"Author"} value={author} onChange={setAuthor} />
@@ -214,7 +214,7 @@ export default function CreateNewsletterPanel(props: {
             />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="p-8 flex flex-col gap-8">
         {sections.map((section, i) => {
           return (

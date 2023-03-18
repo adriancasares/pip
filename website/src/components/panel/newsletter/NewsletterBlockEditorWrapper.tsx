@@ -81,12 +81,20 @@ export default function NewsletterBlockEditorWrapper(props: {
               <p>Add Text</p>
             </div>
 
-            <div>
+            <div
+              onClick={() => {
+                addBlock("IMAGE");
+              }}
+            >
               <IoImage />
               <p>Add Image</p>
             </div>
 
-            <div>
+            <div
+              onClick={() => {
+                addBlock("DIVIDER");
+              }}
+            >
               <IoGitCommit />
               <p>Add Divider</p>
             </div>
