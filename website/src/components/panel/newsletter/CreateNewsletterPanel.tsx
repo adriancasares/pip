@@ -144,6 +144,30 @@ export default function CreateNewsletterPanel(props: {
     };
   });
 
+  useEffect(() => {
+    if (progressSaved !== "NO_CHANGES") {
+      set(ref(database, "drafts/" + props.id), {
+        name,
+        slug,
+        date,
+        author,
+        sections,
+      });
+
+      const beforeunloadCallback = (e: BeforeUnloadEvent) => {
+        e.preventDefault();
+        e.returnValue = "Do you want to leave before saving?";
+        return "Do you want to leave before saving?";
+      };
+
+      window.addEventListener("beforeunload", beforeunloadCallback);
+
+      return () => {
+        window.removeEventListener("beforeunload", beforeunloadCallback);
+      };
+    }
+  }, [progressSaved]);
+
   return (
     <div className="pt-20">
       <div className="fixed top-0 w-full flex items-center justify-between py-4 px-8 border-b border-b-mono-b/50 bg-white z-10">

@@ -1,5 +1,6 @@
 export interface NewsletterContentBlock {
   type: "TEXT" | "IMAGE" | "DIVIDER";
+  id: string;
 }
 
 export interface NewsletterTextBlock extends NewsletterContentBlock {

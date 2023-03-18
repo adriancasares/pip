@@ -58,14 +58,33 @@ export default function NewsletterImageBlockEditor(props: {
 
   useEffect(() => {
     if (crop) {
-      props.onChange({ type: "IMAGE", caption, alt, width, publicId, crop });
+      props.onChange({
+        type: "IMAGE",
+        caption,
+        alt,
+        width,
+        publicId,
+        crop,
+        id: props.block.id,
+      });
     } else {
-      props.onChange({ type: "IMAGE", caption, alt, width, publicId });
+      props.onChange({
+        type: "IMAGE",
+        caption,
+        alt,
+        width,
+        publicId,
+        id: props.block.id,
+      });
     }
   }, [caption, alt, width, publicId, crop]);
 
   return (
-    <div className="mx-auto">
+    <motion.div
+      className="mx-auto relative"
+      layoutId={`block-${props.block.id}`}
+      layout="position"
+    >
       {publicId ? (
         <div
           className="relative group"
@@ -94,9 +113,9 @@ export default function NewsletterImageBlockEditor(props: {
           />
         </div>
       ) : (
-        <div className="ml-4">
+        <div className="mx-auto w-fit">
           <div
-            className="relative"
+            className="relative w-fit ml-4"
             onMouseOver={() => {
               setHover(true);
             }}
@@ -125,6 +144,6 @@ export default function NewsletterImageBlockEditor(props: {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

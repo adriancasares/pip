@@ -37,6 +37,10 @@ export default function ImageEditor(props: {
   const [workingCrop, setWorkingCrop] = useState<Crop>();
   const [trueCrop, setTrueCrop] = useState<Crop | undefined>();
   const [cropUrl, setCropUrl] = useState<string>();
+
+  const [caption, setCaption] = useState<string>(props.caption);
+  const [alt, setAlt] = useState<string>(props.alt);
+
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
@@ -44,12 +48,12 @@ export default function ImageEditor(props: {
   }, [props.publicId]);
 
   useEffect(() => {
-    props.setCaption(props.caption);
-  }, [props.caption]);
+    props.setCaption(caption);
+  }, [caption]);
 
   useEffect(() => {
-    props.setAlt(props.alt);
-  }, [props.alt]);
+    props.setAlt(alt);
+  }, [alt]);
 
   useEffect(() => {
     props.setWidth(width);
@@ -109,82 +113,173 @@ export default function ImageEditor(props: {
     setCropUrl(image.toURL());
   }, [trueCrop]);
 
+  const [imageLoading, setImageLoading] = useState(false);
+
+  useEffect(() => {
+    if (imageRef.current && !imageRef.current.complete) {
+      setImageLoading(true);
+
+      const listener = () => {
+        setImageLoading(false);
+      };
+
+      imageRef.current.addEventListener("load", listener);
+
+      return () => {
+        imageRef.current?.removeEventListener("load", listener);
+      };
+    } else {
+      setImageLoading(false);
+    }
+  }, [cropUrl]);
+
+  const captionRef = useRef<HTMLSpanElement>(null);
+  const altTextRef = useRef<HTMLSpanElement>(null);
+
   return (
     <div>
-      <ReactCrop
-        disabled={trueCrop != null}
-        crop={workingCrop}
-        onChange={setWorkingCrop}
-        onComplete={console.log}
-      >
-        <div
-          className="relative select-none group"
-          onMouseOver={() => {
-            setHover(true);
-          }}
-          onMouseOut={() => {
-            setHover(false);
-          }}
+      <div className="relative">
+        <ReactCrop
+          disabled={trueCrop != null}
+          crop={workingCrop}
+          onChange={setWorkingCrop}
         >
-          <img src={cropUrl} alt={props.alt} width={width} ref={imageRef} />
-          <div className="absolute top-2 left-2">
-            <NewsletterChangeOrderBar
-              show={hover}
-              isFirst={props.isFirst}
-              isLast={props.isLast}
-              onMoveUp={props.onMoveUp}
-              onMoveDown={props.onMoveDown}
-              remove={props.onRemove}
-            />
-          </div>
-
           <div
-            className={`absolute h-full w-8 cursor-ew-resize border-r-4 border-blue-400 right-0 top-0 transition-opacity ${
-              dragging ? "" : "opacity-0 group-hover:opacity-100"
-            }`}
-            onMouseDown={(e) => {
-              setDragging(true);
+            className="relative select-none group"
+            onMouseOver={() => {
+              setHover(true);
             }}
-          ></div>
-        </div>
-      </ReactCrop>
-      {(workingCrop && workingCrop.width !== 0 && workingCrop.height !== 0) ||
-      trueCrop ? (
-        <motion.div
-          className="absolute bottom-4 left-2 bg-black/50 text-white py-1 px-2 rounded-md font-os text-sm z-20 cursor-pointer"
-          onClick={() => {
-            if (trueCrop) {
-              setTrueCrop(undefined);
-              return;
-            } else if (workingCrop) {
-              const multiplier = (imageRef.current?.naturalWidth ?? 0) / width;
+            onMouseOut={() => {
+              setHover(false);
+            }}
+          >
+            <motion.div
+              animate={{
+                scale: imageLoading ? 0.5 : 1,
+                opacity: imageLoading ? 0 : 1,
+              }}
+              initial={{
+                scale: 1,
+                opacity: 1,
+              }}
+              transition={{
+                duration: imageLoading ? 1 : 0.5,
+                type: "spring",
+                bounce: imageLoading ? 0 : 0.5,
+              }}
+            >
+              <img src={cropUrl} alt={props.alt} width={width} ref={imageRef} />
+            </motion.div>
+            <div className="absolute top-2 left-2">
+              <NewsletterChangeOrderBar
+                show={hover}
+                isFirst={props.isFirst}
+                isLast={props.isLast}
+                onMoveUp={props.onMoveUp}
+                onMoveDown={props.onMoveDown}
+                remove={props.onRemove}
+              />
+            </div>
 
-              setTrueCrop({
-                width: workingCrop.width * multiplier,
-                height: workingCrop.height * multiplier,
-                x: workingCrop.x * multiplier,
-                y: workingCrop.y * multiplier,
-                unit: "px",
-              });
+            <div
+              className={`absolute h-full w-1 bg-blue-400 right-0 top-0 transition-opacity ${
+                dragging ? "" : "opacity-0 group-hover:opacity-100"
+              }`}
+              onMouseDown={(e) => {
+                setDragging(true);
+              }}
+            ></div>
+          </div>
+        </ReactCrop>
+        <div
+          className={`absolute h-full w-8 cursor-ew-resize right-0 top-0 transition-opacity ${
+            dragging ? "" : "opacity-0 group-hover:opacity-100"
+          }`}
+          onMouseDown={(e) => {
+            setDragging(true);
+          }}
+        ></div>
+        {(workingCrop && workingCrop.width !== 0 && workingCrop.height !== 0) ||
+        trueCrop ? (
+          <motion.div
+            className="absolute bottom-4 left-2 bg-black/50 text-white py-1 px-2 rounded-md font-os text-sm z-20 cursor-pointer"
+            onClick={() => {
+              if (trueCrop) {
+                setTrueCrop(undefined);
+                return;
+              } else if (workingCrop) {
+                const multiplier =
+                  (imageRef.current?.naturalWidth ?? 0) / width;
 
-              setWorkingCrop(undefined);
-            }
+                setTrueCrop({
+                  width: workingCrop.width * multiplier,
+                  height: workingCrop.height * multiplier,
+                  x: workingCrop.x * multiplier,
+                  y: workingCrop.y * multiplier,
+                  unit: "px",
+                });
+
+                setWorkingCrop(undefined);
+              }
+            }}
+            initial={{
+              opacity: 1,
+              scale: 0.9,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            whileTap={{
+              scale: 0.9,
+            }}
+          >
+            {trueCrop != null ? "Reset" : "Transform"}
+          </motion.div>
+        ) : null}
+      </div>
+
+      <div className="flex items-center">
+        <p className="text-xs text-mono-text font-os w-24">Alt Text</p>
+        <textarea
+          className="font-os text-sm py-1 w-full whitespace-normal overflow-hidden resize-none outline-none focus:bg-mono-container-light transition-colors rounded-md px-2"
+          placeholder="Enter an alt text for this image."
+          suppressContentEditableWarning
+          style={{
+            height: "28px",
           }}
-          initial={{
-            opacity: 1,
-            scale: 0.9,
+          onChange={(e) => {
+            e.currentTarget.style.height = "0px";
+            e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
+
+            setAlt(e.currentTarget.value);
           }}
-          animate={{
-            opacity: 1,
-            scale: 1,
+          value={alt}
+        />
+      </div>
+      <div
+        className="flex items-center"
+        style={{
+          width: width,
+        }}
+      >
+        <p className="text-xs text-mono-text font-os w-24">Caption</p>
+        <textarea
+          className="font-os text-sm py-1 w-full whitespace-normal overflow-hidden resize-none outline-none focus:bg-mono-container-light transition-colors rounded-md px-2"
+          placeholder="Enter a caption for this image."
+          suppressContentEditableWarning
+          style={{
+            height: "28px",
           }}
-          whileTap={{
-            scale: 0.9,
+          onChange={(e) => {
+            e.currentTarget.style.height = "0px";
+            e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
+
+            setCaption(e.currentTarget.value);
           }}
-        >
-          {trueCrop != null ? "Reset" : "Transform"}
-        </motion.div>
-      ) : null}
+          value={caption}
+        />
+      </div>
     </div>
   );
 }

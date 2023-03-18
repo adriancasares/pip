@@ -34,8 +34,8 @@ export default function NewsletterChangeOrderBar(props: {
             <IoCaretDownOutline className="text-mono-c" />
           </div>
         )}
-        <div>
-          <IoRemoveCircle className="text-red-500" onClick={props.remove} />
+        <div onClick={props.remove}>
+          <IoRemoveCircle className="text-red-500" />
         </div>
       </motion.div>
     </div>
