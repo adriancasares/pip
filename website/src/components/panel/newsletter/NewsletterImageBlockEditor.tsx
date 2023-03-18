@@ -80,11 +80,7 @@ export default function NewsletterImageBlockEditor(props: {
   }, [caption, alt, width, publicId, crop]);
 
   return (
-    <motion.div
-      className="mx-auto relative"
-      layoutId={`block-${props.block.id}`}
-      layout="position"
-    >
+    <div className="mx-auto relative">
       {publicId ? (
         <div
           className="relative group"
@@ -144,6 +140,6 @@ export default function NewsletterImageBlockEditor(props: {
           </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }

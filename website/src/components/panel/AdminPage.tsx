@@ -6,6 +6,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Login from "./Login";
 import CreateNewsletterPanel from "./newsletter/CreateNewsletterPanel";
 import { MantineProvider } from "@mantine/core";
+import AlertProvider from "./newsletter/EditorAlertDisplay";
 
 export default function AdminPage() {
   const firebaseConfig = {
@@ -24,10 +25,12 @@ export default function AdminPage() {
 
   return (
     <MantineProvider>
-      <div>
-        {/* either show a login page or the panel */}
-        {user ? <CreateNewsletterPanel id="new" /> : <Login auth={auth} />}
-      </div>
+      <AlertProvider>
+        <div>
+          {/* either show a login page or the panel */}
+          {user ? <CreateNewsletterPanel id="new" /> : <Login auth={auth} />}
+        </div>
+      </AlertProvider>
     </MantineProvider>
   );
 }

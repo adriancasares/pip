@@ -4,6 +4,7 @@ import { AnimateSharedLayout, motion } from "framer-motion";
 import TextInput from "../TextInput";
 import { FiGitCommit, FiImage, FiType } from "react-icons/fi/index.js";
 import type {
+  NewsletterContentBlock,
   NewsletterDividerBlock,
   NewsletterImageBlock,
   NewsletterTextBlock,
@@ -67,6 +68,40 @@ export default function NewsletterSectionEditor(props: {
     return Math.random().toString(36).substring(2, 9);
   };
 
+  const addBlock = (
+    blockType: NewsletterContentBlock["type"],
+    index: number
+  ) => {
+    const newBlocks = [...props.section.blocks];
+
+    let newBlockGeneric: NewsletterContentBlock = {
+      id: generateBlockId(),
+      type: blockType,
+    };
+
+    if (blockType === "TEXT") {
+      const newBlock = newBlockGeneric as NewsletterTextBlock;
+      newBlock.content = "";
+
+      newBlocks.splice(index, 0, newBlock);
+    } else if (blockType === "IMAGE") {
+      const newBlock = newBlockGeneric as NewsletterImageBlock;
+      newBlock.publicId = "";
+      newBlock.alt = "";
+
+      newBlocks.splice(index, 0, newBlock);
+    } else if (blockType === "DIVIDER") {
+      const newBlock = newBlockGeneric as NewsletterDividerBlock;
+
+      newBlocks.splice(index, 0, newBlock);
+    }
+
+    props.onChange({
+      ...props.section,
+      blocks: newBlocks,
+    });
+  };
+
   return (
     <motion.div
       initial={{ scale: 0.8 }}
@@ -112,7 +147,13 @@ export default function NewsletterSectionEditor(props: {
           <AnimateSharedLayout>
             <div ref={blockContainerRef}>
               {(props.section.blocks ?? []).map((block, index) => (
-                <NewsletterBlockEditorWrapper label="Section">
+                <NewsletterBlockEditorWrapper
+                  key={block.id}
+                  id={block.id}
+                  addBlock={(blockType) => {
+                    addBlock(blockType, index + 1);
+                  }}
+                >
                   {(() => {
                     if (block.type === "TEXT") {
                       return (

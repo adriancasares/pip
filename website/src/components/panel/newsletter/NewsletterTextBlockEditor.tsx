@@ -29,30 +29,28 @@ export default function NewsletterTextBlockEditor(props: {
   const [focused, setFocused] = useState(false);
 
   return (
-    <motion.div layout="position">
-      <div
-        className="relative"
-        onFocus={() => {
-          setFocused(true);
-        }}
-        onBlur={() => {
-          setFocused(false);
-        }}
-      >
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-          <NewsletterChangeOrderBar
-            show={focused}
-            isFirst={props.isFirst}
-            isLast={props.isLast}
-            onMoveUp={props.onMoveUp}
-            onMoveDown={props.onMoveDown}
-            remove={() => {
-              props.onChange(undefined);
-            }}
-          />
-        </div>
-        <Editor setBody={setContent} initialBody={content} />
+    <div
+      className="relative pt-4"
+      onFocus={() => {
+        setFocused(true);
+      }}
+      onBlur={() => {
+        setFocused(false);
+      }}
+    >
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-10">
+        <NewsletterChangeOrderBar
+          show={focused}
+          isFirst={props.isFirst}
+          isLast={props.isLast}
+          onMoveUp={props.onMoveUp}
+          onMoveDown={props.onMoveDown}
+          remove={() => {
+            props.onChange(undefined);
+          }}
+        />
       </div>
-    </motion.div>
+      <Editor setBody={setContent} initialBody={content} />
+    </div>
   );
 }
