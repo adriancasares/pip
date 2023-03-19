@@ -134,9 +134,6 @@ export default function ImageEditor(props: {
     }
   }, [cropUrl]);
 
-  const captionRef = useRef<HTMLSpanElement>(null);
-  const altTextRef = useRef<HTMLSpanElement>(null);
-
   return (
     <div className="">
       <div className="relative mx-auto" style={{ width }}>

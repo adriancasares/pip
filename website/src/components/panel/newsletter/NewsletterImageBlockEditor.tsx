@@ -130,7 +130,7 @@ export default function NewsletterImageBlockEditor(props: {
               />
             </div>
             <button
-              className="bg-indigo-500 text-white py-2 px-4 rounded-md mr-4"
+              className="bg-sky-500 text-white py-2 px-4 rounded-md mr-4 font-os"
               onClick={() => {
                 widget.open();
               }}

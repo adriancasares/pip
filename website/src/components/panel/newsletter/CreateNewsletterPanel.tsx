@@ -163,15 +163,15 @@ export default function CreateNewsletterPanel(props: {
 
   useEffect(() => {
     if (progressSaved !== "NO_CHANGES") {
-      set(ref(database, "newsletterDrafts/" + props.id), {
-        name,
-        slug,
-        date: date.valueOf(),
-        author,
-        sections,
-      });
-
       const beforeunloadCallback = (e: BeforeUnloadEvent) => {
+        set(ref(database, "newsletterDrafts/" + props.id), {
+          name,
+          slug,
+          date: date.valueOf(),
+          author,
+          sections,
+        });
+
         e.preventDefault();
         e.returnValue = "Do you want to leave before saving?";
         return "Do you want to leave before saving?";
