@@ -64,15 +64,25 @@ export default function ProjectView(props: {
   }, []);
 
   // from url ?projectView
-  const [view, setView] = useState(
-    new URLSearchParams(window.location.search).get("projectView")
+  const [view, setView] = useState<string | undefined>(
+    new URLSearchParams(window.location.search).get("projectView") ?? undefined
   );
 
   return (
     <div>
       {(() => {
         if (view === "newsletter") {
-          return <CreateNewsletterPanel id={props.project.id} />;
+          return (
+            <CreateNewsletterPanel
+              id={props.project.id}
+              close={() => {
+                setView(undefined);
+                const url = new URL(window.location.href);
+                url.searchParams.delete("projectView");
+                window.history.pushState({}, "", url.toString());
+              }}
+            />
+          );
         } else {
           return (
             <div className="max-w-lg w-full mx-auto flex flex-col gap-4 py-4">

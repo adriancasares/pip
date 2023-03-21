@@ -93,26 +93,11 @@ export default function ProjectManager() {
           }}
         />
       ) : (
-        <div>
-          {projects.map((project, index) => {
-            return (
-              <ProjectCard
-                open={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set("project", project.id);
-                  window.history.pushState({}, "", url.toString());
-                  setProjectId(project.id);
-                }}
-                project={project}
-                onChange={(project) => {
-                  const newProjects = [...projects];
-                  newProjects[index] = project;
-                  setProjects(newProjects);
-                }}
-              />
-            );
-          })}
+        <div className="max-w-6xl w-full mx-auto flex flex-col gap-4">
+          <h1 className="text-3xl font-bold pt-10">Projects</h1>
+          <hr />
           <button
+            className="bg-gray-800 text-white rounded-md py-2 px-4 font-os text-sm w-fit"
             onClick={() => {
               setProgressSaved("WAITING_TO_SAVE");
               setProjects([
@@ -128,6 +113,26 @@ export default function ProjectManager() {
           >
             Add Project
           </button>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {projects.map((project, index) => {
+              return (
+                <ProjectCard
+                  open={() => {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("project", project.id);
+                    window.history.pushState({}, "", url.toString());
+                    setProjectId(project.id);
+                  }}
+                  project={project}
+                  onChange={(project) => {
+                    const newProjects = [...projects];
+                    newProjects[index] = project;
+                    setProjects(newProjects);
+                  }}
+                />
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

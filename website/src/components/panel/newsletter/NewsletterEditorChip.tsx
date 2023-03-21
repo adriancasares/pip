@@ -5,6 +5,7 @@ export default function NewsletterEditorChip(props: {
   icon?: React.ReactNode;
   grayscale?: boolean;
   vibrant?: boolean;
+  onClick?: () => void;
 }) {
   return (
     <div
@@ -15,6 +16,7 @@ export default function NewsletterEditorChip(props: {
           ? "bg-indigo-500 text-white"
           : "bg-indigo-50 text-indigo-500"
       }`}
+      onClick={props.onClick}
     >
       {props.icon}
       <p>{props.label}</p>

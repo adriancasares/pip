@@ -27,7 +27,7 @@ import NewsletterEditorChip from "./NewsletterEditorChip";
 import MetadataTextInput from "./MetadataTextInput";
 import MetadataDateInput from "./MetadataDateInput";
 
-function NewsletterPanelLoader(props: { id: string }) {
+function NewsletterPanelLoader(props: { id: string; close: () => void }) {
   const [newsletter, setNewsletter] = useState<Newsletter | undefined>(
     undefined
   );
@@ -60,7 +60,13 @@ function NewsletterPanelLoader(props: { id: string }) {
   return (
     <div>
       {newsletter ? (
-        <CreateNewsletterPanel id={props.id} newsletter={newsletter} />
+        <CreateNewsletterPanel
+          id={props.id}
+          newsletter={newsletter}
+          close={() => {
+            props.close();
+          }}
+        />
       ) : (
         <div className="flex flex-col gap-2">
           <p className="text-mono-c font-os text-sm">Loading...</p>
@@ -73,9 +79,17 @@ function NewsletterPanelLoader(props: { id: string }) {
 export default function CreateNewsletterPanel(props: {
   id: string;
   newsletter?: Newsletter;
+  close: () => void;
 }) {
   if (!props.newsletter) {
-    return <NewsletterPanelLoader id={props.id} />;
+    return (
+      <NewsletterPanelLoader
+        id={props.id}
+        close={() => {
+          props.close();
+        }}
+      />
+    );
   }
 
   const [name, setName] = useState(props.newsletter.name);
@@ -203,7 +217,13 @@ export default function CreateNewsletterPanel(props: {
           </div>
         </div>
         <div className="flex gap-4">
-          <NewsletterEditorChip label="Back to Project" grayscale />
+          <NewsletterEditorChip
+            label="Back to Project"
+            grayscale
+            onClick={() => {
+              console.log(props.close());
+            }}
+          />
           <NewsletterEditorChip
             label="Publish"
             // onClick={() => {}}
