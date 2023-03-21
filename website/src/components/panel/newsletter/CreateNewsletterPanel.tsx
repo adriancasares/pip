@@ -22,7 +22,7 @@ import { getDatabase, ref, set, onValue, off, get } from "firebase/database";
 import type Newsletter from "../../../types/Newsletter";
 import LoadingSpinner from "../../LoadingSpinner";
 import type { NewsletterTextBlock } from "../../../types/NewsletterContentBlock";
-import { TbPlus } from "react-icons/tb";
+import { TbPlus } from "react-icons/tb/index.js";
 import NewsletterEditorChip from "./NewsletterEditorChip";
 import MetadataTextInput from "./MetadataTextInput";
 import MetadataDateInput from "./MetadataDateInput";
