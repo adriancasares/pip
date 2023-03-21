@@ -64,8 +64,8 @@ export default function ProjectManager() {
     return Math.random().toString(16).substring(2, 8);
   };
 
-  const [projectId, setProjectId] = useState(
-    new URL(window.location.href).searchParams.get("project")
+  const [projectId, setProjectId] = useState<string | undefined>(
+    new URL(window.location.href).searchParams.get("project") ?? undefined
   );
 
   const project = useMemo(() => {
@@ -76,6 +76,12 @@ export default function ProjectManager() {
     <div>
       {project ? (
         <ProjectView
+          close={() => {
+            const url = new URL(window.location.href);
+            url.searchParams.delete("project");
+            window.history.pushState({}, "", url.toString());
+            setProjectId(undefined);
+          }}
           project={project}
           onChange={(project) => {
             const newProjects = [...projects];
@@ -115,6 +121,7 @@ export default function ProjectManager() {
                   id: generateProjectId(),
                   name: "New Project",
                   lastUpdated: Date.now(),
+                  imagePublicId: "",
                 },
               ]);
             }}

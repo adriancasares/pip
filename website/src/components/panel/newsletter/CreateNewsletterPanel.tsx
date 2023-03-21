@@ -188,7 +188,7 @@ export default function CreateNewsletterPanel(props: {
   return (
     <div className="pt-20">
       <div className="fixed top-0 w-full flex items-center justify-between py-4 px-8 bg-white z-10">
-        <div>
+        <div className="relative">
           <input
             className="outline-none border border-mono-border-light py-2 px-4 rounded-xl text-xl font-semibold w-96"
             type={"text"}
@@ -198,13 +198,12 @@ export default function CreateNewsletterPanel(props: {
               setName(e.target.value);
             }}
           />
+          <div className="absolute -bottom-1.5 right-4 bg-white text-xs font-os text-mono-c px-2 rounded-md">
+            {progressSaved === "NO_CHANGES" ? <p>Saved</p> : <p>Saving</p>}
+          </div>
         </div>
         <div className="flex gap-4">
-          <NewsletterEditorChip
-            label="Preview"
-            // onClick={() => {}}
-            icon={<IoEyeOutline />}
-          />
+          <NewsletterEditorChip label="Back to Project" grayscale />
           <NewsletterEditorChip
             label="Publish"
             // onClick={() => {}}
@@ -215,37 +214,14 @@ export default function CreateNewsletterPanel(props: {
             // onClick={() => {}}
             icon={<IoPaperPlaneOutline />}
           />
+          <NewsletterEditorChip
+            label="Preview"
+            icon={<IoEyeOutline />}
+            vibrant
+          />
         </div>
-        {progressSaved !== "NO_CHANGES" ? (
-          <LoadingSpinner />
-        ) : (
-          <p>All changes saved</p>
-        )}
       </div>
-      {/* <div className="w-full mx-auto flex flex-col gap-2">
-        <div className="grid grid-cols-2 gap-4 px-8 py-4 bg-mono-container-light">
-          <TextInput label={"Slug"} value={slug} onChange={setSlug} />
-          <TextInput label={"Author"} value={author} onChange={setAuthor} />
-          <div className="flex flex-col gap-2 font-os">
-            <p>Publication Date</p>
-            <input
-              className="outline-none border border-mono-b py-2 px-4 rounded-md"
-              type={"date"}
-              value={date.toISOString().split("T")[0]}
-              onChange={(e) => {
-                try {
-                  const d = new Date(e.target.value);
-                  if (d.toString() !== "Invalid Date") {
-                    setDate(d);
-                  }
-                } catch (e) {
-                  console.log(e);
-                }
-              }}
-            />
-          </div>
-        </div>
-      </div> */}
+
       <div className="px-8 flex flex-col gap-8">
         <div className="flex flex-col w-96">
           <MetadataTextInput label={"Slug"} value={slug} setValue={setSlug} />

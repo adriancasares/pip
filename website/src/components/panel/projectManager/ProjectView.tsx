@@ -1,6 +1,7 @@
 import { Cloudinary } from "@cloudinary/url-gen";
 import { get, getDatabase, ref, set } from "firebase/database";
 import React, { useEffect, useMemo, useState } from "react";
+import { IoArrowBack } from "react-icons/io5/index.js";
 import type { Project } from "../../../types/Project";
 import CreateNewsletterPanel from "../newsletter/CreateNewsletterPanel";
 import MetadataTextInput from "../newsletter/MetadataTextInput";
@@ -9,6 +10,7 @@ import ProjectResourceOption from "./ProjectResourceOption";
 export default function ProjectView(props: {
   project: Project;
   onChange: (project: Project) => void;
+  close: () => void;
 }) {
   const [imagePublicId, setImagePublicId] = useState<string | undefined>(
     props.project.imagePublicId
@@ -74,6 +76,16 @@ export default function ProjectView(props: {
         } else {
           return (
             <div className="max-w-lg w-full mx-auto flex flex-col gap-4 py-4">
+              <div className="fixed z-50 top-4 left-4">
+                <button
+                  className="bg-mono-container-light rounded-md w-12 h-12 flex justify-center items-center cursor-pointer"
+                  onClick={() => {
+                    props.close();
+                  }}
+                >
+                  <IoArrowBack />
+                </button>
+              </div>
               <div
                 className="w-full h-48 bg-mono-container-light rounded-lg relative bg-cover flex justify-center items-center group"
                 style={{
