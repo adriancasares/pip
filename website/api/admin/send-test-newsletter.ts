@@ -6,7 +6,7 @@ import twilio from "twilio";
 import axios from "axios";
 import dotenv from "dotenv";
 import phoneChecker from "phone";
-import { getDatabase } from "firebase/database";
+import { getDatabase } from "firebase-admin/database";
 import { getAuth } from "firebase-admin/auth";
 
 export default async function handler(
@@ -35,7 +35,7 @@ export default async function handler(
         credential: admin.credential.cert(firebaseConfig),
       });
 
-  const db = getDatabase();
+  const db = getDatabase(app);
 
   const form = new multiparty.Form();
 
