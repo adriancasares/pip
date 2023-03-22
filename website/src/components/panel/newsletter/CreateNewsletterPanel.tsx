@@ -26,6 +26,7 @@ import { TbPlus } from "react-icons/tb/index.js";
 import NewsletterEditorChip from "./NewsletterEditorChip";
 import MetadataTextInput from "./MetadataTextInput";
 import MetadataDateInput from "./MetadataDateInput";
+import SendEmailPanel from "./SendEmailPanel";
 
 function NewsletterPanelLoader(props: { id: string; close: () => void }) {
   const [newsletter, setNewsletter] = useState<Newsletter | undefined>(
@@ -199,8 +200,19 @@ export default function CreateNewsletterPanel(props: {
     }
   }, [progressSaved]);
 
+  const [shownPanel, setShownPanel] = useState("");
   return (
     <div className="pt-20">
+      {
+        <SendEmailPanel
+          show={shownPanel === "SEND_EMAIL"}
+          onClose={() => {
+            setShownPanel("");
+          }}
+          progressSaved={progressSaved}
+          projectId={props.id}
+        />
+      }
       <div className="fixed top-0 w-full flex items-center justify-between py-4 px-8 bg-white z-10">
         <div className="relative">
           <input
@@ -231,7 +243,9 @@ export default function CreateNewsletterPanel(props: {
           />
           <NewsletterEditorChip
             label="Send"
-            // onClick={() => {}}
+            onClick={() => {
+              setShownPanel("SEND_EMAIL");
+            }}
             icon={<IoPaperPlaneOutline />}
           />
           <NewsletterEditorChip
