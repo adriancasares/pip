@@ -44,15 +44,18 @@ export default function SendEmailPanel(props: {
       getAuth()
         .currentUser?.getIdToken()
         .then((token) => {
-          // post request to /api/admin/send-test-newsletter/:id
-          axios
-            .post("/api/admin/send-test-newsletter", {
-              token,
-              projectId: props.projectId,
-            })
-            .then((res) => {
-              setEmailStatus("SENT");
-            });
+          const bodyFormData = new FormData();
+          bodyFormData.append("token", token);
+          bodyFormData.append("projectId", props.projectId);
+
+          axios({
+            method: "post",
+            url: "/api/admin/send-test-newsletter",
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data" },
+          }).then((res) => {
+            setEmailStatus("SENT");
+          });
         });
     }
   }, [emailStatus]);
