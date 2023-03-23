@@ -63,7 +63,7 @@ export default async function handler(
   const isAdmin = decodedToken.admin;
 
   console.log("token", token);
-  console.log(JSON.stringify(project, null, 2));
+  console.log(JSON.stringify(decodedToken, null, 2));
 
   sgmail.setApiKey(process.env.SENDGRID_API_KEY!);
 
