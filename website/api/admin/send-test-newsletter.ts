@@ -8,6 +8,8 @@ import dotenv from "dotenv";
 import phoneChecker from "phone";
 import { getDatabase } from "firebase-admin/database";
 import { getAuth } from "firebase-admin/auth";
+import sgmail, { MailDataRequired } from "@sendgrid/mail";
+import type Newsletter from "../../src/types/Newsletter";
 
 export default async function handler(
   request: VercelRequest,
@@ -50,25 +52,49 @@ export default async function handler(
   const token = FormResp.fields.token[0];
   const projectId = FormResp.fields.projectId[0];
 
-  getAuth()
-    .verifyIdToken(token)
-    .then((decodedToken) => {
-      const uid = decodedToken.uid;
-      const email = decodedToken.email;
-      const admin = decodedToken.admin;
+  const project: Newsletter = await (
+    await db.ref(`newsletterDrafts/${projectId}`).get()
+  ).val();
 
-      console.log(uid, email, admin);
+  const decodedToken = await getAuth().verifyIdToken(token);
+
+  const uid = decodedToken.uid;
+  const email = decodedToken.email;
+  const isAdmin = decodedToken.admin;
+
+  console.log("token", token);
+  console.log(JSON.stringify(project, null, 2));
+
+  sgmail.setApiKey(process.env.SENDGRID_API_KEY!);
+
+  const msg: MailDataRequired = {
+    to: email,
+    from: {
+      email: "mailer@lasapip.com",
+      name: "[test] " + project.name,
+    },
+    subject: project.name,
+    text: "test",
+    html: `
+          <body>
+            <div>
+              test email
+            </div>
+          </body>
+        `,
+  };
+
+  sgmail
+    .send(msg)
+    .then(() => {
+      response.status(200).json({
+        result: "success",
+      });
     })
     .catch((error) => {
-      response.status(401).json({
+      response.status(500).json({
         result: "error",
-        message: "Invalid token",
+        error: error,
       });
-
-      return;
     });
-
-  response.status(200).json({
-    result: "success",
-  });
 }
