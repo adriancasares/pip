@@ -70,6 +70,8 @@ export default async function handler(
     return;
   }
 
+  console.log(decodedToken);
+
   sgmail.setApiKey(process.env.SENDGRID_API_KEY!);
 
   const msg: MailDataRequired = {
