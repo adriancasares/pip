@@ -62,8 +62,13 @@ export default async function handler(
   const email = decodedToken.email;
   const isAdmin = decodedToken.admin;
 
-  console.log("token", token);
-  console.log(JSON.stringify(decodedToken, null, 2));
+  if (!isAdmin) {
+    response.status(401).json({
+      result: "error",
+      error: "Unauthorized",
+    });
+    return;
+  }
 
   sgmail.setApiKey(process.env.SENDGRID_API_KEY!);
 
