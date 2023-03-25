@@ -51,7 +51,7 @@ export default function SubscribeForm() {
 
   const disabled =
     firstName === "" || lastName === "" || (!phoneNumberValid && !emailValid);
-  classYear === "" || captcha == "";
+  classYear === "" || captcha == null || captcha == "";
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -98,6 +98,7 @@ export default function SubscribeForm() {
         }
       })
       .finally(() => {
+        setCaptcha("");
         setLoading(false);
       });
   };
