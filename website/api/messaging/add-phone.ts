@@ -70,7 +70,7 @@ export default async function handler(
 
   const { isValid, phoneNumber } = phoneChecker(phone);
 
-  if (!isValid) {
+  if (!isValid || phoneNumber == null) {
     response.status(400).json({
       result: "error",
       error: "invalid-phone-number",

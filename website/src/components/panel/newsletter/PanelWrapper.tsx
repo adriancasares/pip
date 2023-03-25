@@ -10,7 +10,7 @@ export default function PanelWrapper(props: {
   return (
     <motion.div
       className={`fixed top-0 left-0 w-full h-full bg-black/20 p-20 ${
-        props.show ? "z-50" : "z-0"
+        props.show ? "z-50" : "z-0 invisible"
       }`}
       onClick={() => {
         props.onClose();

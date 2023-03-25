@@ -10,6 +10,7 @@ import { getDatabase } from "firebase-admin/database";
 import { getAuth } from "firebase-admin/auth";
 import sgmail, { MailDataRequired } from "@sendgrid/mail";
 import type Newsletter from "../../src/types/Newsletter";
+import createNewsletter from "../../public/createNewsletter";
 
 export default async function handler(
   request: VercelRequest,
@@ -80,13 +81,7 @@ export default async function handler(
     },
     subject: project.name,
     text: "test",
-    html: `
-          <body>
-            <div>
-              test email
-            </div>
-          </body>
-        `,
+    html: createNewsletter(project),
   };
 
   sgmail

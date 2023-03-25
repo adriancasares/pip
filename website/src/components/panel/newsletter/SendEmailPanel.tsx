@@ -3,6 +3,7 @@ import LoadingSpinner from "../../LoadingSpinner";
 import PanelWrapper from "./PanelWrapper";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
+import TextInput from "../TextInput";
 
 export default function SendEmailPanel(props: {
   onClose: () => void;
@@ -65,16 +66,51 @@ export default function SendEmailPanel(props: {
       <PanelWrapper show={props.show} onClose={props.onClose}>
         {props.progressSaved === "NO_CHANGES" ? (
           <div className="flex items-center justify-center h-full">
-            <div className="max-w-xl w-full relative h-3 bg-mono-container-light">
-              <p>{emailStatus}</p>
+            <div
+              className="max-w-xl w-full relative h-3 bg-mono-container-light"
+              style={{
+                opacity: emailStatus === "SENT" ? 0 : 1,
+                transition: "opacity 1s ease-out",
+              }}
+            >
               <div
                 className="relative top-0 left-0 w-full h-full from-blue-500 to-indigo-500 bg-gradient-to-r rounded-full"
                 style={{
-                  width: emailStatus === "WAITING" ? "0%" : "70%",
-                  transition: "width 8s",
+                  width:
+                    emailStatus === "WAITING"
+                      ? "2%"
+                      : emailStatus === "SENT"
+                      ? "100%"
+                      : "70%",
+                  transition:
+                    emailStatus === "SENT"
+                      ? "width 2s ease-out, opacity 1s ease-out"
+                      : "width 8s ease-in-out",
+                  opacity: emailStatus === "SENT" ? 0 : 1,
                 }}
               ></div>
             </div>
+            {emailStatus === "SENT" && (
+              <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                <div className="flex flex-col gap-4 font-os text-mono-c text-base items-center">
+                  <p className="text-2xl text-mono-text-dark">Email Sent</p>
+                  <p className="text-sm">
+                    You should receive an email shortly at{" "}
+                    {getAuth().currentUser?.email}.
+                  </p>
+                  {
+                    <button
+                      className="bg-indigo-500 text-white px-4 py-2 rounded-md font-os text-sm"
+                      onClick={() => {
+                        props.onClose();
+                      }}
+                    >
+                      Close
+                    </button>
+                  }
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="flex items-center justify-center h-full">
