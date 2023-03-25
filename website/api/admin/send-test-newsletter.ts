@@ -81,7 +81,11 @@ export default async function handler(
     },
     subject: project.name,
     text: "test",
-    html: createNewsletter(project),
+    html: createNewsletter(project, {
+      email: email ?? "",
+      unsubLink: undefined,
+      test: true,
+    }),
   };
 
   sgmail

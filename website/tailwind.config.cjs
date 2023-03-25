@@ -24,12 +24,24 @@ module.exports = {
             // perspective: "1000px",
           },
         },
+        "3-arrows": {
+          "0%": {
+            transform: "scale(1)",
+          },
+          "50%": {
+            transform: "scale(1.1)",
+          },
+          "100%": {
+            transform: "scale(1)",
+          },
+        },
       },
       animation: {
         "fade-in-down": "fade-in-down 0.7s ease-out",
         "loading-dot-1": "pulse 0.75s linear infinite 0s",
         "loading-dot-2": "pulse 0.75s linear infinite 0.25s",
         "loading-dot-3": "pulse 0.75s linear infinite 0.5s",
+        "3-arrows": "3-arrows 4.5s linear infinite",
       },
       screens: {
         "3xs": "435px",

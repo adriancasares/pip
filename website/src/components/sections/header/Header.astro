@@ -1,6 +1,7 @@
 ---
 import { FaDiscord } from "react-icons/fa/index.js";
 import Button from "../../Button";
+import JoinNewsletterForm from "./JoinNewsletterForm";
 export interface Props {
   title: string;
   description: string;
@@ -19,18 +20,19 @@ const { title, description, image, callToAction, discordLink } = Astro.props;
     >
     </div>
     <div class="md:text-center flex flex-col gap-10 pt-20 pb-40 relative px-10">
-      <img src="/favicon.svg" class="md:self-center" width="100">
+      <img src="/favicon.svg" class="md:self-center" width="100" />
       <h1 class="text-mono-a font-title font-extrabold text-4xl">{title}</h1>
       <p class="text-mono-b max-w-sm md:mx-auto">{description}</p>
-      <div class="md:mx-auto flex flex-col gap-4 w-fit">
+      <div class="md:mx-auto flex flex-col gap-4 max-w-sm w-full">
         <div>
-          {
+          {(<JoinNewsletterForm client:load />)}
+          <!-- {
             callToAction === "add phone number" && (
               <Button icon="message" link={"/add-phone"}>
                 Get Involved
               </Button>
             )
-          }
+          } -->
         </div>
         <div
           class="flex items-ceter text-mono-c gap-2 items-center md:mx-auto w-fit"

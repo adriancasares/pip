@@ -1,0 +1,25 @@
+---
+import Banner from "../components/Banner.astro";
+import Layout from "../layouts/Layout.astro";
+import SubscribeForm from "../components/subscribe/SubscribeForm";
+---
+
+<Layout title="Subscribe - Programming in Practice">
+  <main>
+    <Banner />
+    <div class="flex flex-col gap-10 py-10">
+      <div>
+        <div class="text-mono-text max-w-3xl mx-auto px-10 flex flex-col gap-4">
+          <h1 class="text-mono-a text-3xl font-sans">
+            Subscribe To Our Newsletter
+          </h1>
+          <p class="max-w-xs">
+            We send emails about programming and software development every
+            Thursday morning.
+          </p>
+        </div>
+      </div>
+      <SubscribeForm client:load />
+    </div>
+  </main>
+</Layout>
