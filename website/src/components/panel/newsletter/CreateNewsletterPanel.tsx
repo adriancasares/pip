@@ -233,7 +233,7 @@ export default function CreateNewsletterPanel(props: {
             label="Back to Project"
             grayscale
             onClick={() => {
-              console.log(props.close());
+              props.close();
             }}
           />
           <NewsletterEditorChip

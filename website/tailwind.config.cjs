@@ -74,7 +74,7 @@ module.exports = {
         },
         "section-bg-purple-lighter": "#22222C",
         "section-bg-purple": "#181821",
-        "header-image-overlay": "#3D2946",
+        "header-image-overlay": "#47314f",
         "gradient-text": {
           from: "#889BFF",
           to: "#fa9006",

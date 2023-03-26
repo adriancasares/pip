@@ -4,19 +4,19 @@ import Layout from "../layouts/Layout.astro";
 import SubscribeForm from "../components/subscribe/SubscribeForm";
 ---
 
-<Layout title="Subscribe - Programming in Practice">
+<Layout title="Subscribe - Programming in Practice" light={true}>
   <main>
-    <Banner />
-    <div class="flex flex-col gap-10 py-10">
+    <div class="flex flex-col gap-10 pt-10 pb-5">
       <div>
         <div class="text-mono-text max-w-3xl mx-auto px-10 flex flex-col gap-4">
-          <h1 class="text-mono-a text-3xl font-sans">
+          <h1 class="text-black text-3xl font-sans font-medium">
             Subscribe To Our Newsletter
           </h1>
-          <p class="max-w-xs">
+          <p class="max-w-xs text-mono-c">
             We send emails about programming and software development every
             Thursday morning.
           </p>
+          <a href="/" class="underline"> Go Back</a>
         </div>
       </div>
       <SubscribeForm client:load />

@@ -164,28 +164,18 @@ export default async function handler(
         name: "Programming in Practice",
       },
       subject: "Welcome to PIP!",
-      text: "",
+      text: "test",
       html: `<html>
       <body>
-        <p>Hi ${firstName},</p>
-        <p>You're signed up to recieve newsletters from us.
+        <div>
+          <p>Hi ${firstName},</p>
+          <p>You're signed up to recieve newsletters from us.
+          </div>
         </body>
       </html>`,
     };
 
-    sgmail
-      .send(msg)
-      .then(() => {
-        response.status(200).json({
-          result: "success",
-        });
-      })
-      .catch((error) => {
-        response.status(500).json({
-          result: "error",
-          error: error,
-        });
-      });
+    await sgmail.send(msg);
   }
 
   response.status(200).json({

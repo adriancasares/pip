@@ -1,0 +1,23 @@
+---
+import ClubInfoHeader from "./ClubInfoHeader";
+---
+
+<section
+  id="club-info"
+  class="w-full bg-section-bg-purple py-20 flex flex-col gap-10 mb-20"
+>
+  <ClubInfoHeader client:load>Club Info</ClubInfoHeader>
+
+  <div class="flex flex-col w-fit mx-auto">
+    {
+      (
+        <p class="w-full max-w-xl text-mono-c">
+          Programming in Practice is a kickstart to a Computer Science Career.
+          We run live meetings Wednesdays at Lunch in Room 505. We also run
+          middle school outreach programs and send newsletters every Thursday
+          morning.
+        </p>
+      )
+    }
+  </div>
+</section>

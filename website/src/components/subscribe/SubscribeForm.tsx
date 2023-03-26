@@ -147,7 +147,7 @@ export default function SubscribeForm() {
               } transition-opacity max-w-3xl mx-auto w-full`}
             >
               <div className="">
-                <div className="bg-white rounded-lg overflow-hidden mx-8">
+                <div className="bg-white rounded-lg overflow-hidden mx-8 shadow-md border border-mono-border-light">
                   <div className="flex flex-col gap-4 md:p-10 p-6 pb-4 md:pb-4">
                     <TextInput
                       label="First Name"
@@ -172,7 +172,7 @@ export default function SubscribeForm() {
                     />
                   </div>
                   <div className="flex flex-col gap-4 bg-mono-container-light md:p-10 p-6 pt-4 md:pt-4">
-                    <p className="text-xs bg-slate-800 text-white py-1 px-2 rounded-md w-fit">
+                    <p className="text-xs bg-slate-200 text-slate-500 py-1 px-2 rounded-md w-fit">
                       Complete at least one.
                     </p>
                     <TextInput
@@ -204,17 +204,15 @@ export default function SubscribeForm() {
             <div className="mx-auto flex flex-col items-center gap-2">
               <HCaptcha
                 sitekey="994171e5-ba9e-465c-9825-441ad34a3537"
-                theme="dark"
+                theme="light"
                 onVerify={(token) => setCaptcha(token)}
               />
-              <Button
-                loading={loading}
-                type={"submit"}
-                tabIndex={5}
-                disabled={disabled}
+              <button
+                type="submit"
+                className="from-slate-700 to-slate-800 bg-gradient-to-b text-white rounded-lg font-sans uppercase py-2 px-4"
               >
-                Sign Up
-              </Button>
+                Subscribe
+              </button>
             </div>
           </form>
         </>
