@@ -74,6 +74,9 @@ export default async function handler(
   const { isValid, phoneNumber } = phoneChecker(phone);
   const emailValid = validateEmail.validate(email);
 
+  let matchingPhone: any = null;
+  let matchingEmail: any = null;
+
   if (phoneNumber != null) {
     if (!isValid) {
       response.status(400).json({
@@ -83,19 +86,10 @@ export default async function handler(
       return;
     }
 
-    const matchingPhone = await db
+    matchingPhone = await db
       .collection("members")
       .where("phoneNumber", "==", phoneNumber)
       .get();
-
-    if (!matchingPhone.empty) {
-      response.status(400).json({
-        result: "error",
-        error: "phone-already-exists",
-        message: "Phone number already registerd.",
-      });
-      return;
-    }
   }
 
   if (email != null) {
@@ -107,22 +101,61 @@ export default async function handler(
       return;
     }
 
-    const matchingEmail = await db
+    matchingEmail = await db
       .collection("members")
       .where("email", "==", email)
       .get();
+  }
 
-    if (!matchingEmail.empty) {
+  if (phoneNumber != null && email != null) {
+    if (matchingPhone.size > 0 && !(matchingEmail.size > 0)) {
+      await db.collection("members").doc(matchingPhone.docs[0].id).update({
+        email,
+      });
+    } else if (matchingEmail.size > 0 && !(matchingPhone.size > 0)) {
+      await db.collection("members").doc(matchingEmail.docs[0].id).update({
+        phoneNumber,
+      });
+    } else if (matchingEmail.size > 0 && matchingPhone.size > 0) {
       response.status(400).json({
         result: "error",
-        error: "email-already-exists",
-        message: "Email already registerd.",
+        error: "duplicate-email-and-phone",
       });
       return;
     }
+  } else if (phoneNumber != null) {
+    if (matchingPhone.size > 0) {
+      response.status(400).json({
+        result: "error",
+        error: "duplicate-phone",
+      });
+      return;
+    } else {
+      await db.collection("members").add({
+        firstName,
+        lastName,
+        phoneNumber,
+        classYear,
+      });
+    }
+  } else if (email != null) {
+    if (matchingEmail.size > 0) {
+      response.status(400).json({
+        result: "error",
+        error: "duplicate-email",
+      });
+      return;
+    } else {
+      await db.collection("members").add({
+        firstName,
+        lastName,
+        email,
+        classYear,
+      });
+    }
   }
 
-  if (phoneNumber != null) {
+  if (phoneNumber != null && matchingPhone.size == 0) {
     const accountSid = process.env.TWILIO_ACCOUNT_SID!;
     const authToken = process.env.TWILIO_AUTH_TOKEN!;
     const client = twilio(accountSid, authToken);
@@ -146,30 +179,34 @@ export default async function handler(
     });
   }
 
-  const memberRef = await db.collection("members").add({
-    firstName,
-    lastName,
-    email,
-    phoneNumber,
-    classYear,
-  });
-
-  if (email != null) {
+  if (email != null && matchingEmail.size == 0) {
     sgmail.setApiKey(process.env.SENDGRID_API_KEY!);
 
     const msg: MailDataRequired = {
       to: email,
       from: {
         email: "mailer@lasapip.com",
-        name: "Programming in Practice",
+        name: "Adrian Casares",
       },
       subject: "Welcome to PIP!",
-      text: "test",
+      text: `Welcome to Programming in Practice! We're excited to have you join us for our weekly newsletters and meetings.\nYou can expect new emails every Thursday morning.`,
       html: `<html>
       <body>
         <div>
-          <p>Hi ${firstName},</p>
-          <p>You're signed up to recieve newsletters from us.
+          <p>${firstName},</p>
+          <p>
+            Welcome to Programming in Practice! We're
+            excited to have you join us for our weekly
+            newsletters and meetings. 
+          </p>
+          <p>
+            <b>You can expect new emails every Thursday morning.</b>
+          </p>
+          <p>
+            Thanks,
+            <br />
+            Adrian Casares
+          </p>
           </div>
         </body>
       </html>`,
@@ -178,7 +215,19 @@ export default async function handler(
     await sgmail.send(msg);
   }
 
-  response.status(200).json({
-    result: "success",
-  });
+  if (matchingPhone.size != 0) {
+    response.status(200).json({
+      result: "success",
+      matchingPhone: true,
+    });
+  } else if (matchingEmail.size != 0) {
+    response.status(200).json({
+      result: "success",
+      matchingEmail: true,
+    });
+  } else {
+    response.status(200).json({
+      result: "success",
+    });
+  }
 }
