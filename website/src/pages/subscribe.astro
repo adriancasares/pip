@@ -2,9 +2,20 @@
 import Banner from "../components/Banner.astro";
 import Layout from "../layouts/Layout.astro";
 import SubscribeForm from "../components/subscribe/SubscribeForm";
+import { SEO } from "astro-seo";
 ---
 
 <Layout title="Subscribe - Programming in Practice" light={true}>
+  <SEO
+    openGraph={{
+      basic: {
+        title: "Programming in Practice Newsletter",
+        type: "you should subscribe! 👀",
+        url: "https://lasapip.com/subscribe",
+        image: "https://lasapip.com/icon-256.png",
+      },
+    }}
+  />
   <main>
     <div class="flex flex-col gap-10 pt-10 pb-5">
       <div>

@@ -34,6 +34,7 @@
     "@types/marked": "^4.0.7",
     "@vercel/node": "^2.5.26",
     "astro": "^1.4.7",
+    "astro-seo": "^0.7.2",
     "cloudinary": "^1.35.0",
     "dotenv": "^16.0.3",
     "email-validator": "^2.0.4",

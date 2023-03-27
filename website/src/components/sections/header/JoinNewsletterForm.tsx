@@ -23,7 +23,7 @@ export default function JoinNewsletterForm() {
           <img
             src="/image/arrows/curved-arrow-down.svg"
             alt=""
-            className="w-24 select-none"
+            className="w-20 select-none"
           />
         </div>
         <p>Join our Newsletter</p>
