@@ -7,9 +7,16 @@ import "@fontsource/poppins/600.css";
 export interface Props {
   title: string;
   light?: boolean;
+  og?: {
+    title: string;
+    description: string;
+    url: string;
+    image: string;
+
+  }
 }
 
-const { title, light } = Astro.props;
+const { title, light, og } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -19,6 +26,17 @@ const { title, light } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=4&from=lasapip" />
     <meta name="generator" content={Astro.generator} />
+    
+    { /* @ts-ignore */ }
+    { og && <meta.property name="og:title" content={og.title} /> }
+    { /* @ts-ignore */ }
+    { og && <meta.property name="og:type" content="website" /> }
+    { /* @ts-ignore */ }
+    { og && <meta.property name="og:description" content={og.description} /> }
+    { /* @ts-ignore */ }
+    { og && <meta.property name="og:url" content={og.url} /> }
+    { /* @ts-ignore */ }
+    { og && <meta.property name="og:image" content={og.image} /> }
     <title>{title}</title>
   </head>
   <body>
