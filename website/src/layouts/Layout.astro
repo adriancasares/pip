@@ -27,16 +27,11 @@ const { title, light, og } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=4&from=lasapip" />
     <meta name="generator" content={Astro.generator} />
     
-    { /* @ts-ignore */ }
-    { og && <meta.property name="og:title" content={og.title} /> }
-    { /* @ts-ignore */ }
-    { og && <meta.property name="og:type" content="website" /> }
-    { /* @ts-ignore */ }
-    { og && <meta.property name="og:description" content={og.description} /> }
-    { /* @ts-ignore */ }
-    { og && <meta.property name="og:url" content={og.url} /> }
-    { /* @ts-ignore */ }
-    { og && <meta.property name="og:image" content={og.image} /> }
+    { og && <meta name="og:title" content={og.title} /> }
+    { og && <meta name="og:type" content="website" /> }
+    { og && <meta name="og:description" content={og.description} /> }
+    { og && <meta name="og:url" content={og.url} /> }
+    { og && <meta name="og:image" content={og.image} /> }
     <title>{title}</title>
   </head>
   <body>
