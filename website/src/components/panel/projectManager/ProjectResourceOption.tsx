@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import LoadingSpinner from "../../LoadingSpinner";
 
 export default function ProjectResourceOption(props: {
   label: string;
   faded?: boolean;
+  loading?: boolean;
   onClick?: () => void;
 }) {
   const [hover, setHover] = useState(false);
@@ -28,13 +30,14 @@ export default function ProjectResourceOption(props: {
           transition={{ duration: 0.2 }}
         />
       )}
-      <p
-        className={`relative z-10 py-4 px-8 ${
+      <div
+        className={`relative z-10 py-4 px-8 flex items-center gap-4 ${
           props.faded ? "text-mono-c italic" : "text-black"
         }`}
       >
-        {props.label}
-      </p>
+        {props.loading && <LoadingSpinner small />}
+        <p>{props.label}</p>
+      </div>
     </div>
   );
 }

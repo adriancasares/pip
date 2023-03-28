@@ -1,12 +1,15 @@
 import React from "react";
 
-export default function LoadingSpinner(props: { large?: boolean }) {
+export default function LoadingSpinner(props: {
+  large?: boolean;
+  small?: boolean;
+}) {
   return (
     <div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 48 48"
-        width={props.large ? "40px" : "20px"}
+        width={props.large ? "40px" : props.small ? "14px" : "20px"}
         stroke="grey"
         speed="0.75"
         data-testid="rotating-lines-svg"

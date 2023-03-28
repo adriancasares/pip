@@ -1,11 +1,13 @@
 import { Cloudinary } from "@cloudinary/url-gen";
+import { getAuth } from "firebase/auth";
 import { get, getDatabase, ref, set } from "firebase/database";
-import React, { useEffect, useMemo, useState } from "react";
 import { IoArrowBack } from "react-icons/io5/index.js";
+import React, { useEffect, useMemo, useState } from "react";
 import type { Project } from "../../../types/Project";
 import CreateNewsletterPanel from "../newsletter/CreateNewsletterPanel";
 import MetadataTextInput from "../newsletter/MetadataTextInput";
 import ProjectResourceOption from "./ProjectResourceOption";
+import axios from "axios";
 
 export default function ProjectView(props: {
   project: Project;
@@ -50,6 +52,11 @@ export default function ProjectView(props: {
   }, [imagePublicId]);
 
   const [hasNewsletter, setHasNewsletter] = useState(false);
+  const hasNotes = useMemo(
+    () => props.project.notesUrl != null,
+    [props.project]
+  );
+  const [loadingNotes, setLoadingNotes] = useState(false);
 
   const database = getDatabase();
 
@@ -156,6 +163,14 @@ export default function ProjectView(props: {
                     }}
                   />
                 )}
+                {hasNotes && (
+                  <ProjectResourceOption
+                    label="Notes"
+                    onClick={() => {
+                      window.open(props.project.notesUrl, "_blank");
+                    }}
+                  />
+                )}
                 <div className="py-4 relative">
                   <hr />
                   <p className="absolute top-1/2 -translate-y-1/2 left-6 bg-white text-xs font-os p-2 text-mono-c">
@@ -184,6 +199,48 @@ export default function ProjectView(props: {
 
                       setHasNewsletter(true);
                       setView("newsletter");
+                    }}
+                  />
+                )}
+                {!hasNotes && (
+                  <ProjectResourceOption
+                    faded
+                    loading={loadingNotes}
+                    label="Notes"
+                    onClick={() => {
+                      setLoadingNotes((l) => {
+                        if (!l) {
+                          getAuth()
+                            .currentUser?.getIdToken()
+                            .then((token) => {
+                              const bodyFormData = new FormData();
+                              bodyFormData.append("token", token);
+                              bodyFormData.append(
+                                "projectId",
+                                props.project.id
+                              );
+
+                              axios({
+                                method: "post",
+                                url: "/api/admin/create-notes",
+                                data: bodyFormData,
+                                headers: {
+                                  "Content-Type": "multipart/form-data",
+                                },
+                              }).then((res) => {
+                                window.open(res.data.fileUrl, "_blank");
+
+                                props.onChange({
+                                  ...props.project,
+                                  notesUrl: res.data.fileUrl,
+                                });
+
+                                setLoadingNotes(false);
+                              });
+                            });
+                        }
+                        return true;
+                      });
                     }}
                   />
                 )}
