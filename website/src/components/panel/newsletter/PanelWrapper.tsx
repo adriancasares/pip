@@ -1,18 +1,26 @@
 import type React from "react";
 import { IoCloseOutline } from "react-icons/io5/index.js";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 export default function PanelWrapper(props: {
   children: React.ReactNode;
   onClose: () => void;
   show: boolean;
 }) {
+  const dontCloseRef = useRef<HTMLDivElement>(null);
+
   return (
     <motion.div
       className={`fixed top-0 left-0 w-full h-full bg-black/20 p-20 ${
         props.show ? "z-50" : "z-0 invisible"
       }`}
-      onClick={() => {
+      onClick={(e) => {
+        // if inside the panel, don't close
+        if (dontCloseRef.current?.contains(e.target as Node)) {
+          return;
+        }
+
         props.onClose();
       }}
       initial={{
@@ -29,6 +37,7 @@ export default function PanelWrapper(props: {
         <IoCloseOutline className="w-4 h-4" />
       </div>
       <motion.div
+        ref={dontCloseRef}
         className="bg-white w-full h-full rounded-md shadow-lg"
         initial={{
           opacity: 0,

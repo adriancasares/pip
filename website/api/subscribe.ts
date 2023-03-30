@@ -122,6 +122,14 @@ export default async function handler(
         error: "duplicate-email-and-phone",
       });
       return;
+    } else {
+      await db.collection("members").add({
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        classYear,
+      });
     }
   } else if (phoneNumber != null) {
     if (matchingPhone.size > 0) {

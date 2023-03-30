@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type {
   NewsletterDividerBlock,
   NewsletterMeetingExclusiveBlock,
@@ -19,7 +19,12 @@ export default function NewsletterMeExBlockEditor(props: {
   remove: () => void;
 }) {
   const [hover, setHover] = useState(false);
-  const [name, setName] = useState("");
+  const [text, setText] = useState(props.block.text);
+
+  useEffect(() => {
+    props.onChange({ ...props.block, text });
+  }, [text]);
+
   return (
     <div
       className="relative flex items-center py-4"
@@ -42,7 +47,7 @@ export default function NewsletterMeExBlockEditor(props: {
       </div>
       <div className="w-full bg-mono-container-light flex items-center gap-8 py-4 px-8 rounded-lg">
         <IoLockClosed />
-        <TextInput value={name} onChange={setName} label="Meeting Exclusive" />
+        <TextInput value={text} onChange={setText} label="Meeting Exclusive" />
       </div>
     </div>
   );
