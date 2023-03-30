@@ -164,6 +164,8 @@ export default function createNewsletter(
                                             </tr>
                                         `;
                                 }
+                                if (block.type === "MEETING_EXCLUSIVE") {
+                                }
                                 return "";
                               })
                               .join("")}
@@ -199,8 +201,8 @@ export default function createNewsletter(
                 <span style="color: #555; padding: 0 0.5rem; display: inline-block;">•</span> 
                 ${
                   recipient.unsubLink
-                    ? `<a href="${recipient.unsubLink}" style="font-size: 0.75rem; display: inline-block; color: #888;">Unsubscribe</a>`
-                    : ""
+                    ? `<p href="${recipient.unsubLink}" style="font-size: 0.75rem; display: inline-block; color: #888;">Unsubscribe</a>`
+                    : `<p style="font-size: 0.75rem; display: inline-block; color: #888;">Reply to us to unsubscribe.</p>`
                 }
                 ${
                   recipient.test
