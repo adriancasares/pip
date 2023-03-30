@@ -5,6 +5,7 @@ import {
   IoAdd,
   IoGitCommit,
   IoImage,
+  IoLockClosed,
   IoText,
   IoTextSharp,
 } from "react-icons/io5/index.js";
@@ -97,6 +98,15 @@ export default function NewsletterBlockEditorWrapper(props: {
             >
               <IoGitCommit />
               <p>Add Divider</p>
+            </div>
+
+            <div
+              onClick={() => {
+                addBlock("MEETING_EXCLUSIVE");
+              }}
+            >
+              <IoLockClosed />
+              <p>Add MeEx</p>
             </div>
           </motion.div>
         </div>

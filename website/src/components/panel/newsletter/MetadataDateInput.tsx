@@ -30,7 +30,7 @@ export default function MetadataDateInput(props: {
 
   return (
     <div className="flex items-center relative" ref={inputRef}>
-      <p className="text-xs text-mono-text font-os w-24">{props.label}</p>
+      <p className="text-xs text-mono-text font-os min-w-24">{props.label}</p>
       <p
         onClick={() => {
           setShow(!show);

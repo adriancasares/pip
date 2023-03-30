@@ -1,5 +1,5 @@
 export interface NewsletterContentBlock {
-  type: "TEXT" | "IMAGE" | "DIVIDER";
+  type: "TEXT" | "IMAGE" | "DIVIDER" | "MEETING_EXCLUSIVE";
   id: string;
 }
 
@@ -24,4 +24,10 @@ export interface NewsletterImageBlock extends NewsletterContentBlock {
 
 export interface NewsletterDividerBlock extends NewsletterContentBlock {
   type: "DIVIDER";
+}
+
+export interface NewsletterMeetingExclusiveBlock
+  extends NewsletterContentBlock {
+  type: "MEETING_EXCLUSIVE";
+  text: string;
 }

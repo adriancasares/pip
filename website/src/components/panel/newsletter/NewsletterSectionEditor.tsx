@@ -7,6 +7,7 @@ import type {
   NewsletterContentBlock,
   NewsletterDividerBlock,
   NewsletterImageBlock,
+  NewsletterMeetingExclusiveBlock,
   NewsletterTextBlock,
 } from "../../../types/NewsletterContentBlock";
 import NewsletterTextBlockEditor from "./NewsletterTextBlockEditor";
@@ -19,6 +20,7 @@ import {
   IoEllipsisVertical,
 } from "react-icons/io5/index.js";
 import NewsletterChangeOrderBar from "./NewsletterChangeOrderBar";
+import NewsletterMeExBlockEditor from "./NewsletterMeExBlockEditor";
 export default function NewsletterSectionEditor(props: {
   section: NewsletterSection;
   onChange: (section: NewsletterSection) => void;
@@ -99,6 +101,10 @@ export default function NewsletterSectionEditor(props: {
       newBlocks.splice(index, 0, newBlock);
     } else if (blockType === "DIVIDER") {
       const newBlock = newBlockGeneric as NewsletterDividerBlock;
+
+      newBlocks.splice(index, 0, newBlock);
+    } else if (blockType === "MEETING_EXCLUSIVE") {
+      const newBlock = newBlockGeneric as NewsletterMeetingExclusiveBlock;
 
       newBlocks.splice(index, 0, newBlock);
     }
@@ -337,6 +343,57 @@ export default function NewsletterSectionEditor(props: {
                         <NewsletterDividerBlockEditor
                           key={block.id}
                           block={block as NewsletterDividerBlock}
+                          onChange={(newBlock) => {
+                            const newBlocks = props.section.blocks;
+                            newBlocks[index] = newBlock;
+                            props.onChange({
+                              ...props.section,
+                              blocks: newBlocks,
+                            });
+                          }}
+                          isFirst={index === 0}
+                          isLast={index === props.section.blocks.length - 1}
+                          onMoveUp={() => {
+                            adjustBlockContainerHeight();
+
+                            const newBlocks = props.section.blocks;
+                            const temp = newBlocks[index];
+                            newBlocks[index] = newBlocks[index - 1];
+                            newBlocks[index - 1] = temp;
+
+                            props.onChange({
+                              ...props.section,
+                              blocks: newBlocks,
+                            });
+                          }}
+                          onMoveDown={() => {
+                            adjustBlockContainerHeight();
+
+                            const newBlocks = props.section.blocks;
+                            const temp = newBlocks[index];
+                            newBlocks[index] = newBlocks[index + 1];
+                            newBlocks[index + 1] = temp;
+
+                            props.onChange({
+                              ...props.section,
+                              blocks: newBlocks,
+                            });
+                          }}
+                          remove={() => {
+                            const newBlocks = props.section.blocks;
+                            newBlocks.splice(index, 1);
+                            props.onChange({
+                              ...props.section,
+                              blocks: newBlocks,
+                            });
+                          }}
+                        />
+                      );
+                    } else if (block.type === "MEETING_EXCLUSIVE") {
+                      return (
+                        <NewsletterMeExBlockEditor
+                          key={block.id}
+                          block={block as NewsletterMeetingExclusiveBlock}
                           onChange={(newBlock) => {
                             const newBlocks = props.section.blocks;
                             newBlocks[index] = newBlock;
