@@ -10,6 +10,7 @@ import ProjectResourceOption from "./ProjectResourceOption";
 import axios from "axios";
 import { AlertContext } from "../newsletter/EditorAlertDisplay";
 import ProjectResources from "./ProjectResources";
+import MeetingEditor from "../meeting/MeetingEditor";
 
 export default function ProjectView(props: {
   project: Project;
@@ -54,6 +55,10 @@ export default function ProjectView(props: {
   }, [imagePublicId]);
 
   const [hasNewsletter, setHasNewsletter] = useState(false);
+
+  const [hasMeeting, setHasMeeting] = useState(false);
+  const [presentationUrl, setPresentationUrl] = useState("");
+
   const hasNotes = useMemo(
     () => props.project.notesUrl != null,
     [props.project]
@@ -70,6 +75,12 @@ export default function ProjectView(props: {
         }
       }
     );
+    get(ref(database, `meetings/${props.project.id}`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        setHasMeeting(true);
+        setPresentationUrl(snapshot.val().slidesUrl);
+      }
+    });
   }, []);
 
   // from url ?projectView
@@ -93,6 +104,18 @@ export default function ProjectView(props: {
         if (view === "newsletter") {
           return (
             <CreateNewsletterPanel
+              id={props.project.id}
+              close={() => {
+                setView(undefined);
+                const url = new URL(window.location.href);
+                url.searchParams.delete("projectView");
+                window.history.pushState({}, "", url.toString());
+              }}
+            />
+          );
+        } else if (view === "meeting") {
+          return (
+            <MeetingEditor
               id={props.project.id}
               close={() => {
                 setView(undefined);
@@ -162,10 +185,50 @@ export default function ProjectView(props: {
                 }}
               />
 
-              <h3 className="text-lg font-medium">Resources</h3>
-
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-medium">Resources</h3>
+                {hasMeeting && presentationUrl && (
+                  <button
+                    className="bg-sky-500 text-white rounded-md py-2 px-4 font-os text-sm"
+                    onClick={() => {
+                      // open presentation
+                      if (hasMeeting) {
+                        window.open(presentationUrl);
+                      }
+                    }}
+                  >
+                    Present
+                  </button>
+                )}
+              </div>
               <ProjectResources
                 resources={[
+                  {
+                    loading: false,
+                    name: "Meeting",
+                    open() {
+                      const url = new URL(window.location.href);
+                      url.searchParams.set("projectView", "meeting");
+                      history.pushState({}, "", url.toString());
+                      setView("meeting");
+                    },
+                    create() {
+                      set(ref(database, `meetings/${props.project.id}`), {
+                        name: props.project.name + " Meeting",
+                        slug: "",
+                        date: Date.now(),
+                      });
+                    },
+                    complete: completed.includes("meeting"),
+                    exists: hasMeeting,
+                    changeComplete(arg0) {
+                      if (arg0) {
+                        setCompleted([...completed, "meeting"]);
+                      } else {
+                        setCompleted(completed.filter((c) => c !== "meeting"));
+                      }
+                    },
+                  },
                   {
                     loading: false,
                     name: "Newsletter",
@@ -356,10 +419,12 @@ export default function ProjectView(props: {
                 )}
               </div> */}
               <div
-                className="text-xs text-red-400 flex gap-2 items-center cursor-pointer hover:underline"
+                className="text-xs text-red-400 flex gap-2 items-center cursor-pointer hover:underline w-fit"
                 onClick={() => {
                   alerts.addAlert({
                     name: "Are you sure you want to remove this project and all of its resources?",
+                    type: "CONFIRM",
+                    // @ts-ignore
                     callback(arg0) {
                       if (arg0) {
                         props.onChange(null);
