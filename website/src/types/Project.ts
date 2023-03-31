@@ -5,4 +5,5 @@ export type Project = {
   imagePublicId?: string;
   notesUrl?: string;
   plans?: string;
+  completed?: string[];
 };

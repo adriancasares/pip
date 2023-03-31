@@ -9,6 +9,7 @@ import MetadataTextInput from "../newsletter/MetadataTextInput";
 import ProjectResourceOption from "./ProjectResourceOption";
 import axios from "axios";
 import { AlertContext } from "../newsletter/EditorAlertDisplay";
+import ProjectResources from "./ProjectResources";
 
 export default function ProjectView(props: {
   project: Project;
@@ -77,6 +78,14 @@ export default function ProjectView(props: {
   );
 
   const alerts = useContext(AlertContext);
+
+  const [completed, setCompleted] = useState<string[]>(
+    props.project.completed ?? []
+  );
+
+  useEffect(() => {
+    props.onChange({ ...props.project, completed });
+  }, [completed]);
 
   return (
     <div>
@@ -154,7 +163,105 @@ export default function ProjectView(props: {
               />
 
               <h3 className="text-lg font-medium">Resources</h3>
-              <div className="max-w-lg border border-mono-border-light p-2 rounded-lg cursor-pointer">
+
+              <ProjectResources
+                resources={[
+                  {
+                    loading: false,
+                    name: "Newsletter",
+                    open() {
+                      const url = new URL(window.location.href);
+                      url.searchParams.set("projectView", "newsletter");
+                      history.pushState({}, "", url.toString());
+                      setView("newsletter");
+                    },
+                    create() {
+                      set(
+                        ref(database, `newsletterDrafts/${props.project.id}`),
+                        {
+                          name: props.project.name + " Newsletter",
+                          slug: "",
+                          date: Date.now(),
+                          author: "",
+                          sections: [],
+                        }
+                      );
+
+                      const url = new URL(window.location.href);
+                      url.searchParams.set("projectView", "newsletter");
+                      history.pushState({}, "", url.toString());
+
+                      setHasNewsletter(true);
+                      setView("newsletter");
+                    },
+                    complete: completed.includes("newsletter"),
+                    exists: hasNewsletter,
+                    changeComplete(arg0) {
+                      setCompleted((c) => {
+                        if (arg0) {
+                          return [...c, "newsletter"];
+                        } else {
+                          return c.filter((v) => v !== "newsletter");
+                        }
+                      });
+                    },
+                  },
+                  {
+                    loading: loadingNotes,
+                    name: "Notes",
+                    open() {
+                      window.open(props.project.notesUrl, "_blank");
+                    },
+                    create() {
+                      setLoadingNotes((l) => {
+                        if (!l) {
+                          getAuth()
+                            .currentUser?.getIdToken()
+                            .then((token) => {
+                              const bodyFormData = new FormData();
+                              bodyFormData.append("token", token);
+                              bodyFormData.append(
+                                "projectId",
+                                props.project.id
+                              );
+
+                              axios({
+                                method: "post",
+                                url: "/api/admin/create-notes",
+                                data: bodyFormData,
+                                headers: {
+                                  "Content-Type": "multipart/form-data",
+                                },
+                              }).then((res) => {
+                                window.open(res.data.fileUrl, "_blank");
+
+                                props.onChange({
+                                  ...props.project,
+                                  notesUrl: res.data.fileUrl,
+                                });
+
+                                setLoadingNotes(false);
+                              });
+                            });
+                        }
+                        return true;
+                      });
+                    },
+                    complete: completed.includes("notes"),
+                    exists: hasNotes,
+                    changeComplete(arg0) {
+                      setCompleted((c) => {
+                        if (arg0) {
+                          return [...c, "notes"];
+                        } else {
+                          return c.filter((v) => v !== "notes");
+                        }
+                      });
+                    },
+                  },
+                ]}
+              />
+              {/* <div className="max-w-lg border border-mono-border-light p-2 rounded-lg cursor-pointer">
                 {hasNewsletter && (
                   <ProjectResourceOption
                     label="Newsletter"
@@ -247,7 +354,7 @@ export default function ProjectView(props: {
                     }}
                   />
                 )}
-              </div>
+              </div> */}
               <div
                 className="text-xs text-red-400 flex gap-2 items-center cursor-pointer hover:underline"
                 onClick={() => {
