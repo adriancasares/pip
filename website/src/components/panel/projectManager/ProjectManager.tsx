@@ -36,6 +36,8 @@ export default function ProjectManager() {
       const data = snapshot.val();
 
       if (data) {
+        console.log(data);
+
         setProjects(data);
       }
     });
@@ -83,10 +85,22 @@ export default function ProjectManager() {
             setProjectId(undefined);
           }}
           project={project}
-          onChange={(project) => {
+          onChange={(newProject) => {
+            if (newProject == null) {
+              // delete project
+              const newProjects = [...projects];
+              newProjects.splice(
+                projects.findIndex((p) => p.id === project.id),
+                1
+              );
+              setProjects(newProjects);
+              return;
+            }
             const newProjects = [...projects];
             newProjects[projects.findIndex((p) => p.id === project.id)] =
-              project;
+              newProject;
+
+            console.log(newProjects);
             setProjects(newProjects);
 
             setProgressSaved("WAITING_TO_SAVE");
@@ -113,7 +127,7 @@ export default function ProjectManager() {
           >
             Add Project
           </button>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-4">
             {projects.map((project, index) => {
               return (
                 <ProjectCard
@@ -124,10 +138,13 @@ export default function ProjectManager() {
                     setProjectId(project.id);
                   }}
                   project={project}
-                  onChange={(project) => {
+                  onChange={(newProject) => {
                     const newProjects = [...projects];
-                    newProjects[index] = project;
+                    newProjects[index] = newProject;
+
                     setProjects(newProjects);
+
+                    setProgressSaved("WAITING_TO_SAVE");
                   }}
                 />
               );

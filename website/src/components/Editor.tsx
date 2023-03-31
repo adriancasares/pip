@@ -9,6 +9,8 @@ import { motion } from "framer-motion";
 export default function Editor(props: {
   initialBody: string;
   setBody: (body: string) => void;
+  blueBackground?: boolean;
+  height?: number;
 }) {
   const editor = useEditor({
     extensions: [
@@ -30,7 +32,12 @@ export default function Editor(props: {
   }, [editor]);
 
   useEffect(() => {
-    editor?.commands.setContent(props.initialBody);
+    if (
+      props.initialBody.replace(/\s/g, "") !==
+      editor?.getHTML().replace(/\s/g, "")
+    ) {
+      editor?.commands.setContent(props.initialBody);
+    }
   }, [props.initialBody]);
 
   const [focused, setFocused] = useState(false);
@@ -38,7 +45,7 @@ export default function Editor(props: {
     <div>
       <RichTextEditor
         editor={editor}
-        className="border-0 p-0"
+        className={`border-0 p-0`}
         onFocus={() => {
           setFocused(true);
         }}
@@ -47,7 +54,12 @@ export default function Editor(props: {
         }}
         styles={{
           content: {
-            backgroundColor: focused ? "#F8F8F8" : "transparent",
+            height: props.height,
+            backgroundColor: focused
+              ? props.blueBackground
+                ? "rgba(238, 242, 255, .5)"
+                : "#F8F8F8"
+              : "transparent",
           },
         }}
       >

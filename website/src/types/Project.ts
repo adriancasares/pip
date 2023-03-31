@@ -4,4 +4,5 @@ export type Project = {
   lastUpdated: number;
   imagePublicId?: string;
   notesUrl?: string;
+  plans?: string;
 };

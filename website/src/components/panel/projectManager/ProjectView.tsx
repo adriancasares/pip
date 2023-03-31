@@ -1,17 +1,18 @@
 import { Cloudinary } from "@cloudinary/url-gen";
 import { getAuth } from "firebase/auth";
 import { get, getDatabase, ref, set } from "firebase/database";
-import { IoArrowBack } from "react-icons/io5/index.js";
-import React, { useEffect, useMemo, useState } from "react";
+import { IoArrowBack, IoTrashBinOutline } from "react-icons/io5/index.js";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import type { Project } from "../../../types/Project";
 import CreateNewsletterPanel from "../newsletter/CreateNewsletterPanel";
 import MetadataTextInput from "../newsletter/MetadataTextInput";
 import ProjectResourceOption from "./ProjectResourceOption";
 import axios from "axios";
+import { AlertContext } from "../newsletter/EditorAlertDisplay";
 
 export default function ProjectView(props: {
   project: Project;
-  onChange: (project: Project) => void;
+  onChange: (project: Project | null) => void;
   close: () => void;
 }) {
   const [imagePublicId, setImagePublicId] = useState<string | undefined>(
@@ -75,6 +76,8 @@ export default function ProjectView(props: {
     new URLSearchParams(window.location.search).get("projectView") ?? undefined
   );
 
+  const alerts = useContext(AlertContext);
+
   return (
     <div>
       {(() => {
@@ -104,7 +107,7 @@ export default function ProjectView(props: {
                 </button>
               </div>
               <div
-                className="w-full h-48 bg-mono-container-light rounded-lg relative bg-cover flex justify-center items-center group"
+                className="w-full h-48 bg-mono-container-light rounded-lg relative bg-cover flex justify-center items-center group object-center bg-center"
                 style={{
                   backgroundImage: `url(${url})`,
                 }}
@@ -244,6 +247,22 @@ export default function ProjectView(props: {
                     }}
                   />
                 )}
+              </div>
+              <div
+                className="text-xs text-red-400 flex gap-2 items-center cursor-pointer hover:underline"
+                onClick={() => {
+                  alerts.addAlert({
+                    name: "Are you sure you want to remove this project and all of its resources?",
+                    callback(arg0) {
+                      if (arg0) {
+                        props.onChange(null);
+                        props.close();
+                      }
+                    },
+                  });
+                }}
+              >
+                <p>Remove Project</p>
               </div>
             </div>
           );
