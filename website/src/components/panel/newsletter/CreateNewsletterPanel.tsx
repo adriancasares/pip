@@ -118,6 +118,8 @@ export default function CreateNewsletterPanel(props: {
     const draft = ref(database, "newsletterDrafts/" + props.id);
 
     onValue(draft, (snapshot) => {
+      console.log("Recieved data", snapshot.val());
+
       if (progressSaved === "WAITING_TO_RECIEVE") {
         return setProgressSaved("NO_CHANGES");
       } else if (progressSaved === "WAITING_TO_SAVE") {

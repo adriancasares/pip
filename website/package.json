@@ -58,6 +58,7 @@
     "twilio": "^3.83.0"
   },
   "devDependencies": {
+    "@types/html-to-text": "^9.0.0",
     "@types/multiparty": "^0.0.33",
     "@types/react": "^18.0.21",
     "@types/slug": "^5.0.3",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import type { NewsletterTextBlock } from "../../../types/NewsletterContentBlock";
 import Editor from "../../Editor";
 import NewsletterBlockEditorWrapper from "./NewsletterBlockEditorWrapper";
@@ -21,6 +21,10 @@ export default function NewsletterTextBlockEditor(props: {
   onMoveDown: () => void;
 }) {
   const [content, setContent] = useState(props.block.content);
+
+  useEffect(() => {
+    setContent(props.block.content);
+  }, [props.block]);
 
   useEffect(() => {
     props.onChange({ ...props.block, content });

@@ -29,6 +29,10 @@ export default function Editor(props: {
     });
   }, [editor]);
 
+  useEffect(() => {
+    editor?.commands.setContent(props.initialBody);
+  }, [props.initialBody]);
+
   const [focused, setFocused] = useState(false);
   return (
     <div>

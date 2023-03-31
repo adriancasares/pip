@@ -143,7 +143,7 @@ export default function ImageEditor(props: {
           onChange={setWorkingCrop}
         >
           <div
-            className="relative select-none group"
+            className="relative select-none group min-h-[4rem] bg-mono-container-light"
             onMouseOver={() => {
               setHover(true);
             }}
