@@ -223,7 +223,7 @@ export default async function handler(
     await sgmail.send(msg);
   }
 
-  if (matchingPhone.size != 0) {
+  if (matchingPhone != null && matchingPhone.size != 0) {
     response.status(200).json({
       result: "success",
       matchingPhone: true,
