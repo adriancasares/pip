@@ -41,6 +41,7 @@ export default async function fetchMembers() {
   });
 
   const textRecipients = sortedData.filter((member: any) => member.phoneNumber);
+
   const emailRecipients = sortedData.filter((member: any) => member.email);
 
   return {

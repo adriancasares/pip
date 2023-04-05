@@ -18,6 +18,11 @@ export default function sendMessage(message: string, phoneNumber: string) {
         to: phoneNumber,
       })
       .then(resolve)
-      .catch(reject);
+      .catch((e) => {
+        if (e.message === "Attempt to send to unsubscribed recipient") {
+          resolve(e);
+        }
+        reject(e);
+      });
   });
 }
