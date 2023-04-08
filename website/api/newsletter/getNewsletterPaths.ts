@@ -33,11 +33,17 @@ export default async function handler(
 
   const newsletterRef = db.collection("publishedNewsletters");
 
+  console.log("newsletterRef", newsletterRef);
+
   const newsletters = await newsletterRef.get();
+
+  console.log("newsletters", newsletters);
 
   const newsletterPaths = newsletters.docs.map((doc) => {
     return doc.get("slug") as string;
   });
+
+  console.log("newsletterPaths", newsletterPaths);
 
   response.status(200).json({
     result: "success",
