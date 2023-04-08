@@ -1,0 +1,21 @@
+---
+import Banner from "../../components/Banner.astro";
+import Layout from "../../layouts/Layout.astro";
+import SubscribeForm from "../../components/subscribe/SubscribeForm";
+
+export async function getStaticPaths() {
+  return [{ params: { slug: "subscribe" } }];
+}
+---
+
+<Layout
+  title="Subscribe - Programming in Practice"
+  light={true}
+  og={{
+    title: "The PIP Newsletter",
+    description: "you join subscribe 👀",
+    image: "https://lasapip.com/icon-256.png",
+    url: "https://lasapip.com/subscribe",
+  }}
+/>
+<h1>Hello World</h1>
