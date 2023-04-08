@@ -4,18 +4,25 @@ import Layout from "../../layouts/Layout.astro";
 import SubscribeForm from "../../components/subscribe/SubscribeForm";
 import axios from "axios";
 
-export async function getStaticPaths() {
-  const res = await axios.get(
-    "https://lasapip.com/api/newsletter/getNewsletterPaths"
-  );
-  console.log(res.data);
-
-  return res.data["newsletterPaths"].map((path: string) => {
-    return {
-      params: {
-        slug: path,
-      },
-    };
+export function getStaticPaths() {
+  return new Promise((resolve) => {
+    axios
+      .get("https://lasapip.com/api/newsletter/getNewsletterPaths")
+      .then((res) => {
+        resolve(
+          res.data["newsletterPaths"].map((path: string) => {
+            return {
+              params: {
+                slug: path,
+              },
+            };
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        resolve([]);
+      });
   });
 }
 ---
