@@ -28,6 +28,7 @@ import MetadataTextInput from "./MetadataTextInput";
 import MetadataDateInput from "./MetadataDateInput";
 import SendEmailPanel from "./SendEmailPanel";
 import SendRealEmailPanel from "./SendRealEmailPanel";
+import PublishPanel from "./PublishPanel";
 
 function NewsletterPanelLoader(props: { id: string; close: () => void }) {
   const [newsletter, setNewsletter] = useState<Newsletter | undefined>(
@@ -226,6 +227,17 @@ export default function CreateNewsletterPanel(props: {
           projectId={props.id}
         />
       }
+      {
+        <PublishPanel
+          show={shownPanel === "PUBLISH"}
+          onClose={() => {
+            setShownPanel("");
+          }}
+          progressSaved={progressSaved}
+          projectId={props.id}
+        />
+      }
+
       <div className="fixed top-0 w-full flex items-center justify-between py-4 px-8 bg-white z-10">
         <div className="relative">
           <input
@@ -252,7 +264,7 @@ export default function CreateNewsletterPanel(props: {
           <NewsletterEditorChip
             label="Publish"
             onClick={() => {
-              setShownPanel("SEND_REAL_EMAIL");
+              setShownPanel("PUBLISH");
             }}
             icon={<IoCloudUploadOutline />}
           />
