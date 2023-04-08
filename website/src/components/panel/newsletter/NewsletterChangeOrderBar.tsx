@@ -47,6 +47,7 @@ export default function NewsletterChangeOrderBar(props: {
                   props.remove();
                 }
               },
+              type: "CONFIRM",
             });
           }}
         >
