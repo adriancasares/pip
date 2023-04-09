@@ -7,7 +7,7 @@ export default async function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  const { id } = request.query;
+  const { slug } = request.query;
   dotenv.config();
 
   const firebaseConfig = {
@@ -32,9 +32,13 @@ export default async function handler(
 
   const db = getFirestore(app);
 
-  const newsletterRef = db.collection("publishedNewsletters/" + id);
+  const newsletterRef = db.collection("publishedNewsletters");
 
-  const newsletter = await newsletterRef.get();
+  const newsletters = await newsletterRef.get();
+
+  const newsletter = newsletters.docs.filter((doc) => {
+    return doc.get("slug") === slug;
+  });
 
   response.status(200).json({
     result: "success",
