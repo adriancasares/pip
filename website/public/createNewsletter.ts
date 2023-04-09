@@ -7,7 +7,7 @@ import type {
   NewsletterTextBlock,
 } from "../src/types/NewsletterContentBlock";
 
-function getImageURL(imageBlock: NewsletterImageBlock): string {
+export function getImageURL(imageBlock: NewsletterImageBlock): string {
   const cld = new Cloudinary({
     cloud: {
       cloudName: "dlkexpc87",

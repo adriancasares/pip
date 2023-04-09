@@ -51,25 +51,6 @@ export default async function handler(
   const email = FormResp.fields.email ? FormResp.fields.email[0] : null;
   const phone = FormResp.fields.phone ? FormResp.fields.phone[0] : null;
   const classYear = FormResp.fields.classYear[0];
-  const captchaKey = FormResp.fields.captchaKey[0];
-  // verify captchaKey with hcaptcha
-  const captchaResponse = await axios.post(
-    "https://hcaptcha.com/siteverify",
-    "secret=" + process.env.HCAPTCHA_SECRET + "&response=" + captchaKey,
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }
-  );
-
-  if (!captchaResponse.data.success) {
-    response.status(400).json({
-      result: "error",
-      error: "invalid-captcha",
-    });
-    return;
-  }
 
   const { isValid, phoneNumber } = phoneChecker(phone);
   const emailValid = validateEmail.validate(email);

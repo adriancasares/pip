@@ -4,6 +4,14 @@ import Layout from "../../layouts/Layout.astro";
 import SubscribeForm from "../../components/subscribe/SubscribeForm";
 import axios from "axios";
 import type Newsletter from "../../types/Newsletter";
+import type {
+  NewsletterTextBlock,
+  NewsletterContentBlock,
+  NewsletterImageBlock,
+} from "../../types/NewsletterContentBlock";
+import { getImageURL } from "../../../public/createNewsletter";
+import SafeSection from "../../components/newsletter/SafeSection";
+import SubscribeReminder from "../../components/newsletter/SubscribeReminder";
 
 export function getStaticPaths() {
   return new Promise((resolve) => {
@@ -28,12 +36,12 @@ export function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
+
 const newsletter: Newsletter = (
   await axios.get(
     `https://lasapip.com/api/newsletter/getNewsletter?slug=${slug}`
   )
-).data.newsletter;
-console.log(newsletter);
+).data.newsletter[0];
 ---
 
 <Layout
@@ -45,5 +53,43 @@ console.log(newsletter);
     image: "https://lasapip.com/icon-256.png",
     url: "https://lasapip.com/subscribe",
   }}
-/>
-<h1>{newsletter.name}</h1>
+>
+  <div>
+    <SubscribeReminder client:load />
+    <div class="max-w-2xl w-full mx-auto flex flex-col gap-4">
+      <h1 class="text-4xl font-bold">{newsletter.name}</h1>
+      <div class="text-mono-c">
+        <p>By {newsletter.author}</p>
+        <p>
+          {
+            new Date(newsletter.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          }
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-col gap-4">
+      {
+        newsletter.sections.map((section) => {
+          return (
+            <div>
+              <div class="flex max-w-2xl items-end mx-auto">
+                <div class="p-2 w-4 border border-b-0 border-r-0 border-mono-border-light rounded-tl-md" />
+                <h2 class="flex-1 whitespace-nowrap pl-2 pr-8 pb-1 text-lg font-medium">
+                  {section.name}
+                </h2>
+                <div class="p-2 w-full border border-b-0 border-l-0 border-mono-border-light rounded-tr-md" />
+              </div>
+              <div class="py-4 px-6 max-w-2xl mx-auto w-full border border-t-0 border-mono-border-light rounded-b-md">
+                <SafeSection section={section} />
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</Layout>
