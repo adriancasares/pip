@@ -3,6 +3,7 @@ import Banner from "../../components/Banner.astro";
 import Layout from "../../layouts/Layout.astro";
 import SubscribeForm from "../../components/subscribe/SubscribeForm";
 import axios from "axios";
+import type Newsletter from "../../types/Newsletter";
 
 export function getStaticPaths() {
   return new Promise((resolve) => {
@@ -25,6 +26,14 @@ export function getStaticPaths() {
       });
   });
 }
+
+const { slug } = Astro.params;
+const newsletter: Newsletter = (
+  await axios.get(
+    `https://lasapip.com/api/newsletter/getNewsletter?slug=${slug}`
+  )
+).data.newsletter;
+console.log(newsletter);
 ---
 
 <Layout
@@ -37,4 +46,4 @@ export function getStaticPaths() {
     url: "https://lasapip.com/subscribe",
   }}
 />
-<h1>Hello World</h1>
+<h1>{newsletter.name}</h1>

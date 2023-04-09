@@ -36,9 +36,13 @@ export default async function handler(
 
   const newsletters = await newsletterRef.get();
 
-  const newsletter = newsletters.docs.filter((doc) => {
-    return doc.get("slug") === slug;
-  });
+  const newsletter = newsletters.docs
+    .filter((doc) => {
+      return doc.get("slug") === slug;
+    })
+    .map((doc) => {
+      return doc.data();
+    });
 
   response.status(200).json({
     result: "success",
