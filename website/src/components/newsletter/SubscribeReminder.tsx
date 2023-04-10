@@ -231,14 +231,13 @@ export default function SubscribeReminder() {
                 translateX: showFurtherSignup ? "-100%" : 0,
               }}
               transition={{
-                duration: 1,
-                type: "spring",
-                bounce: 0.2,
+                // duration: show ? 0.5 : 0,
+                duration: 0,
               }}
             >
               <motion.div className="flex flex-col gap-4">
                 <h1 className="text-xl font-medium font-os tracking-normal">
-                  Continue in your Email
+                  Sign up to Continue
                 </h1>
                 <p className="text-mono-c font-os max-w-sm">
                   Don't miss future issues. Subscribe to our newsletter for a
@@ -259,7 +258,15 @@ export default function SubscribeReminder() {
                     }`}
                     onClick={() => {
                       if (emailValid) {
-                        setShowFurtherSignup(true);
+                        setShow(false);
+
+                        setTimeout(() => {
+                          setShowFurtherSignup(true);
+                        }, 300);
+
+                        setTimeout(() => {
+                          setShow(true);
+                        }, 400);
                       }
                     }}
                   >
@@ -288,8 +295,9 @@ export default function SubscribeReminder() {
                   height: showFurtherSignup ? "auto" : 0,
                 }}
                 transition={{
-                  duration: 0.3,
-                  delay: 0.3,
+                  // duration: show ? 1 : 0.5,
+                  // delay: show ? 0.3 : 0,
+                  duration: 0,
                 }}
               >
                 <h1 className="text-xl font-medium font-os tracking-normal">
@@ -367,7 +375,16 @@ export default function SubscribeReminder() {
                     className={`font-os text-xs text-mono-c cursor-pointer mt-2`}
                     onClick={() => {
                       if (loading) return;
-                      setShowFurtherSignup(false);
+
+                      setShow(false);
+
+                      setTimeout(() => {
+                        setShowFurtherSignup(false);
+                      }, 300);
+
+                      setTimeout(() => {
+                        setShow(true);
+                      }, 400);
                     }}
                   >
                     Go Back
