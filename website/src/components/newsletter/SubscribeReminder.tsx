@@ -23,7 +23,7 @@ export default function SubscribeReminder() {
       const scrollable =
         document.documentElement.scrollHeight - window.innerHeight;
       const scrolled = window.scrollY;
-      if (scrolled / scrollable > 0.1) {
+      if (scrolled / scrollable > 0.4) {
         setShow(true);
       } else {
         setShow(false);
