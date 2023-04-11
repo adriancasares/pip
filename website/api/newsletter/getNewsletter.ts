@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import admin from "firebase-admin";
 import dotenv from "dotenv";
 import { getFirestore } from "firebase-admin/firestore";
+import { getDatabase } from "firebase-admin/database";
 
 export default async function handler(
   request: VercelRequest,
@@ -30,9 +31,19 @@ export default async function handler(
         credential: admin.credential.cert(firebaseConfig),
       });
 
-  const db = getFirestore(app);
+  const db = getDatabase(app);
 
-  const newsletterRef = db.collection("publishedNewsletters");
+  const projectsRef = db.ref("projects");
+
+  const projects = await projectsRef.get();
+
+  const project = projects.val().filter((project: any) => {
+    return project.slug === slug;
+  })[0];
+
+  const fs = getFirestore(app);
+
+  const newsletterRef = fs.collection("publishedNewsletters");
 
   const newsletters = await newsletterRef.get();
 
@@ -47,5 +58,6 @@ export default async function handler(
   response.status(200).json({
     result: "success",
     newsletter,
+    project,
   });
 }

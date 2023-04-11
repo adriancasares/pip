@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import TextInput from "../subscribe/TextInput";
 import { IoArrowForward } from "react-icons/io5/index.js";
@@ -32,6 +32,22 @@ export default function SubscribeReminder() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [inPermanentState]);
+
+  useEffect(() => {
+    if (
+      localStorage.getItem(
+        `showSubscribeReminder_for_${window.location.pathname}`
+      ) === "false"
+    ) {
+      setShow(false);
+      setInPermanentState(true);
+    }
+
+    localStorage.setItem(
+      `showSubscribeReminder_for_${window.location.pathname}`,
+      "false"
+    );
+  }, []);
 
   const variants = {
     hidden: {
@@ -158,8 +174,38 @@ export default function SubscribeReminder() {
       });
   };
 
+  const [fromBanner, setFromBanner] = useState(false);
   return (
     <>
+      <div className="flex flex-col gap-4 w-full max-w-2xl mx-auto bg-orange-50 p-6 rounded-2xl">
+        <p className="text-mono-c font-os text-sm">
+          This is part of our weekly newsletter, which is sent out every
+          Thursday morning. Subscribe to let us know you're interested and we'll
+          send you the next issue when it comes out.
+        </p>
+        <hr className="border-orange-100 border-b-2" />
+        <div className="flex items-center gap-4">
+          <input
+            placeholder="Your Personal Email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full py-2 px-4 border border-orange-100 outline-orange-500 rounded-full font-os text-sm"
+          />
+          <button
+            className="bg-orange-500 text-white py-2 px-4 rounded-full"
+            onClick={() => {
+              setShowFurtherSignup(true);
+
+              setShow(true);
+
+              setFromBanner(true);
+            }}
+          >
+            Subscribe
+          </button>
+        </div>
+      </div>
       {response === "PHONE_EXISTS" && (
         <ErrorNotice>
           Your phone number is already on our list. If you haven't been getting
@@ -259,6 +305,8 @@ export default function SubscribeReminder() {
                     onClick={() => {
                       if (emailValid) {
                         setShow(false);
+
+                        setFromBanner(false);
 
                         setTimeout(() => {
                           setShowFurtherSignup(true);
@@ -377,6 +425,8 @@ export default function SubscribeReminder() {
                       if (loading) return;
 
                       setShow(false);
+
+                      if (fromBanner) return;
 
                       setTimeout(() => {
                         setShowFurtherSignup(false);

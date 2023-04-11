@@ -12,7 +12,7 @@ export interface Props {
     description: string;
     url: string;
     image: string;
-
+    siteName?: string;
   }
 }
 
@@ -32,6 +32,8 @@ const { title, light, og } = Astro.props;
     { og && <meta name="og:description" content={og.description} /> }
     { og && <meta name="og:url" content={og.url} /> }
     { og && <meta name="og:image" content={og.image} /> }
+    { og && og.siteName && <meta name="og:site_name" content={og.siteName} /> }
+
     <title>{title}</title>
   </head>
   <body>
