@@ -27,6 +27,7 @@ export default async function handler(
   const app = admin.apps.length
     ? admin.app()
     : admin.initializeApp({
+        databaseURL: "https://lasapip-default-rtdb.firebaseio.com/",
         // @ts-ignore
         credential: admin.credential.cert(firebaseConfig),
       });
