@@ -37,11 +37,19 @@ export function getStaticPaths() {
 
 const { slug } = Astro.params;
 
-const newsletter: Newsletter = (
-  await axios.get(
-    `https://lasapip.com/api/newsletter/getNewsletter?slug=${slug}`
-  )
-).data.newsletter[0];
+let newsletter: Newsletter;
+
+try {
+  newsletter = (
+    await axios.get(
+      `https://lasapip.com/api/newsletter/getNewsletter?slug=${slug}`
+    )
+  ).data.newsletter[0];
+} catch (err) {
+  console.log(err);
+  Astro.response.status = 404;
+  Astro.response.statusText = "Not Found";
+}
 ---
 
 <Layout
