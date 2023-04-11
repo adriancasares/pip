@@ -13,6 +13,7 @@ export interface Props {
     url: string;
     image?: string;
     siteName?: string;
+    isArticle?: boolean;
   }
 }
 
@@ -28,7 +29,8 @@ const { title, light, og } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     
     { og && <meta name="og:title" content={og.title} /> }
-    { og && <meta name="og:type" content="website" /> }
+    { og && og.isArticle && <meta name="og:type" content="article" /> }
+    { og && !og.isArticle && <meta name="og:type" content="website" />}
     { og && <meta name="og:description" content={og.description} /> }
     { og && <meta name="og:url" content={og.url} /> }
     { og && og.image && <meta name="og:image" content={og.image} /> }
