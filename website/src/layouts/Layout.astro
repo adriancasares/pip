@@ -33,6 +33,8 @@ const { title, light, og } = Astro.props;
     { og && og.isArticle && <meta name="og:type" content="article" /> }
     { og && !og.isArticle && <meta name="og:type" content="website" />}
     { og && <meta name="og:description" content={og.description} /> }
+    { og && <meta name="description" content={og.description} /> }
+    { og && <meta name="twitter:description" content={og.description} /> }
     { og && <meta name="og:url" content={og.url} /> }
     { og && og.image && <meta name="og:image" content={og.image} /> }
     { og && og.image && <meta name="twitter:image:src" content={og.image} /> }
@@ -40,7 +42,7 @@ const { title, light, og } = Astro.props;
     { og && og.largeImage && <meta name="og:image:height" content="800" />}
     { og && og.largeImage && <meta name="twitter:card" content="summary_large_image" /> }
     { og && og.largeImage &&<meta name="robots" content="max-image-preview:large" /> }
-    { og && og.largeImage && <meta name="twitter:card" content="photo" /> }
+    { og && og.largeImage && <meta name="twitter:card" content="summary_large_image" /> }
     { og && og.siteName && <meta name="og:site_name" content={og.siteName} /> }
 
     <title>{title}</title>
