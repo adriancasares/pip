@@ -37,7 +37,7 @@ export function getStaticPaths() {
 
 const { slug } = Astro.params;
 
-let newsletter: Newsletter;
+let newsletter: Newsletter | null = null;
 
 try {
   newsletter = (
@@ -52,53 +52,63 @@ try {
 }
 ---
 
-<Layout
-  title={newsletter.name + " - PIP"}
-  light={true}
-  og={{
-    title: newsletter.name,
-    siteName: "The PIP Newsletter",
-    description: "you join subscribe 👀",
-    image: "https://lasapip.com/icon-256.png",
-    url: "https://lasapip.com/newsletter/" + newsletter.slug,
-  }}
->
-  <div>
-    <div class="max-w-2xl w-full mx-auto flex flex-col gap-4 py-8">
-      <h1 class="text-4xl font-bold">{newsletter.name}</h1>
-      <div class="text-mono-c">
-        <p>By {newsletter.author}</p>
-        <p>
+{
+  newsletter == null ? (
+    <Banner
+      title="404"
+      subtitle="Not Found"
+      description="The newsletter you are looking for does not exist."
+    />
+  ) : (
+    <Layout
+      title={newsletter.name + " - PIP"}
+      light={true}
+      og={{
+        title: newsletter.name,
+        siteName: "The PIP Newsletter",
+        description: "you join subscribe 👀",
+        image: "https://lasapip.com/icon-256.png",
+        url: "https://lasapip.com/newsletter/" + newsletter.slug,
+      }}
+    >
+      <div>
+        <div class="max-w-2xl w-full mx-auto flex flex-col gap-4 py-8">
+          <h1 class="text-4xl font-bold">{newsletter.name}</h1>
+          <div class="text-mono-c">
+            <p>By {newsletter.author}</p>
+            <p>
+              {
+                new Date(newsletter.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              }
+            </p>
+          </div>
+        </div>
+        <SubscribeReminder client:load />
+        <div class="flex flex-col gap-4 py-8">
           {
-            new Date(newsletter.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
+            newsletter.sections.map((section) => {
+              return (
+                <div>
+                  <div class="flex max-w-2xl items-end mx-auto">
+                    <div class="p-2 w-4 border border-b-0 border-r-0 border-mono-border-light rounded-tl-md" />
+                    <h2 class="flex-1 whitespace-nowrap pl-2 pr-8 pb-1 text-lg font-medium">
+                      {section.name}
+                    </h2>
+                    <div class="p-2 w-full border border-b-0 border-l-0 border-mono-border-light rounded-tr-md" />
+                  </div>
+                  <div class="py-4 px-6 max-w-2xl mx-auto w-full border border-t-0 border-mono-border-light rounded-b-md">
+                    <SafeSection section={section} />
+                  </div>
+                </div>
+              );
             })
           }
-        </p>
+        </div>
       </div>
-    </div>
-    <SubscribeReminder client:load />
-    <div class="flex flex-col gap-4 py-8">
-      {
-        newsletter.sections.map((section) => {
-          return (
-            <div>
-              <div class="flex max-w-2xl items-end mx-auto">
-                <div class="p-2 w-4 border border-b-0 border-r-0 border-mono-border-light rounded-tl-md" />
-                <h2 class="flex-1 whitespace-nowrap pl-2 pr-8 pb-1 text-lg font-medium">
-                  {section.name}
-                </h2>
-                <div class="p-2 w-full border border-b-0 border-l-0 border-mono-border-light rounded-tr-md" />
-              </div>
-              <div class="py-4 px-6 max-w-2xl mx-auto w-full border border-t-0 border-mono-border-light rounded-b-md">
-                <SafeSection section={section} />
-              </div>
-            </div>
-          );
-        })
-      }
-    </div>
-  </div>
-</Layout>
+    </Layout>
+  )
+}
