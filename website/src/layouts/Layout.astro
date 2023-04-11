@@ -14,6 +14,7 @@ export interface Props {
     image?: string;
     siteName?: string;
     isArticle?: boolean;
+    largeImage?: boolean;
   }
 }
 
@@ -34,6 +35,8 @@ const { title, light, og } = Astro.props;
     { og && <meta name="og:description" content={og.description} /> }
     { og && <meta name="og:url" content={og.url} /> }
     { og && og.image && <meta name="og:image" content={og.image} /> }
+    { og && og.largeImage && <meta name="og:image:width" content="1200" />}
+    { og && og.largeImage && <meta name="og:image:height" content="800" />}
     { og && og.siteName && <meta name="og:site_name" content={og.siteName} /> }
 
     <title>{title}</title>
