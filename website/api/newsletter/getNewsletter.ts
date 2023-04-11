@@ -34,14 +34,6 @@ export default async function handler(
 
   const db = getDatabase(app);
 
-  const projectsRef = db.ref("projects");
-
-  const projects = await projectsRef.get();
-
-  const project = projects.val().filter((project: any) => {
-    return project.slug === slug;
-  })[0];
-
   const fs = getFirestore(app);
 
   const newsletterRef = fs.collection("publishedNewsletters");
@@ -53,8 +45,19 @@ export default async function handler(
       return doc.get("slug") === slug;
     })
     .map((doc) => {
-      return doc.data();
+      return {
+        ...doc.data(),
+        id: doc.id,
+      };
     });
+
+  const projectsRef = db.ref("projects");
+
+  const projects = await projectsRef.get();
+
+  const project = projects.val().filter((project: any) => {
+    return project.id === newsletter[0].id;
+  })[0];
 
   response.status(200).json({
     result: "success",
