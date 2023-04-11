@@ -52,45 +52,43 @@ try {
 }
 ---
 
-{
-  newsletter == null ? (
-    <Banner
-      title="404"
-      subtitle="Not Found"
-      description="The newsletter you are looking for does not exist."
-    />
-  ) : (
-    <Layout
-      title={newsletter.name + " - PIP"}
-      light={true}
-      og={{
-        title: newsletter.name,
-        siteName: "The PIP Newsletter",
-        description: "you join subscribe 👀",
-        image: "https://lasapip.com/icon-256.png",
-        url: "https://lasapip.com/newsletter/" + newsletter.slug,
-      }}
-    >
-      <div>
-        <div class="max-w-2xl w-full mx-auto flex flex-col gap-4 py-8">
-          <h1 class="text-4xl font-bold">{newsletter.name}</h1>
-          <div class="text-mono-c">
-            <p>By {newsletter.author}</p>
-            <p>
-              {
-                new Date(newsletter.date).toLocaleDateString("en-US", {
+<fragment>
+  {
+    newsletter == null ? (
+      <Banner
+        title="404"
+        subtitle="Not Found"
+        description="The newsletter you are looking for does not exist."
+      />
+    ) : (
+      <Layout
+        title={newsletter.name + " - PIP"}
+        light={true}
+        og={{
+          title: newsletter.name,
+          siteName: "The PIP Newsletter",
+          description: "you join subscribe 👀",
+          image: "https://lasapip.com/icon-256.png",
+          url: "https://lasapip.com/newsletter/" + newsletter.slug,
+        }}
+      >
+        <div>
+          <div class="max-w-2xl w-full mx-auto flex flex-col gap-4 py-8">
+            <h1 class="text-4xl font-bold">{newsletter.name}</h1>
+            <div class="text-mono-c">
+              <p>By {newsletter.author}</p>
+              <p>
+                {new Date(newsletter.date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
-                })
-              }
-            </p>
+                })}
+              </p>
+            </div>
           </div>
-        </div>
-        <SubscribeReminder client:load />
-        <div class="flex flex-col gap-4 py-8">
-          {
-            newsletter.sections.map((section) => {
+          <SubscribeReminder client:load />
+          <div class="flex flex-col gap-4 py-8">
+            {newsletter.sections.map((section) => {
               return (
                 <div>
                   <div class="flex max-w-2xl items-end mx-auto">
@@ -105,10 +103,10 @@ try {
                   </div>
                 </div>
               );
-            })
-          }
+            })}
+          </div>
         </div>
-      </div>
-    </Layout>
-  )
-}
+      </Layout>
+    )
+  }</fragment
+>
