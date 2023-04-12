@@ -28,7 +28,7 @@ const { title, light, og } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=4&from=lasapip" />
     <meta name="generator" content={Astro.generator} />
-    
+    <meta name="theme-color" content="#7faceb">
     { og && <meta name="og:title" content={og.title} /> }
     { og && og.isArticle && <meta name="og:type" content="article" /> }
     { og && !og.isArticle && <meta name="og:type" content="website" />}
