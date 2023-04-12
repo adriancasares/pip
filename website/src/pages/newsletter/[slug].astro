@@ -106,7 +106,7 @@ try {
       </div>
     </div>
     <SubscribeReminder client:load />
-    <div class="flex flex-col gap-4 py-8">
+    <div class="flex flex-col gap-4 py-8 newsletter-sections">
       {
         newsletter.sections.map((section) => {
           return (
@@ -136,3 +136,8 @@ try {
     }
   </div>
 </Layout>
+<style is:global>
+  .newsletter-sections a {
+    color: #0993c9;
+  }
+</style>

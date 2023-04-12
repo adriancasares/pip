@@ -21,8 +21,14 @@ export default function SafeSection(props: { section: NewsletterSection }) {
               dangerouslySetInnerHTML={{
                 __html: sanitizeHtml(textBlock.content, {
                   allowedAttributes: {
+                    ...sanitizeHtml.defaults.allowedAttributes,
+                    a: ["href", "name", "target"],
                     "*": ["style"],
                   },
+                  allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+                    "img",
+                    "a",
+                  ]),
                 }),
               }}
             ></div>
