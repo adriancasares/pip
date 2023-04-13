@@ -14,6 +14,7 @@ import {
   IoCloudUploadOutline,
   IoEnterOutline,
   IoEyeOutline,
+  IoMailOutline,
   IoPaperPlane,
   IoPaperPlaneOutline,
   IoPaperPlaneSharp,
@@ -269,7 +270,14 @@ export default function CreateNewsletterPanel(props: {
             icon={<IoCloudUploadOutline />}
           />
           <NewsletterEditorChip
-            label="Send"
+            label="Send Official"
+            onClick={() => {
+              setShownPanel("PUBLISH");
+            }}
+            icon={<IoMailOutline />}
+          />
+          <NewsletterEditorChip
+            label="Send Test"
             onClick={() => {
               setShownPanel("SEND_EMAIL");
             }}
