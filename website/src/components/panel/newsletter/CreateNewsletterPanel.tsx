@@ -272,7 +272,7 @@ export default function CreateNewsletterPanel(props: {
           <NewsletterEditorChip
             label="Send Official"
             onClick={() => {
-              setShownPanel("PUBLISH");
+              setShownPanel("SEND_REAL_EMAIL");
             }}
             icon={<IoMailOutline />}
           />
