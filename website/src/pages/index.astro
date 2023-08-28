@@ -7,27 +7,6 @@ import Layout from "../layouts/Layout.astro";
 import More from "../components/sections/more/More";
 import Button from "../components/Button";
 import ClubInfo from "../components/sections/clubInfo/ClubInfo.astro";
-
-const header = await fetch(`http://lasapip.herokuapp.com/api/header`)
-  .then((res) => res.json())
-  .then((data) => data.data.attributes);
-const paragraphs = await fetch(`http://lasapip.herokuapp.com/api/paragraphs`)
-  .then((res) => res.json())
-  .then((data) =>
-    data.data.map((item: { attributes: any }) => item.attributes)
-  );
-const meetings = await fetch(`http://lasapip.herokuapp.com/api/meetings`)
-  .then((res) => res.json())
-  .then((data) =>
-    data.data.map((item: { attributes: any }) => item.attributes)
-  );
-const captains = await fetch(`http://lasapip.herokuapp.com/api/captains`)
-  .then((res) => res.json())
-  .then((data) =>
-    data.data
-      .map((item: { attributes: any }) => item.attributes)
-      .sort((i1: any, i2: any) => (i1.order > i2.order ? 1 : -1))
-  );
 ---
 
 <Layout
@@ -40,21 +19,53 @@ const captains = await fetch(`http://lasapip.herokuapp.com/api/captains`)
   }}
 >
   <main>
-    <Header
-      title={header.title}
-      description={header.description}
-      callToAction={header.buttonType}
-      image={header.image}
-      discordLink={header.discord}
-    />
+    <section id="header" class="w-full">
+      <div
+        class="from-gradient-more-section-from to-gradient-more-section-to bg-gradient-to-tr relative h-screen"
+      >
+        <div
+          class="w-full h-screen from-black/0 to-black/50 bg-gradient-to-b absolute bottom-0"
+        >
+        </div>
+        <div
+          class="md:text-center flex flex-col gap-10 pt-20 pb-40 relative px-10"
+        >
+          <img src="/favicon.svg" class="md:self-center" width="100" />
+          <h1 class="text-mono-a font-title font-extrabold text-4xl">
+            Welcome to PIP
+          </h1>
+          <p class="text-mono-b max-w-sm md:mx-auto pr-20 md:pr-0">
+            {
+              `We're working on updating our website for the 2023-2024 school year. For now, fill out our interest form for this year!`
+            }
+          </p>
+          <div class="md:mx-auto flex flex-col gap-4 max-w-sm w-full">
+            <div>
+              <!-- {
+                callToAction === "add phone number" && (
+                  <Button icon="message" link={"/add-phone"}>
+                    Get Involved
+                  </Button>
+                )
+              } -->
 
-    <ClubInfo />
-
-    <Paragraphs paragraphs={paragraphs} client:load />
-
-    <Meetings meetings={meetings} client:load />
-
-    <More client:visible captains={captains} />
+              <a href="https://forms.gle/ZRLHhAC5fgaJxSZ49">
+                <button
+                  class="font-os font-medium text-sm py-3 px-6 bg-orange-600 text-white rounded-xl tracking-widest uppercase active:translate-y-1 transition-transform"
+                >
+                  Interest Form
+                </button>
+              </a>
+            </div>
+            <div
+              class="flex items-ceter text-mono-c gap-2 items-center md:mx-auto w-fit"
+            >
+              <a href={"/"}>Join our Discord</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </Layout>
 <style>
