@@ -5,5 +5,6 @@ export default interface Meeting {
   name: string;
   slidesUrl: string;
   date: number;
+  dateLabel?: string;
   description: string;
 }

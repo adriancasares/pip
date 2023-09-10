@@ -7,6 +7,7 @@ export interface MeetingData {
   description: string;
   date: string;
   slides?: string;
+  dateLabel?: string;
 }
 
 export default function Meeting(props: {
@@ -14,6 +15,7 @@ export default function Meeting(props: {
   description: string;
   date: string;
   slides?: string;
+  dateLabel?: string;
   upcoming: boolean;
 }) {
   const { description, date, slides, upcoming } = props;
@@ -30,13 +32,26 @@ export default function Meeting(props: {
               : "from-gradient-purple-from/25 to-gradient-purple-to/25"
           }`}
         >
-          <p
-            className={`text-mono-a font-number text-4xl md:text-5xl ${
-              upcoming ? "" : "opacity-50"
-            }`}
-          >
-            {localDate.getDate()}
-          </p>
+          {localDate.getTime() ? (
+            <div>
+              <p className="text-mono-a font-title uppercase text-md text-center">
+                {localDate.toLocaleDateString("en-US", {
+                  month: "short",
+                })}
+              </p>
+              <p
+                className={`text-mono-a font-number text-3xl md:text-4xl ${
+                  upcoming ? "" : "opacity-50"
+                }`}
+              >
+                {localDate.getDate()}
+              </p>
+            </div>
+          ) : (
+            <p className="text-mono-b font-title uppercase text-3xl text-center">
+              TBD
+            </p>
+          )}
         </div>
 
         <div className="flex flex-col gap-2 md:max-w-sm">
@@ -53,13 +68,9 @@ export default function Meeting(props: {
       </div>
       <div className="flex xs:ml-28 md:ml-0 md:flex-col gap-4 items-end whitespace-nowrap flex-wrap w-40">
         <p className="font-sans text-mono-b bg-mono-border py-4 px-6 rounded-full md:bg-transparent md:py-0 md:px-0 md:rounded-none">
-          {localDate.toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          })}
+          {props.dateLabel}
         </p>
-        <div>
+        {/* <div>
           {slides ? (
             <a
               href={slides}
@@ -72,7 +83,7 @@ export default function Meeting(props: {
               No slides yet
             </p>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import PhoneInput from "../add-phone/PhoneInput";
 import emailValidator from "email-validator";
 import LoadingDots from "../LoadingDots";
 
-export default function SubscribeForm() {
+export default function SubscribeForm(props: { internal?: boolean }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -76,6 +76,7 @@ export default function SubscribeForm() {
     }
     bodyFormData.append("classYear", classYear);
     bodyFormData.append("captchaKey", captcha);
+    bodyFormData.append("internal", props.internal ? "true" : "false");
 
     await axios({
       method: "post",

@@ -51,6 +51,7 @@ export default async function handler(
   const email = FormResp.fields.email ? FormResp.fields.email[0] : null;
   const phone = FormResp.fields.phone ? FormResp.fields.phone[0] : null;
   const classYear = FormResp.fields.classYear[0];
+  const interal = FormResp.fields.internal ? FormResp.fields.internal[0] : null;
 
   const { isValid, phoneNumber } = phoneChecker(phone);
   const emailValid = validateEmail.validate(email);
@@ -178,7 +179,7 @@ export default async function handler(
         name: "Adrian Casares",
       },
       subject: "Welcome to PIP!",
-      text: `Welcome to Programming in Practice! We're excited to have you join us for our weekly newsletters and meetings.\nYou can expect new emails every Thursday morning.`,
+      text: `Welcome to Programming in Practice! We're excited to have you join us for our weekly newsletters and meetings.\nYou can expect new emails every Wednesday morning.`,
       html: `<html>
       <body>
         <div>
@@ -189,7 +190,7 @@ export default async function handler(
             newsletters and meetings. 
           </p>
           <p>
-            <b>You can expect new emails every Thursday morning.</b>
+            <b>You can expect new emails every Wednesday morning.</b>
           </p>
           <p>
             Thanks,
