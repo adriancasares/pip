@@ -232,10 +232,10 @@ export default function SubscribeForm(props: { internal?: boolean }) {
                       <SelectInput
                         label="Class Year"
                         options={[
-                          "2023 (Senior)",
-                          "2024 (Junior)",
-                          "2025 (Sophomore)",
-                          "2026 (Freshman)",
+                          "2024 (Senior)",
+                          "2025 (Junior)",
+                          "2026 (Sophomore)",
+                          "2027 (Freshman)",
                         ]}
                         value={classYear}
                         onChange={setClassYear}
